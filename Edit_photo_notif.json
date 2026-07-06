@@ -1,0 +1,2504 @@
+{
+  "name": "Edit_photo_notif",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.url }}{{ $json.api_login_url }}{{ $json.endoints._adminToken }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "username",
+              "value": "={{ $json.username }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $json.password }}"
+            }
+          ]
+        },
+        "options": {
+          "allowUnauthorizedCerts": true,
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1984,
+        -240
+      ],
+      "id": "38f7066a-a65d-455f-be21-e3c96d944d21",
+      "name": "CONNECTION_MAGENTO"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"username\": \"n8nAgent\",\n  \"password\": \"N8Nagent_N8N2025$\",\n  \"_username\": \"admin\",\n  \"_password\": \"ypnj9uje87LrZ67!!!\",\n  \"url\":\"https://ekstere.eco\",\n  \"api_login_url\":\"/rest/V1/integration\",\n  \"api_url\":\"/rest/V1\",\n  \"endoints\":{\n    \"_adminToken\": \"/admin/token\",\n    \"_categories_GET\":\"/categories\",\n    \"_categories_CREATE\":\"/categories\",\n    \"_categories_UPDATE\":\"/categories\",\n    \"_products_GET\": \"/products\",\n    \"_products_CREATE\": \"/products\",\n    \"_products_UPDATE\": \"/products\",\n    \"_annonce_GET\": \"/ads/validated\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2224,
+        -240
+      ],
+      "id": "1d9cc36f-8e69-4a58-835e-351ac8605255",
+      "name": "_CONFIG"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG').item.json.url }}{{ $('_CONFIG').item.json.api_url }}{{ $('_CONFIG').item.json.endoints._annonce_GET }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "dateFrom",
+              "value": "={{$now.minus(350, 'days').format('yyyy-MM-dd')}}"
+            },
+            {
+              "name": "dateTo",
+              "value": "={{ $now }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.data }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1744,
+        -336
+      ],
+      "id": "edf7710f-8e6e-4209-ac72-51069493ee37",
+      "name": "GET_MAGENTO_PRODUCTS"
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "='1xh8fSVotSZ2BwLI6OZMz6jW5iBFxjsUl' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
+            },
+            {
+              "name": "fields",
+              "value": "files(id,name,mimeType)"
+            },
+            {
+              "name": "supportsAllDrives",
+              "value": "true"
+            },
+            {
+              "name": "includeItemsFromAllDrives",
+              "value": "true"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1520,
+        -352
+      ],
+      "id": "d738b91b-7ddf-4907-88c6-e6a85cb19460",
+      "name": "GET_DRIVE_SUBFOLDERS",
+      "alwaysOutputData": false,
+      "executeOnce": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "L0XtXKdv6jILumlS",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "='{{ $json.id }}' in parents and mimeType != 'application/vnd.google-apps.folder' and trashed = false"
+            },
+            {
+              "name": "fields",
+              "value": "files(id,name,mimeType,parents)"
+            },
+            {
+              "name": "supportsAllDrives",
+              "value": "true"
+            },
+            {
+              "name": "includeItemsFromAllDrives",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        336,
+        -512
+      ],
+      "id": "3d4edec2-39b0-4639-83a3-d05e17276271",
+      "name": "LIST_IMAGES",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "L0XtXKdv6jILumlS",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const res = $input.first().json;\nconst folders = Array.isArray(res.files) ? res.files : [];\n\nreturn folders.map(f => ({\n  json: {\n    folderId: f.id,\n    folderName: f.name,\n  },\n}));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1472,
+        1136
+      ],
+      "id": "14cab1fc-96d7-42e5-a4c4-8c6c8dd63ec3",
+      "name": "GET_FOLFER_Infos",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const allItems = $input.all();\nconst results = [];\n\nfor (const item of allItems) {\n  const files = item.json.files || [];\n\n  for (const f of files) {\n    const folderId = Array.isArray(f.parents) ? f.parents[0] : null;\n\n    results.push({\n      json: {\n        fileId: f.id,\n        fileName: f.name,\n        mimeType: f.mimeType,\n        folderId,          // important\n      },\n    });\n  }\n}\n\nreturn results;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        48,
+        1088
+      ],
+      "id": "1d5fcf47-8f95-434d-8eb7-d211b7a3d592",
+      "name": "ALL_IMAGES_INFOS",
+      "alwaysOutputData": true,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Run Once for Each Item\nconst item = $input.item;\n\nreturn {\n  json: {\n    original: item.json,  // on garde fileId, fileName, folderId ici\n  },\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        320,
+        992
+      ],
+      "id": "c2ec3591-95b8-4c36-898a-94beb3b3bfaa",
+      "name": "Retrieve_file_spec",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Retrieve_file_spec').item.json.original.fileId }} ",
+          "mode": "id"
+        },
+        "options": {
+          "binaryPropertyName": "data"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        624,
+        928
+      ],
+      "id": "758cc159-b7cf-4153-8af4-2934fbc48ca8",
+      "name": "Download_file_within_folder",
+      "alwaysOutputData": false,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "fNC8WPOeTl9bQzYD",
+          "name": "Google Oauth N8N"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "edit",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3-pro-image-preview",
+          "mode": "list",
+          "cachedResultName": "models/gemini-3-pro-image-preview (Nano Banana Pro)"
+        },
+        "prompt": "=ORDRE DE RETOUCHE STRICT - INTERDICTION DE GÉNÉRER\nNB: (Ne génère aucune image, modifie juste les paramètres suivants):\n\n* GÉOMÉTRIE : Interdiction formelle de changer l'orientation du vélo. Si le vélo pointe vers la droite, il DOIT rester vers la droite. Ne change aucun angle, aucune vis, aucun câble.\n\n* DÉTOURAGE : Remplace l'arrière-plan actuel par un blanc pur (#FFFFFF) de manière chirurgicale. Préserve l'intégrité des rayons des roues et autres détails du vélo et enlève la planche de bois si elle apparait dans l'image. L'image doit être dans un plan 2D blanc.\n\n* LUMIÈRE : Ne change pas le style de la photo. Augmente l'exposition de +20% et le contraste sur le cadre uniquement pour un aspect brillant/neuf.\n\n* SORTIE : Taille 1700x1100. Cadrage central avec une marge de respiration constante de 5 px de chaque côté.\n\n*QUALITÉ: Conserve la qualité des détails même si l'on zoom sur l'image, on devrait voir clair.\n\nNE RÉ-IMAGINE PAS LE VÉLO. CONTENTE-TOI DE NETTOYER LE FOND ET D'AJUSTER LES NIVEAUX.\n\n",
+        "images": {
+          "values": [
+            {
+              "binaryPropertyName": "=data"
+            }
+          ]
+        },
+        "options": {
+          "binaryPropertyOutput": "=data"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        2400,
+        1264
+      ],
+      "id": "fe867219-6c73-4255-bb32-7ed8f10cabfc",
+      "name": "Edit an image",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "pt0DkMuoiCsMD6Xm",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "={{ $('FIND_SKU_MODEL').item.json.sku_extracted }}",
+        "driveId": {
+          "__rl": true,
+          "value": "=https://drive.google.com/drive/folders/17eqvbw0Yy6Vvir41QgxukTs981kRQgIc",
+          "mode": "url"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "=https://drive.google.com/drive/folders/1FIzuuvFV0CH8OG3u5ahfUgTB8FkaCmie",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4688,
+        944
+      ],
+      "id": "7b3210fa-1c23-434f-8289-14595fa655ba",
+      "name": "Create folder",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tVURFnlOcOQuwRI4",
+          "name": "Google Drive account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const info = $input.item.json.original;\n\n// On récupère les infos\n$input.item.json = {\n  fileId: info.fileId,\n  fileName: info.fileName,\n  mimeType: info.mimeType,\n  folderId: info.folderId\n};\n\n// On renvoie l'item complet (qui contient maintenant le JSON simplifié ET le binaire)\nreturn $input.item;\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        960,
+        928
+      ],
+      "id": "46466fe2-1f43-4de0-aa58-50fa6fdb2204",
+      "name": "Conserver_infos",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "=https://www.googleapis.com/drive/v3/files/{{ $json.folderId }}?fields=name&supportsAllDrives=true",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2176,
+        1504
+      ],
+      "id": "716174ba-235f-4af5-8b9e-d10e0e247d80",
+      "name": "Get_Folder_Name",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "L0XtXKdv6jILumlS",
+          "name": "Google Drive account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// 1. Récupération des données\nconst item = $input.item.json;\nconst image = $input.item.binary.data;\n\n// 2. Extraction du SKU\nconst folderName = item.folderName || \"\";\nconst skuMatch = folderName.match(/EKS\\d+/);\nconst extractedSku = skuMatch ? skuMatch[0] : \"SKU-INCONNU\";\n\n// 3. Récupération de Magento\nconst magentoItems = $('GET_MAGENTO_PRODUCTS').all();\nconst product = magentoItems.find(p => p.json.sku === extractedSku);\n\n// Préparation des variables par défaut\nlet brand = \"specialized\";\nlet model = \"modele-inconnu\";\nlet suffix = extractedSku.slice(-4);\nlet millesime = \"2026\";\nlet errorMsg = null;\n\nconst slugify = (str) => {\n    return str.toLowerCase()\n              .normalize(\"NFD\").replace(/[\\u0300-\\u036f]/g, \"\")\n              .replace(/[^a-z0-9]/g, '-')\n              .replace(/-+/g, '-')\n              .replace(/^-|-$/g, '');\n};\n\nif (product) {\n    brand = slugify(product.json.ekstere_brand || \"marque\");\n    model = slugify(product.json.ekstere_model || \"modele\");\n    millesime = slugify(product.json.ekstere_year || \"2026\");\n} else {\n    errorMsg = \"SKU non trouvé dans Magento\";\n}\n\n// FIX de l'index : n8n utilise $input.item.index dans ce mode\nconst photoIndex = ($input.item.index || 0) + 1;\n\nconst extension = (item.fileName || \"image.jpg\").split('.').pop();\nconst finalFileName = `ekstere-${brand}-${model}-${suffix}-${photoIndex}.${extension}`;\n\n// On renvoie TOUJOURS sku_extracted\nreturn {\n  json: {\n    ...item,\n    sku_extracted: extractedSku, // Maintenant il sera toujours là\n    brand: product ? product.json.ekstere_brand : null,\n    model: product ? product.json.ekstere_model : null,\n    millesime: product ? product.json.ekstere_year : null,\n    newFileName: finalFileName,\n    error: errorMsg\n  },\n  binary: {\n    data: image,\n    fileName: finalFileName \n  }\n};\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*// 1. Récupération des données d'entrée (Image + Infos fusionnées par le Merge)\nconst item = $input.item.json;\nconst image = $input.item.binary.data;\n\n// 2. Extraction du SKU depuis le nom du dossier (ex: \"Photo_2025_EKS00004889\")\n// On cherche \"EKS\" suivi de chiffres\nconst folderName = item.folderName || \"\";\nconst skuMatch = folderName.match(/EKS\\d+/);\nconst extractedSku = skuMatch ? skuMatch[0] : null;\n\nif (!extractedSku) {\n    throw new Error(`Impossible d'extraire un SKU du dossier : ${folderName}`);\n}\n\n// 3. Récupération de la liste des produits Magento (nœud GET_MAGENTO_PRODUCTS)\n// On récupère TOUS les produits pour trouver celui qui correspond\nconst magentoItems = $('GET_MAGENTO_PRODUCTS').all();\nconst product = magentoItems.find(p => p.json.sku === extractedSku);\n\nif (!product) {\n    // Si le produit n'existe pas dans Magento, on garde un nom par défaut pour ne pas bloquer\n    return {\n        json: { ...item, error: \"SKU non trouvé dans Magento\" },\n        binary: { data: image }\n    };\n}\n\n// 4. Préparation des variables pour le nom (ekstere-brand-model-suffix-index)\n// Fonction pour nettoyer les noms (minuscules, remplace espaces par tirets, vire les caractères spéciaux)\nconst slugify = (str) => {\n    return str.toLowerCase()\n              .normalize(\"NFD\").replace(/[\\u0300-\\u036f]/g, \"\") // Enlève les accents\n              .replace(/[^a-z0-9]/g, '-') // Remplace tout ce qui n'est pas lettre/chiffre par -\n              .replace(/-+/g, '-') // Évite les doubles tirets --\n              .replace(/^-|-$/g, ''); // Enlève les tirets au début ou à la fin\n};\n\nconst brand = slugify(product.json.ekstere_brand || \"marque\");\nconst model = slugify(product.json.ekstere_model || \"modele\");\nconst suffix = extractedSku.slice(-4); // Récupère les 4 derniers caractères (ex: 4889)\nconst photoIndex = $input.item.index + 1; // n° de la photo (1, 2, 3...)\n\n// 5. Construction du nom final\nconst extension = item.fileName.split('.').pop(); // Récupère l'extension d'origine (.jpg, .png...)\nconst finalFileName = `ekstere-${brand}-${model}-${suffix}-${photoIndex}.${extension}`;\n\nreturn {\n  json: {\n    ...item,\n    sku_extracted: extractedSku,\n    brand: product.json.ekstere_brand,\n    model: product.json.ekstere_model,\n    newFileName: finalFileName // On stocke le nouveau nom ici\n  },\n  binary: {\n    data: image,\n    fileName: finalFileName // On renomme officiellement le fichier binaire\n  }\n};*/"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1648,
+        928
+      ],
+      "id": "22465ac1-a6ce-4d81-94e6-e61e9d545213",
+      "name": "FIND_SKU_MODEL",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Merge1').item.json.newFileName }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        5456,
+        864
+      ],
+      "id": "ca2e4633-8bfe-4e5c-a96d-29854100b2d9",
+      "name": "Upload file1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tVURFnlOcOQuwRI4",
+          "name": "Google Drive account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "sku_extracted",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        4000,
+        944
+      ],
+      "id": "3d78535d-89d9-4e76-95de-3bdc480bc781",
+      "name": "Remove Duplicates",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "advanced": true,
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "sku_extracted",
+              "field2": "name"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        4816,
+        688
+      ],
+      "id": "c6c88e65-4d48-4890-9c1c-abebeb135ca9",
+      "name": "Merge1",
+      "alwaysOutputData": false,
+      "executeOnce": false,
+      "retryOnFail": false,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const item = $input.item;\n\nconst original = item.json.original || {};\nconst folderName = item.json.name;\n\nreturn {\n  json: {\n    fileId: item,\n    fileName: original.fileName,\n    mimeType: original.mimeType,\n    folderId: item.json.id,\n    folderName,\n  },\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2288,
+        1376
+      ],
+      "id": "93d7ed4a-a064-4c2b-a39b-9e25f0bcdad9",
+      "name": "Extract_folder_infos",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Tout est déjà dans $input.item.json grâce au nœud Merge !\nconst info = $input.item.json;\nconst image = $input.item.binary.data;\n\nreturn {\n  json: {\n    fileId: info.fileId,\n    fileName: info.fileName,\n    folderId: info.folderId,\n    folderName: info.name, // Le nom vient du noeud HTTP\n    status: \"terminé\"\n  },\n  binary: {\n    data: image\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1296,
+        928
+      ],
+      "id": "fd4c26d5-404d-484d-a1de-d99ca40817a9",
+      "name": "Match_file_and_folder",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "='{{ $json.id }}' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
+            },
+            {},
+            {
+              "name": "supportsAllDrives",
+              "value": "true"
+            },
+            {
+              "name": "includeItemsFromAllDrives",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1136,
+        -592
+      ],
+      "id": "f3423fd7-73ad-47a8-b290-4d3eb3dc01b5",
+      "name": "Get_EKS_Folders",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "L0XtXKdv6jILumlS",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "33098d40-1b66-4d0c-a45f-3804ae04140b",
+              "leftValue": "={{ $json.files[0].name }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1088,
+        1808
+      ],
+      "id": "16faf1d2-ce35-48c5-9db0-d568d6a77a79",
+      "name": "If1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "advanced": true,
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "sku_extracted",
+              "field2": "name"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1632,
+        1808
+      ],
+      "id": "7c0a9b99-03a4-4a49-90c6-4b3a7df47456",
+      "name": "Merge2",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"name\": \"final_folder_id\",\n  \"value\": \"{{ $json.id || $json.files[0].id }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2240,
+        1840
+      ],
+      "id": "4a44554a-7cfb-45d2-9d79-8fa15b6880c1",
+      "name": "Edit Fields",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "='1FIzuuvFV0CH8OG3u5ahfUgTB8FkaCmie' in parents and name = '{{ $json.sku_extracted }}' and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
+            },
+            {
+              "name": "supportsAllDrives",
+              "value": "true"
+            },
+            {
+              "name": "includeItemsFromAllDrives",
+              "value": "true"
+            },
+            {
+              "name": "fields",
+              "value": "files(id, name)"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        4304,
+        944
+      ],
+      "id": "dc63c1cf-a4f0-4965-84fd-7e44825c1016",
+      "name": "FIND_FOLDER",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tVURFnlOcOQuwRI4",
+          "name": "Google Drive account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "files",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        -2032
+      ],
+      "id": "728bd209-2310-45e1-82bb-199b5960b176",
+      "name": "Split_EKS",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "files",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -1344,
+        -464
+      ],
+      "id": "6e06ca15-6cea-4384-91ea-7341574eb9e0",
+      "name": "Split_Folder"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        2624,
+        1168
+      ],
+      "id": "a0200bc8-0e2c-4aaf-a7bc-e33b91b87526",
+      "name": "Remove Duplicates1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://www.googleapis.com/drive/v3/files/{{ $('FIND_SKU_MODEL').item.json.fileId.json.folderId }}?addParents=1eUZxPGscbB-FWI6xDQJEBXSdLkDP0Xtc&removeParents={{ $('Split_Folder').item.json.id }}&supportsAllDrives=true",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "supportsAllDrives",
+              "value": "true"
+            },
+            {
+              "name": "includeItemsFromAllDrives",
+              "value": "true"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2848,
+        1168
+      ],
+      "id": "47e3a00b-e70c-4f83-9747-5d5b6f8c8f7d",
+      "name": "HTTP Request",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tVURFnlOcOQuwRI4",
+          "name": "Google Drive account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "edit",
+        "prompt": "Tu es un photographe professionnel de vélos haut de gamme pour catalogue e-commerce Trek/Scott.\n\nTA MISSION EXACTE (ne change rien d'autre) :\n1. Fond 100% BLANC pur (#FFFFFF), éclairage studio pro centré sur le vélo\n2. Planche bois claire uniforme en bas (texture chêne clair, éclairée naturellement)\n3. Résolution 2K premium (2048x2048 minimum), netteté maximale, zéro flou\n4. Tous les détails du vélo hyper-nets : câbles, logos, rayures, reflets métal, pneus, suspensions\n5. Orientation IDENTIQUE à l'original (ne tourne PAS le vélo)\n6. Aspect \"shooting pro\" : éclairage doux blanc, ombres réalistes légères, rendu luxueux qui donne envie d'acheter\n7. Pas de déformation, pas de changement de proportions\n\nL'image finale doit ressembler à une photo pro prise en studio avec Canon EOS R5 + éclairage pro.",
+        "images": {
+          "values": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        2480,
+        576
+      ],
+      "id": "471eb20c-ab86-462d-a319-c0cb6a0142db",
+      "name": "Edit image",
+      "credentials": {
+        "openAiApi": {
+          "id": "32WdHhHsqLWHn8BM",
+          "name": "OpenAi_ekstere"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "multiStep",
+        "operations": {
+          "operations": [
+            {
+              "operation": "resize",
+              "width": 1700,
+              "height": 1100
+            }
+          ]
+        },
+        "options": {
+          "format": "png",
+          "quality": 100
+        }
+      },
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        2752,
+        1360
+      ],
+      "id": "bbb03bfc-1311-4b6a-b870-b04ef3007c18",
+      "name": "Edit Image",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "name",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        5616,
+        992
+      ],
+      "id": "04b3a53c-3817-4395-a7b8-3578845cab3c",
+      "name": "Remove Duplicates2",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -2848,
+        -480
+      ],
+      "id": "35e74bfe-7549-4295-a2e4-49612ac33a3a",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1qArYVDtdDK6d5s2DpgAvpfr2UAaX6XpNUepUwtkvTA0",
+          "mode": "list",
+          "cachedResultName": "Dossiers_photo_n8n",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1qArYVDtdDK6d5s2DpgAvpfr2UAaX6XpNUepUwtkvTA0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 123814419,
+          "mode": "list",
+          "cachedResultName": "Alerte process",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1qArYVDtdDK6d5s2DpgAvpfr2UAaX6XpNUepUwtkvTA0/edit#gid=123814419"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -848,
+        -784
+      ],
+      "id": "98a31cfb-f8e5-401c-9779-8b43196ca727",
+      "name": "Get_Processed_Folders",
+      "alwaysOutputData": false,
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7JAwvDgccaa2DtIC",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b18c5d69-d0af-46f1-9f21-7959d309f4db",
+              "leftValue": "={{ $json.files.length }}",
+              "rightValue": "=0",
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1136,
+        -112
+      ],
+      "id": "18cc640d-d641-4f49-b4d1-bec0b7863658",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "spaceId": "spaces/AAQAfW3eNKE",
+        "messageUi": {
+          "text": "=\"Nouvelles photos prêtes à être ajoutées à l'annonce. \nSKU : [{{ $('Merge1').item.json.sku_extracted }}]\nVélo : [{{ $('Merge1').item.json.brand }}] \nModel: [{{ $('Merge1').item.json.model }}] -\nMillesime: [{{ $('Merge1').item.json.millesime }}]  \nDossier : https://drive.google.com/drive/folders/{{ $('Merge1').item.json.id }}\""
+        },
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleChat",
+      "typeVersion": 1,
+      "position": [
+        4048,
+        416
+      ],
+      "id": "50e6cc6a-9bab-4b5e-a23a-79b83942514c",
+      "name": "Create a message",
+      "webhookId": "765c341c-573e-4ebb-bc34-e5540da55b36",
+      "credentials": {
+        "googleApi": {
+          "id": "76LsKuYVxJDonzoi",
+          "name": "Google - ekstere - Service account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "spaceId": "spaces/AAQAfW3eNKE",
+        "messageUi": {
+          "text": "=\"Nouvelles photos prêtes à être ajoutées à l'annonce.  SKU : [{{ $('Merge1').item.json.sku_extracted }}] Vélo : [{{ $('Merge1').item.json.brand }}]  Model: [{{ $('Merge1').item.json.model }}] - Millesime: [{{ $('Merge1').item.json.millesime }}]   Dossier : https://drive.google.com/drive/folders/{{ $('Merge1').item.json.id }}\""
+        },
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleChat",
+      "typeVersion": 1,
+      "position": [
+        6176,
+        1072
+      ],
+      "id": "102dc624-1119-4106-87f4-5d9bb8938aa8",
+      "name": "Create a message1",
+      "webhookId": "eb3b28f9-897f-4869-bb67-73127f6864f0",
+      "credentials": {
+        "googleApi": {
+          "id": "76LsKuYVxJDonzoi",
+          "name": "Google - ekstere - Service account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "space",
+        "operation": "getAll",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.googleChat",
+      "typeVersion": 1,
+      "position": [
+        6384,
+        1072
+      ],
+      "id": "af3345d4-739e-403c-96b5-95877309241a",
+      "name": "Get many spaces",
+      "webhookId": "11006da1-79bd-4d12-8eb6-e20d7e181e0b",
+      "credentials": {
+        "googleApi": {
+          "id": "76LsKuYVxJDonzoi",
+          "name": "Google - ekstere - Service account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Récupère les dossiers déjà traités depuis le Google Sheet\nconst sheetItems = $items(\"Get_Processed_Folders\", 0);\nconst processedNames = sheetItems\n  .map(i => i.json.Dossiers?.trim().toLowerCase())\n  .filter(v => v && v.length > 0);\n\n// Récupère les dossiers depuis Google Drive\nconst driveItems = $items(\"Split_out_destination\", 0);\nconst newFolders = driveItems.filter(i => {\n  const name = (i.json.name || \"\").trim().toLowerCase();\n  return name && !processedNames.includes(name);\n});\n\n// Retourne uniquement les nouveaux dossiers\nreturn newFolders.map(i => ({\n  json: {\n    name: i.json.name,\n    id: i.json.id\n  }\n}));\n\n\n\n// Récupère TOUS les items du Google Sheet (toutes les lignes)\n/*const allItems = $input.all();\n\n// Extrait les valeurs de la colonne A (adapte \"A\" si ta colonne s'appelle différemment)\nconst dossiersList = allItems\n  .map(item => item.json.Dossiers?.trim())  // Remplace \"A\" par ta vraie clé colonne\n  .filter(value => value && value.length > 0);  // Ignore les vides\n\nconsole.log(\"Dossiers:\", dossiersList);  // Debug\n\nreturn [{\n  json: {\n    dossiersList: dossiersList.flat(),\n    //dossiersCount: dossiersList.length,\n    //dossiersJoined: dossiersList.join(' ')\n  }\n}];\n*/"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2032,
+        -64
+      ],
+      "id": "12d88ea8-a6a1-4d73-8c70-299749cd6743",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "resource": "member",
+        "operation": "getAll",
+        "spaceId": "spaces/AAQAfW3eNKE",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.googleChat",
+      "typeVersion": 1,
+      "position": [
+        6592,
+        1072
+      ],
+      "id": "6c462262-ae7d-4ae9-8c9c-170c479ca662",
+      "name": "Get many members",
+      "webhookId": "b7cf429c-194b-4680-ae7d-005dc5f8982b",
+      "credentials": {
+        "googleApi": {
+          "id": "76LsKuYVxJDonzoi",
+          "name": "Google - ekstere - Service account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "messageId": "spaces/AAQAfW3eNKE/messages/104123742441459127004"
+      },
+      "type": "n8n-nodes-base.googleChat",
+      "typeVersion": 1,
+      "position": [
+        6800,
+        1072
+      ],
+      "id": "d742cfe9-6f7d-4e87-ae26-1e291cfad4fa",
+      "name": "Get a message1",
+      "webhookId": "e33590bc-5146-473d-ba4a-ad9895a13a9d",
+      "credentials": {
+        "googleApi": {
+          "id": "76LsKuYVxJDonzoi",
+          "name": "Google - ekstere - Service account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1qArYVDtdDK6d5s2DpgAvpfr2UAaX6XpNUepUwtkvTA0",
+          "mode": "list",
+          "cachedResultName": "Dossiers_photo_n8n",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1qArYVDtdDK6d5s2DpgAvpfr2UAaX6XpNUepUwtkvTA0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Feuille 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1qArYVDtdDK6d5s2DpgAvpfr2UAaX6XpNUepUwtkvTA0/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Modèle": "={{ $json.name }}",
+            "Date": "={{ $now}}",
+            "Dossier parent": "= https://drive.google.com/drive/folders/{{ $json.parents[0] }}",
+            "Dossiers": "={{ $('Merge1').item.json.folderName }}"
+          },
+          "matchingColumns": [
+            "Dossiers"
+          ],
+          "schema": [
+            {
+              "id": "Dossiers",
+              "displayName": "Dossiers",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Dossier parent",
+              "displayName": "Dossier parent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modèle",
+              "displayName": "Modèle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        5952,
+        1072
+      ],
+      "id": "e67cae20-8dfd-4c0e-bdc2-dd89071b7d08",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7JAwvDgccaa2DtIC",
+          "name": "Google Sheets account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "=https://chat.googleapis.com/v1/spaces/AAQAfW3eNKE/messages?pageSize=1&orderBy=createTime DESC",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleApi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        7024,
+        1104
+      ],
+      "id": "15398d17-24fe-438b-90ef-c98b8d13e9ad",
+      "name": "HTTP Request3",
+      "credentials": {
+        "googleChatOAuth2Api": {
+          "id": "eImQn0v8LTxcuV4y",
+          "name": "Chat account 2"
+        },
+        "googleApi": {
+          "id": "76LsKuYVxJDonzoi",
+          "name": "Google - ekstere - Service account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1776,
+        1232
+      ],
+      "id": "21e48476-9e88-49bb-8ab1-2816017f1dc7",
+      "name": "Loop Over Items",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 3,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        3056,
+        1504
+      ],
+      "id": "8a46fb97-3934-4a6a-96f1-b556dbd13c5b",
+      "name": "Merge_infos",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "files",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -912,
+        -592
+      ],
+      "id": "441aa6d7-6e37-48aa-bd27-6c69c93e88b1",
+      "name": "Split_out_sources_folders"
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "='1FIzuuvFV0CH8OG3u5ahfUgTB8FkaCmie' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
+            },
+            {
+              "name": "fields",
+              "value": "files(id,name,mimeType)"
+            },
+            {
+              "name": "supportsAllDrives",
+              "value": "true"
+            },
+            {
+              "name": "includeItemsFromAllDrives",
+              "value": "true"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -3376,
+        944
+      ],
+      "id": "55e67c9b-b4f6-46a2-9428-10e12bdd731d",
+      "name": "GET_Destination_SUBFOLDERS",
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "L0XtXKdv6jILumlS",
+          "name": "Google Drive account"
+        }
+      },
+      "disabled": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "files",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -3152,
+        944
+      ],
+      "id": "210043bf-297d-45de-9587-e32567acd114",
+      "name": "Split_out_destination",
+      "alwaysOutputData": true,
+      "disabled": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Récupère les dossiers déjà traités depuis le Google Sheet\nconst sheetItems = $items(\"Get_Processed_Folders\", 0);\nconst processedNames = sheetItems\n  .map(i => i.json.Modele?.trim().toLowerCase())\n  .filter(v => v && v.length > 0);\n\n// Récupère les dossiers depuis Google Drive\nconst driveItems = $items(\"Split_out_sources_folders\", 0);\nconst newFolders = driveItems.filter(i => {\n  const name = (i.json.name || \"\").trim().toLowerCase();\n  return name && !processedNames.includes(name);\n});\n\n// Retourne uniquement les nouveaux dossiers\nreturn newFolders.map(i => ({\n  json: {\n    name: i.json.name,\n    id: i.json.id\n  }\n}));\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/**\n// 1. Récupérer tous les dossiers du Dossier Source (ceux qui arrivent dans ce nœud)\nconst sourceItems = $input.all();\n\n// 2. Récupérer TOUS les dossiers déjà traités depuis ton autre nœud Split Out\n// REMPLACE 'Split_Out_Destination' par le nom EXACT de ton nœud qui liste les dossiers traités\nconst processedItems = $('Split_out_destination').all();\n\n// 3. Créer une liste (Set) des noms déjà traités pour une recherche ultra-rapide\n// On utilise .trim() et .toUpperCase() pour éviter les erreurs de frappe/casse\nconst processedNames = new Set(\n  processedItems.map(item => item.json.name)\n);\n\n// 4. Filtrer : on ne garde que les dossiers sources dont le nom n'est PAS dans processedNames\nconst itemsToProcess = sourceItems.filter(item => {\n  const folderName = item.json.name.trim().toUpperCase();\n  return !processedNames.has(folderName);\n});\n\n// 5. Retourner la liste finale des dossiers à traiter\nreturn itemsToProcess;**/"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -496,
+        -2032
+      ],
+      "id": "83c81fdd-fb08-4f46-836d-c8901885b2c0",
+      "name": "Code in JavaScript1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://sdk.photoroom.com/v1/segment",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "image_file",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "background_color",
+              "value": "ffffff"
+            },
+            {
+              "name": "shadow_enabled",
+              "value": "true"
+            },
+            {
+              "name": "format",
+              "value": "jpg"
+            },
+            {
+              "name": "brightness",
+              "value": "6"
+            },
+            {
+              "name": "padding",
+              "value": "0.1"
+            },
+            {
+              "name": "beautify.mode",
+              "value": "ai.auto"
+            },
+            {
+              "name": "scaling",
+              "value": "0.9"
+            },
+            {
+              "name": "shadow.mode",
+              "value": "ai.soft"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2096,
+        1248
+      ],
+      "id": "9dfbe7d2-a365-4bfe-8eba-e2733ed85d10",
+      "name": "HTTP Request4",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "R3GsQhxZz3cn8I9v",
+          "name": "Header Auth account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "test_photoroom",
+        "driveId": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/folders/17eqvbw0Yy6Vvir41QgxukTs981kRQgIc",
+          "mode": "url",
+          "__regex": "https:\\/\\/drive\\.google\\.com(?:\\/.*|)\\/folders\\/([0-9a-zA-Z\\-_]+)(?:\\/.*|)"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/folders/1FIzuuvFV0CH8OG3u5ahfUgTB8FkaCmie",
+          "mode": "url",
+          "__regex": "https:\\/\\/drive\\.google\\.com(?:\\/.*|)\\/folders\\/([0-9a-zA-Z\\-_]+)(?:\\/.*|)"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1264,
+        1392
+      ],
+      "id": "363a546c-5513-4342-96e4-e61704093f2e",
+      "name": "Create folder1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tVURFnlOcOQuwRI4",
+          "name": "Google Drive account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "name": "test_photoroom",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1U4lfmD248YKhBLzpUwcwhNasSQOTkwdG",
+          "mode": "list",
+          "cachedResultName": "SHOOTING PHOTO ATELIER",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1U4lfmD248YKhBLzpUwcwhNasSQOTkwdG"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1440,
+        1376
+      ],
+      "id": "c629afb4-491f-4d0c-a18a-6f1d994aecc4",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tVURFnlOcOQuwRI4",
+          "name": "Google Drive account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "information"
+      },
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        112,
+        1600
+      ],
+      "id": "b4e0087c-d958-4bc9-9629-1ce52039b6b9",
+      "name": "Edit Image1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "text": "Get contrast and ",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        976,
+        1232
+      ],
+      "id": "846329e5-d37c-483e-9980-dece519d0fe2",
+      "name": "Analyze an image",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "xlJHR2vquKNzOD5w",
+          "name": "my_gemini_key"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// On récupère la moyenne (Mean) de la luminosité (ici sur le canal Red pour l'exemple)\nconst mean = $json[\"Channel Statistics\"].Red.Mean.match(/\\(([^)]+)\\)/)[1]; // Extrait 0.6444\nconst stdDev = $json[\"Channel Statistics\"].Red[\"Standard Deviation\"].match(/\\(([^)]+)\\)/)[1]; // Extrait l'écart-type\n\nlet brightnessBoost = 100; // 100 = pas de changement\nlet contrastCommand = \"\";\n\n// LOGIQUE LUMINOSITÉ (On veut atteindre 0.75)\nif (mean < 0.70) {\n    // Si trop sombre, on calcule le boost (ex: 0.75 / 0.64 * 100 = 117)\n    brightnessBoost = Math.round((0.75 / mean) * 100);\n}\n\n// LOGIQUE CONTRASTE (On veut au moins 0.22)\nif (stdDev < 0.15) {\n    contrastCommand = \"+contrast +contrast +contrast\"; // Fort boost\n} else if (stdDev < 0.20) {\n    contrastCommand = \"+contrast\"; // Boost léger\n}\n\nreturn {\n    brightnessBoost,\n    contrastCommand,\n    originalMean: mean,\n    originalStdDev: stdDev\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        1568
+      ],
+      "id": "3d30715e-0ea9-4abe-a248-edd4266d9020",
+      "name": "Code in JavaScript2",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://172.17.0.1:8000/process-image",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "image_file",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "brightness",
+              "value": "1.2"
+            },
+            {
+              "name": "contrast",
+              "value": "2"
+            },
+            {
+              "name": "sharpen ",
+              "value": "1.5"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        528,
+        1424
+      ],
+      "id": "33aa4403-ad4f-4ae4-9412-8f8a95f3c16b",
+      "name": "HTTP Request5",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "spaceId": "spaces/AAQAfW3eNKE",
+        "messageUi": {
+          "text": "=\"Nouvelles photos à traiter:\nSKU : {{ $json.sku_extracted }}\nNom dossier:  {{ $json.folder_original_name }}\nlien dossier: https://drive.google.com/drive/folders/{{ $json.original_item_info.files[0].parents[0] }}\n\""
+        },
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleChat",
+      "typeVersion": 1,
+      "position": [
+        576,
+        -208
+      ],
+      "id": "43cf10da-81cb-4458-93a3-fae737ad058c",
+      "name": "Photo_edit_message",
+      "webhookId": "eb3b28f9-897f-4869-bb67-73127f6864f0",
+      "credentials": {
+        "googleApi": {
+          "id": "76LsKuYVxJDonzoi",
+          "name": "Google - ekstere - Service account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -208,
+        -128
+      ],
+      "id": "9c680555-c1cb-4866-904f-5b05218118a7",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Récupération des infos de l'item actuel (JSON uniquement)\nconst item = $input.item.json;\n\n// 2. Récupération du nom du dossier parent (Ex: \"EKS00005144 - Blanchi Oltre\")\n// On pointe vers le nœud ancêtre qui contient le nom du dossier\nconst folderName = $('Split_out_sources_folders').item.json.name || \"\";\n\n// 3. Extraction des 11 premiers caractères (Le SKU)\nconst extractedSku = folderName.substring(0, 11);\n\n// 4. Récupération de TOUS les produits Magento pour trouver le match\nconst magentoItems = $('GET_MAGENTO_PRODUCTS').all();\nconst product = magentoItems.find(p => p.json.sku === extractedSku);\n\n// 5. Préparation des variables\nlet brand = \"inconnue\";\nlet model = \"modele-inconnu\";\nlet millesime = \"2026\";\nlet errorMsg = null;\n\nif (product) {\n    brand = product.json.ekstere_brand || \"marque\";\n    model = product.json.ekstere_model || \"modele\";\n    millesime = product.json.ekstere_year || \"2026\";\n} else {\n    errorMsg = `SKU ${extractedSku} non trouvé dans Magento`;\n}\n\n// 6. Construction d'une suggestion de nom de fichier (slugify léger)\nconst cleanString = (str) => {\n    return str.toLowerCase()\n              .normalize(\"NFD\").replace(/[\\u0300-\\u036f]/g, \"\")\n              .replace(/[^a-z0-9]/g, '-')\n              .replace(/-+/g, '-')\n              .replace(/^-|-$/g, '');\n};\n\nconst photoIndex = ($input.item.index || 0) + 1;\nconst skuSuffix = extractedSku.slice(-4);\nconst finalFileNameBase = `ekstere-${cleanString(brand)}-${cleanString(model)}-${skuSuffix}-${photoIndex}`;\n\n// 7. Retour du résultat\nreturn {\n    sku_extracted: extractedSku,\n    folder_original_name: folderName,\n    brand: brand,\n    model: model,\n    millesime: millesime,\n    suggestedFileName: finalFileNameBase,\n    error: errorMsg,\n    original_item_info: item // On conserve les infos du fichier (id, name drive, etc.)\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        544,
+        16
+      ],
+      "id": "26686317-d08c-4005-a235-8b2574328eab",
+      "name": "Code in JavaScript3"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "sku_extracted",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        96,
+        -208
+      ],
+      "id": "1664dc54-63a1-44e1-983e-d20dc029da51",
+      "name": "Remove Duplicates3"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1qArYVDtdDK6d5s2DpgAvpfr2UAaX6XpNUepUwtkvTA0",
+          "mode": "list",
+          "cachedResultName": "Dossiers_photo_n8n",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1qArYVDtdDK6d5s2DpgAvpfr2UAaX6XpNUepUwtkvTA0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 123814419,
+          "mode": "list",
+          "cachedResultName": "Alerte process",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1qArYVDtdDK6d5s2DpgAvpfr2UAaX6XpNUepUwtkvTA0/edit#gid=123814419"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Dossiers": "={{ $('Remove Duplicates3').item.json.sku_extracted }}",
+            "Date": "={{ $now }}",
+            "Dossier parent": "=https://drive.google.com/drive/folders/{{ $('Remove Duplicates3').item.json.original_item_info.files[0].parents[0] }}",
+            "Modele": "={{ $json.folder_original_name }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Dossiers",
+              "displayName": "Dossiers",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Dossier parent",
+              "displayName": "Dossier parent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modele",
+              "displayName": "Modele",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        816,
+        -208
+      ],
+      "id": "a1ee7721-d3d4-4f10-9e6b-685102bd9d14",
+      "name": "Append row in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7JAwvDgccaa2DtIC",
+          "name": "Google Sheets account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "advanced": true,
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "Dossiers",
+              "field2": "EKS"
+            }
+          ]
+        },
+        "joinMode": "keepNonMatches",
+        "outputDataFrom": "input2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -96,
+        -608
+      ],
+      "id": "ea924b71-79ec-4087-b659-b84f10cd8663",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "KW6riozYJz1LeKah",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/KW6riozYJz1LeKah",
+          "cachedResultName": "Process_annonce"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {
+          "waitForSubWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        1552,
+        -224
+      ],
+      "id": "e7d637bd-0ebe-48eb-9972-a3913a0d8952",
+      "name": "Call 'Process_annonce'"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1040,
+        -240
+      ],
+      "id": "25e2eb3d-2d55-4aaa-8738-563cd4c1b7f7",
+      "name": "Loop Over Items2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "69a058e5-6c4c-46bf-bcef-dfa1825efb9d",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "EKS",
+              "operator": {
+                "type": "string",
+                "operation": "startsWith"
+              }
+            },
+            {
+              "id": "a29cc9cb-166d-4c30-a4cf-3c99d0c9ff6f",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "EKS00000000",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -720,
+        -592
+      ],
+      "id": "75bf410c-c697-4e58-a6b9-90dbcbd3a262",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1680,
+        -720
+      ],
+      "id": "a40eb909-6352-4cf0-8c8e-69efe5a4bdfa",
+      "name": "Wait",
+      "webhookId": "f8f05fa9-e245-476f-a1aa-e0c3975a39d0"
+    },
+    {
+      "parameters": {
+        "url": "=https://ekstere.eco/rest/V1/ad?sku=EKS00002929",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.data }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1536,
+        -64
+      ],
+      "id": "5e1c865e-0c60-4897-9e1c-28fbee02b576",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  kind: \"{{ $json.kind }}\",\n  driveId: \"{{ $json.driveId }}\",\n  mimeType: \"{{ $json.mimeType }}\",\n  id: \"{{ $json.id }}\",\n  name: \"{{ $json.name.replace(\" -\",\"\") }}\",\n  teamDriveId: \"{{ $json.teamDriveId }}\",\n  EKS: \"{{ $json.name.slice(0, 11) }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -496,
+        -592
+      ],
+      "id": "99816838-5d43-4afb-bd56-72f5674ed643",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "amount": 20
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1296,
+        -224
+      ],
+      "id": "dd5c84de-02a1-4d63-925b-c0cd9697398d",
+      "name": "Wait1",
+      "webhookId": "3e25c6e0-7840-45ac-84a6-e5ef2306c8ec"
+    },
+    {
+      "parameters": {
+        "maxItems": 5
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -784,
+        -128
+      ],
+      "id": "a08dfd16-45a4-4628-a724-bf96a04883e4",
+      "name": "Limit",
+      "disabled": true
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "CONNECTION_MAGENTO": {
+      "main": [
+        [
+          {
+            "node": "GET_MAGENTO_PRODUCTS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "_CONFIG": {
+      "main": [
+        [
+          {
+            "node": "CONNECTION_MAGENTO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET_MAGENTO_PRODUCTS": {
+      "main": [
+        [
+          {
+            "node": "GET_DRIVE_SUBFOLDERS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET_DRIVE_SUBFOLDERS": {
+      "main": [
+        [
+          {
+            "node": "Split_Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LIST_IMAGES": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ALL_IMAGES_INFOS": {
+      "main": [
+        [
+          {
+            "node": "Retrieve_file_spec",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve_file_spec": {
+      "main": [
+        [
+          {
+            "node": "Download_file_within_folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download_file_within_folder": {
+      "main": [
+        [
+          {
+            "node": "Conserver_infos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit an image": {
+      "main": [
+        [
+          {
+            "node": "Edit Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create folder": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Conserver_infos": {
+      "main": [
+        [
+          {
+            "node": "Match_file_and_folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_Folder_Name": {
+      "main": [
+        [
+          {
+            "node": "Merge_infos",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "FIND_SKU_MODEL": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload file1": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "FIND_FOLDER",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        []
+      ]
+    },
+    "Extract_folder_infos": {
+      "main": [
+        [
+          {
+            "node": "Merge_infos",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Match_file_and_folder": {
+      "main": [
+        [
+          {
+            "node": "FIND_SKU_MODEL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_EKS_Folders": {
+      "main": [
+        [
+          {
+            "node": "Split_out_sources_folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FIND_FOLDER": {
+      "main": [
+        [
+          {
+            "node": "Create folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split_EKS": {
+      "main": [
+        []
+      ]
+    },
+    "Split_Folder": {
+      "main": [
+        [
+          {
+            "node": "Get_EKS_Folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Image": {
+      "main": [
+        [
+          {
+            "node": "Merge_infos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates2": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "_CONFIG",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_Processed_Folders": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a message1": {
+      "main": [
+        [
+          {
+            "node": "Get many spaces",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many spaces": {
+      "main": [
+        [
+          {
+            "node": "Get many members",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        []
+      ]
+    },
+    "Get many members": {
+      "main": [
+        [
+          {
+            "node": "Get a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a message1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Create a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Extract_folder_infos",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get_Folder_Name",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge_infos": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split_out_sources_folders": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET_Destination_SUBFOLDERS": {
+      "main": [
+        [
+          {
+            "node": "Split_out_destination",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split_out_destination": {
+      "main": [
+        []
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        []
+      ]
+    },
+    "HTTP Request4": {
+      "main": [
+        [
+          {
+            "node": "Edit an image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create folder1": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Image1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code in JavaScript3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Photo_edit_message": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates3": {
+      "main": [
+        [
+          {
+            "node": "Photo_edit_message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "LIST_IMAGES",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Process_annonce'": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get_Processed_Folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Call 'Process_annonce'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "e25ee7ff-5b1c-4a4b-87ae-01ff735d3aca",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "aca6ed7ec8875b2fbca26169c7cd9cbc432770c08b36ede295ebecdc45904a16"
+  },
+  "id": "E1tobf3MXOUu0Dov",
+  "tags": []
+}

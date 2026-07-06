@@ -1,0 +1,2865 @@
+{
+  "name": "Process_annonce",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"username\": \"n8nAgent\",\n  \"password\": \"N8Nagent_N8N2025$\",\n  \"_username\": \"admin\",\n  \"_password\": \"ypnj9uje87LrZ67!!!\",\n  \"url\":\"https://ekstere.eco\",\n  \"api_login_url\":\"/rest/V1/integration\",\n  \"api_url\":\"/rest/V1\",\n  \"endoints\":{\n    \"_adminToken\": \"/admin/token\",\n    \"_categories_GET\":\"/categories\",\n    \"_categories_CREATE\":\"/categories\",\n    \"_categories_UPDATE\":\"/categories\",\n    \"_products_GET\": \"/products\",\n    \"_products_CREATE\": \"/products\",\n    \"_products_UPDATE\": \"/products\",\n    \"_annonce_GET\": \"/ads/validated\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -432,
+        848
+      ],
+      "id": "3785b723-1467-4c04-b6f5-a42375af6df0",
+      "name": "_CONFIG",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG').item.json.url }}{{ $('_CONFIG').item.json.api_url }}{{ $('_CONFIG').item.json.endoints._annonce_GET }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "dateFrom",
+              "value": "={{$now.minus(350, 'days').format('yyyy-MM-dd')}}"
+            },
+            {
+              "name": "dateTo",
+              "value": "={{ $now }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.data }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -432,
+        1088
+      ],
+      "id": "dcd0ac97-6858-4638-8e73-4ced94100baf",
+      "name": "GET_MAGENTO_PRODUCTS",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.is_electric }}",
+                    "rightValue": true,
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "equals"
+                    },
+                    "id": "db090d3b-132f-480a-a87f-e6040c4ccf6f"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "00212b65-5471-4f1c-9f42-78619473e5c1",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "32ce7751-779e-47b3-aff5-1cbcaf5f1394",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "98be5d9c-c930-4ddb-ac4f-ad435d203156",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "23e95682-b768-48ff-8228-7766e3475bcd",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        16,
+        864
+      ],
+      "id": "d8c664b9-6ffe-48f9-b106-ab8b68bcd345",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"dryRun\":true,\n  \"base_url\": \"https://cote-velo.fr\",\n  \"login\": \"erle\",\n  \"password\": \"5LK76879KF\",\n  \"entrypoints\": {\n    \"login\": \"/rest/V1/integration/admin/token\",\n    \"brands\": \"/rest/V1/brands\",\n    \"categories\": \"/rest/V1/categories\",\n    \"models\": \"/rest/V1/models\"\n  },\n  \"params\":{\n    \"brand\": \"{{ $json.query?.brand_name || \"\" }}\",\n    \"model\": \"{{ $json.query?.model_name || \"\" }}\",\n    \"year\": \"{{ $json.query?.model_year || \"\" }}\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -880,
+        848
+      ],
+      "id": "e4849889-1bfb-4d0c-ab53-3d3cbc034ead",
+      "name": "_CONFIG Cote-Velo",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.base_url }}{{ $json.entrypoints.login }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "username",
+              "value": "={{ $json.login }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $json.password }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -672,
+        848
+      ],
+      "id": "90d76db1-2718-4097-b026-15b58c459bf1",
+      "name": "Login token",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"baseUrl\": \"https://ekstere.eco\",\n  \"tokenEndpoint\": \"/rest/V1/integration/admin/token\",\n  \"productsUrl\": \"/rest/V1/products\",\n  \"username\": \"api_magento\",\n  \"password\": \"E28hBaZmdb2K\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3040,
+        -32
+      ],
+      "id": "4c93c878-cd83-41e3-8820-48e3af885a71",
+      "name": "_CONFIG_MAGENTO"
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "='1FIzuuvFV0CH8OG3u5ahfUgTB8FkaCmie' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
+            },
+            {
+              "name": "fields",
+              "value": "files(id,name,mimeType)"
+            },
+            {
+              "name": "supportsAllDrives",
+              "value": "true"
+            },
+            {
+              "name": "includeItemsFromAllDrives",
+              "value": "true"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2528,
+        96
+      ],
+      "id": "66911733-0719-4c06-bb04-ec42be6c21fb",
+      "name": "GET_Destination_SUBFOLDERS",
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "L0XtXKdv6jILumlS",
+          "name": "Google Drive account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "files",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -2336,
+        96
+      ],
+      "id": "6bf7a3fb-94c3-49a0-9af0-f89cfd6faa41",
+      "name": "Split_out_destination",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -2160,
+        96
+      ],
+      "id": "86b81740-fc12-44c3-af2c-c4b3c156ab50",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG_MAGENTO').item.json.baseUrl }}/rest/V1/products/{{ $json.name }}\n",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Get_Token').item.json.token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1952,
+        96
+      ],
+      "id": "9ae7e6af-5017-4665-bdc0-1582d759788a",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Get_categorie').item.json.name }}",
+                    "rightValue": "route",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "2c651ace-32c1-4a3e-8767-2988d46a7efb"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Route"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "a796c9fd-20f1-49e4-aaa1-a4eea683bd02",
+                    "leftValue": "={{ $('Get_categorie').item.json.name }}",
+                    "rightValue": "VTT",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "VTT"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "d0098271-622f-469d-a3a8-0d88ad37ccd3",
+                    "leftValue": "={{ $('Get_categorie').item.json.name }}",
+                    "rightValue": "Cargo",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Cargo"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "790b27c8-a774-4554-9d98-098a223871f3",
+                    "leftValue": "={{ $('Get_categorie').item.json.name }}",
+                    "rightValue": "Gravel",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Gravel"
+            }
+          ]
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        784,
+        48
+      ],
+      "id": "8c949353-c07f-4674-983a-5e4eecbfb4b0",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Vélo de {{ $('Get_categorie').item.json.name }} musculaire, \n\nPour un vélo reconditionné : [catégorie vélo] [électrique], [kilométrage], [millésime], [taille], [taille roues]\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1680,
+        448
+      ],
+      "id": "c7592859-0438-4d86-8367-6059b5760f83",
+      "name": "AI Agent",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1568,
+        576
+      ],
+      "id": "7b3a5b44-0510-4718-a173-b7a4954960fb",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "xlJHR2vquKNzOD5w",
+          "name": "my_gemini_key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "=Tu es un expert vélo, extrait les données demandées du texte:{{ $('HTTP Request2').item.json.custom_attributes[19].value }}\n",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "Catégorie de vélo",
+              "description": "Extrait la catégorie de ce vélo"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        1104,
+        480
+      ],
+      "id": "83b21350-1d70-4881-8978-653b570b4387",
+      "name": "Information Extractor",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1408,
+        512
+      ],
+      "id": "017c08e7-03ec-480a-96cf-5fe8b98259df",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "32WdHhHsqLWHn8BM",
+          "name": "OpenAi_ekstere"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.baseUrl }}{{ $json.tokenEndpoint }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "username",
+              "value": "={{ $json.username }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $json.password }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text",
+              "outputPropertyName": "token"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2864,
+        -32
+      ],
+      "id": "27772b76-6200-4877-9f11-9bd27e2fb217",
+      "name": "Get_Token"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG_MAGENTO').item.json.baseUrl + $('_CONFIG_MAGENTO').item.json.productsUrl + '?searchCriteria[pageSize]=100&searchCriteria[currentPage]=1' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2688,
+        192
+      ],
+      "id": "29b118b2-9621-4f7b-b9cb-9257b7ba7ae8",
+      "name": "Get_velos"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG_MAGENTO').item.json.baseUrl }}/rest/V1/categories/{{ $('HTTP Request2').item.json.extension_attributes.category_links[1].category_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Get_Token').item.json.token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1568,
+        96
+      ],
+      "id": "39791a1c-1899-4ef1-b4b4-cf431b452d5c",
+      "name": "Get_categorie"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('HTTP Request2').item.json.custom_attributes[28].value }}",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "4c285a0f-a39e-45c7-9e3f-20332ec47962"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Reconditionné"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "8d978678-a2be-4893-a0c1-51736b5d30eb",
+                    "leftValue": "={{ $('HTTP Request2').item.json.custom_attributes[28].value }}",
+                    "rightValue": "0",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "New"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        1104,
+        16
+      ],
+      "id": "9088eeb1-5694-4fa2-8d1a-8191b32fa951",
+      "name": "Switch2"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('HTTP Request2').item.json.custom_attributes[28].value }}",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "4c285a0f-a39e-45c7-9e3f-20332ec47962"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Reconditionné"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "8d978678-a2be-4893-a0c1-51736b5d30eb",
+                    "leftValue": "={{ $('HTTP Request2').item.json.custom_attributes[28].value }}",
+                    "rightValue": "0",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "New"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        1152,
+        208
+      ],
+      "id": "6da9d566-284a-49ea-976c-bfe6831bc325",
+      "name": "Switch3"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG_MAGENTO').item.json.baseUrl }}/rest/V1/categories/{{ $('HTTP Request2').item.json.extension_attributes.category_links[0].category_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Get_Token').item.json.token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1360,
+        96
+      ],
+      "id": "dfe6ea45-3ccd-4347-a05f-f15bbaaa57eb",
+      "name": "Get_elec"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Récupération des attributs du produit\nconst attributes = $json.custom_attributes || [];\n\n// 2. Dictionnaires complets basés sur vos captures d'écran\nconst mapping = {\n  frame_size: {\n    // Tailles standards\n    \"10150\": \"Taille unique\", \"10034\": \"TU\", \"8196\": \"XXS\", \"24\": \"XS\", \"8483\": \"S\", \n    \"26\": \"M\", \"27\": \"L\", \"28\": \"XL\", \"29\": \"XXL\",\n    // Tailles en cm\n    \"9621\": \"33cm\", \"9622\": \"34cm\", \"9623\": \"35cm\", \"9624\": \"36cm\", \"8197\": \"37cm\", \n    \"9582\": \"38cm\", \"9583\": \"39cm\", \"9579\": \"40cm\", \"9580\": \"41cm\", \"9581\": \"42cm\", \n    \"9610\": \"43cm\", \"8199\": \"44cm\", \"8201\": \"45cm\", \"8202\": \"46cm\", \"8203\": \"47cm\", \n    \"8204\": \"48cm\", \"9589\": \"49cm\", \"9625\": \"50cm\", \"8206\": \"51cm\", \"8207\": \"52cm\", \n    \"9597\": \"53cm\", \"9626\": \"54cm\", \"8219\": \"55cm\", \"8222\": \"56cm\", \"9598\": \"57cm\", \n    \"9599\": \"58cm\", \"9600\": \"59cm\", \"9601\": \"60cm\", \"9602\": \"61cm\", \"9603\": \"62cm\", \n    \"8208\": \"63cm\",\n    // Tailles en pouces (\")\n    \"9611\": \"10\\\"\", \"9612\": \"12\\\"\", \"8217\": \"13\\\"\", \"8218\": \"14\\\"\", \"8220\": \"15\\\"\", \n    \"8221\": \"16\\\"\", \"8223\": \"17\\\"\", \"8224\": \"18\\\"\", \"8209\": \"19\\\"\", \"8210\": \"20\\\"\", \n    \"9604\": \"21\\\"\", \"9605\": \"22\\\"\", \"9617\": \"24\\\"\", \"9618\": \"26\\\"\",\n    // BMX / Spécifiques\n    \"8228\": \"Mini (43-45cm)\", \"8229\": \"Junior (45-48cm)\", \"8230\": \"Expert (48-50cm)\", \n    \"8231\": \"Pro (50-52cm)\", \"8232\": \"Pro XL (53cm)\", \"8233\": \"Pro XXL (+53cm)\", \n    \"8234\": \"Unique\", \"8467\": \"Enfant\"\n  },\n  frame_material: {\n    \"42\": \"Carbone\", \"7521\": \"Aluminium\", \"7734\": \"Aluminium/Carbone\", \"43\": \"Titane\", \n    \"7458\": \"Chromoly\", \"41\": \"Acier\", \"8238\": \"Autre\"\n  },\n  wheel_size: {\n    \"9572\": \"10\\\"\", \"9627\": \"16\\\"\", \"9650\": \"21\\\"\", \"9649\": \"22\\\"\", \"9659\": \"25\\\"\", \n    \"9628\": \"27,5\\\"\", \"9917\": \"27,5\\\" (S)\", \"9648\": \"28\\\"\", \"9629\": \"28\\\"(700C)\", \n    \"9918\": \"29\\\" (M, L, XL)\", \"8239\": \"12\\\"\", \"7453\": \"14\\\"\", \"7335\": \"16\\\"\", \n    \"7333\": \"18\\\"\", \"30\": \"20\\\"\", \"31\": \"24\\\"\", \"32\": \"26\\\"\", \"8264\": \"27,5\\\"(650B)\", \n    \"7356\": \"27,5\\\"+\", \"8263\": \"28\\\"(700C)\", \"35\": \"29\\\"\", \"9507\": \"29\\\"/27,5\\\"\", \"7733\": \"Autre\"\n  },\n  wheel_material: {\n    \"5535\": \"Aluminium\", \"5536\": \"Carbone\", \"8194\": \"Autre\"\n  },\n  shock_absorber: {\n    \"37\": \"Semi-rigide (avant)\", \n    \"38\": \"Tout suspendu (avant & arrière)\", \n    \"39\": \"Pas de suspension\"\n  }\n};\n\n// 3. Fonction utilitaire pour extraire la valeur\nconst getVal = (code, dict) => {\n  const attr = attributes.find(a => a.attribute_code === code);\n  if (!attr) return null;\n  const val = String(attr.value);\n  return dict[val] || val; // Retourne le label, ou l'ID si pas trouvé\n};\n\n// 4. Construction de l'objet de sortie\nreturn {\n  sku: $json.sku,\n  name: $json.name,\n  prix: $json.price,\n  // Application du mapping\n  taille_cadre: getVal('ekstere_frame_size', mapping.frame_size),\n  matiere_cadre: getVal('ekstere_frame_material', mapping.frame_material),\n  taille_roues: getVal('ekstere_wheel_size', mapping.wheel_size),\n  matiere_jantes: getVal('ekstere_wheel_material', mapping.wheel_material),\n  type_suspension: getVal('ekstere_shock_absorber', mapping.shock_absorber),\n  // Flags simples\n  is_reconditionne: attributes.find(a => a.attribute_code === 'ekstere_is_reconditioned')?.value === \"1\" ? \"Oui\" : \"Non\",\n  is_new: attributes.find(a => a.attribute_code === 'ekstere_is_new')?.value === \"1\" ? \"Oui\" : \"Non\"\n};\n\n\n\n\n\n\n/**\n\n// On récupère le tableau des attributs personnalisés\nconst attributes = $json.custom_attributes;\n\n// Fonction pour extraire une valeur par son code\nconst getVal = (code) => {\n  const attr = attributes.find(a => a.attribute_code === code);\n  return attr ? attr.value : null;\n};\n\nreturn {\n  sku: $json.sku,\n  nom: $json.name,\n  prix: $json.price,\n  taille_cadre_id: getVal('ekstere_frame_size'), // Renvoie \"26\"\n  matiere_cadre_id: getVal('ekstere_frame_material'), // Renvoie \"42\"\n  taille_roues_id: getVal('ekstere_wheel_size'),\n  is_reconditionne: getVal('ekstere_is_reconditioned') === \"1\" ? \"Oui\" : \"Non\",\n  is_electrique: getVal('ekstere_transmission_type') // À vérifier pour l'électrique\n};\n**/"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1744,
+        96
+      ],
+      "id": "4b03a0f5-92da-4628-a633-9facd4c019e3",
+      "name": "Map_infos"
+    },
+    {
+      "parameters": {
+        "resource": "document",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "text": "=Analyse this document and suggest a quick description of 4 lines, of this bicycle with those param in french:\n* {{ $('Get_categorie').item.json.name }}\n* {{ $('Map_infos').item.json.taille_roues }}\n* {{ $('Map_infos').item.json.taille_cadre }}\n* {{ $('Map_infos').item.json.name }}",
+        "documentUrls": "https://docs.google.com/spreadsheets/d/19Qsj9BGwNr0ipoP-VH_t_ygmAa5IMlb4Qz6c_FokZ1Y/edit?usp=sharing",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1312,
+        -64
+      ],
+      "id": "b1f964cb-014f-4636-b4c0-91cdd47db30f",
+      "name": "Analyze document",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "xlJHR2vquKNzOD5w",
+          "name": "my_gemini_key"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1520,
+        -64
+      ],
+      "id": "de7d5c50-a87e-4fae-b5c0-de5e14a3a5e1",
+      "name": "AI Agent1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1392,
+        144
+      ],
+      "id": "086bfe14-16df-48f8-9f7c-83c00d1480a1",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "32WdHhHsqLWHn8BM",
+          "name": "OpenAi_ekstere"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.url }}{{ $json.api_login_url }}{{ $json.endoints._adminToken }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "username",
+              "value": "={{ $json.username }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $json.password }}"
+            }
+          ]
+        },
+        "options": {
+          "allowUnauthorizedCerts": true,
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -880,
+        1088
+      ],
+      "id": "1d165ce9-b17c-4d29-bfa7-a530e8fc70ac",
+      "name": "CONNECTION_MAGENTO",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"my_field_1\": \"\",\n  \"my_field_2\": 1\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3104,
+        256
+      ],
+      "id": "ce09bbe5-8487-4558-99af-e8a83d0f934c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG_MAGENTO').item.json.baseUrl}}/rest/V1/ad/sku/EKS00005144",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2656,
+        -32
+      ],
+      "id": "3b56e3c3-690c-4b49-839a-14b2687c5970",
+      "name": "Get_velos1"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -4016,
+        -1792
+      ],
+      "id": "40b05bdd-7d87-4613-a715-406998d44bc5",
+      "name": "Edit_photo",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "='1xh8fSVotSZ2BwLI6OZMz6jW5iBFxjsUl' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
+            },
+            {
+              "name": "fields",
+              "value": "files(id,name,mimeType)"
+            },
+            {
+              "name": "supportsAllDrives",
+              "value": "true"
+            },
+            {
+              "name": "includeItemsFromAllDrives",
+              "value": "true"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2096,
+        -1664
+      ],
+      "id": "aed24e82-0a68-46f5-b85e-1b9450c7cfeb",
+      "name": "GET_DRIVE_SUBFOLDERS",
+      "alwaysOutputData": false,
+      "executeOnce": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "L0XtXKdv6jILumlS",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "='{{ $json.id }}' in parents and mimeType != 'application/vnd.google-apps.folder' and trashed = false"
+            },
+            {
+              "name": "fields",
+              "value": "files(id,name,mimeType,parents)"
+            },
+            {
+              "name": "supportsAllDrives",
+              "value": "true"
+            },
+            {
+              "name": "includeItemsFromAllDrives",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -32,
+        -1824
+      ],
+      "id": "c1841262-7eed-4a89-8e03-10d79e248a39",
+      "name": "LIST_IMAGES",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "L0XtXKdv6jILumlS",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "='{{ $json.id }}' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
+            },
+            {},
+            {
+              "name": "supportsAllDrives",
+              "value": "true"
+            },
+            {
+              "name": "includeItemsFromAllDrives",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1440,
+        -1872
+      ],
+      "id": "eee5fdde-9f2e-4171-bf4a-89387931235d",
+      "name": "Get_EKS_Folders",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "L0XtXKdv6jILumlS",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "files",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -1888,
+        -1840
+      ],
+      "id": "be72535c-80b8-472d-8cd0-e11c874973fe",
+      "name": "Split_Folder"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -4576,
+        -800
+      ],
+      "id": "c3c14a43-7d89-4c6a-9386-e0f55649f682",
+      "name": "Schedule Trigger",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1qArYVDtdDK6d5s2DpgAvpfr2UAaX6XpNUepUwtkvTA0",
+          "mode": "list",
+          "cachedResultName": "Dossiers_photo_n8n",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1qArYVDtdDK6d5s2DpgAvpfr2UAaX6XpNUepUwtkvTA0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 123814419,
+          "mode": "list",
+          "cachedResultName": "Alerte process",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1qArYVDtdDK6d5s2DpgAvpfr2UAaX6XpNUepUwtkvTA0/edit#gid=123814419"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1792,
+        -2032
+      ],
+      "id": "0a96e557-a9cb-4f72-8e7e-8bb7c56f113d",
+      "name": "Get_Processed_Folders",
+      "alwaysOutputData": false,
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7JAwvDgccaa2DtIC",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b18c5d69-d0af-46f1-9f21-7959d309f4db",
+              "leftValue": "={{ $json.files.length }}",
+              "rightValue": "=0",
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1872,
+        -1424
+      ],
+      "id": "32cd2dc9-8d23-49d9-8851-13480265f6a6",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Récupère les dossiers déjà traités depuis le Google Sheet\nconst sheetItems = $items(\"Get_Processed_Folders\", 0);\nconst processedNames = sheetItems\n  .map(i => i.json.Dossiers?.trim().toLowerCase())\n  .filter(v => v && v.length > 0);\n\n// Récupère les dossiers depuis Google Drive\nconst driveItems = $items(\"Split_out_destination1\", 0);\nconst newFolders = driveItems.filter(i => {\n  const name = (i.json.name || \"\").trim().toLowerCase();\n  return name && !processedNames.includes(name);\n});\n\n// Retourne uniquement les nouveaux dossiers\nreturn newFolders.map(i => ({\n  json: {\n    name: i.json.name,\n    id: i.json.id\n  }\n}));\n\n\n\n// Récupère TOUS les items du Google Sheet (toutes les lignes)\n/*const allItems = $input.all();\n\n// Extrait les valeurs de la colonne A (adapte \"A\" si ta colonne s'appelle différemment)\nconst dossiersList = allItems\n  .map(item => item.json.Dossiers?.trim())  // Remplace \"A\" par ta vraie clé colonne\n  .filter(value => value && value.length > 0);  // Ignore les vides\n\nconsole.log(\"Dossiers:\", dossiersList);  // Debug\n\nreturn [{\n  json: {\n    dossiersList: dossiersList.flat(),\n    //dossiersCount: dossiersList.length,\n    //dossiersJoined: dossiersList.join(' ')\n  }\n}];\n*/"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3920,
+        -640
+      ],
+      "id": "903d6094-b054-44cb-b97b-0adc405843c1",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "files",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -1216,
+        -1872
+      ],
+      "id": "d116dccd-2372-415e-b90c-66a1b2727012",
+      "name": "Split_out_sources_folders",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -992,
+        -1440
+      ],
+      "id": "3ba19615-02e2-4781-9b03-c4642046f585",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Récupération des infos de l'item actuel (JSON uniquement)\nconst item = $input.item.json;\n\n// 2. Récupération du nom du dossier parent (Ex: \"EKS00005144 - Blanchi Oltre\")\n// On pointe vers le nœud ancêtre qui contient le nom du dossier\nconst folderName = $('Split_out_sources_folders').item.json.name || \"\";\n\n// 3. Extraction des 11 premiers caractères (Le SKU)\nconst extractedSku = folderName.substring(0, 11);\n\n// 4. Récupération de TOUS les produits Magento pour trouver le match\nconst magentoItems = $('GET_MAGENTO_PRODUCTS1').all();\nconst product = magentoItems.find(p => p.json.sku === extractedSku);\n\n// 5. Préparation des variables\nlet brand = \"inconnue\";\nlet model = \"modele-inconnu\";\nlet millesime = \"2026\";\nlet errorMsg = null;\n\nif (product) {\n    brand = product.json.ekstere_brand || \"marque\";\n    model = product.json.ekstere_model || \"modele\";\n    millesime = product.json.ekstere_year || \"2026\";\n} else {\n    errorMsg = `SKU ${extractedSku} non trouvé dans Magento`;\n}\n\n// 6. Construction d'une suggestion de nom de fichier (slugify léger)\nconst cleanString = (str) => {\n    return str.toLowerCase()\n              .normalize(\"NFD\").replace(/[\\u0300-\\u036f]/g, \"\")\n              .replace(/[^a-z0-9]/g, '-')\n              .replace(/-+/g, '-')\n              .replace(/^-|-$/g, '');\n};\n\nconst photoIndex = ($input.item.index || 0) + 1;\nconst skuSuffix = extractedSku.slice(-4);\nconst finalFileNameBase = `ekstere-${cleanString(brand)}-${cleanString(model)}-${skuSuffix}-${photoIndex}`;\n\n// 7. Retour du résultat\nreturn {\n    sku_extracted: extractedSku,\n    folder_original_name: folderName,\n    brand: brand,\n    model: model,\n    millesime: millesime,\n    suggestedFileName: finalFileNameBase,\n    error: errorMsg,\n    original_item_info: item // On conserve les infos du fichier (id, name drive, etc.)\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -784,
+        -1152
+      ],
+      "id": "306d8363-58c7-4664-bb1c-6f01a0caf71a",
+      "name": "Code in JavaScript3",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "advanced": true,
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "Dossiers",
+              "field2": "EKS"
+            }
+          ]
+        },
+        "joinMode": "keepNonMatches",
+        "outputDataFrom": "input2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -464,
+        -1904
+      ],
+      "id": "860db1e0-a77f-4766-8b2b-7aa8dd0d7737",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.url }}{{ $json.api_login_url }}{{ $json.endoints._adminToken }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "username",
+              "value": "={{ $json.username }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $json.password }}"
+            }
+          ]
+        },
+        "options": {
+          "allowUnauthorizedCerts": true,
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -3584,
+        -1792
+      ],
+      "id": "5cd75a2d-c693-4340-a9b7-48c0404fa1a1",
+      "name": "CONNECTION_MAGENTO1"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"username\": \"n8nAgent\",\n  \"password\": \"N8Nagent_N8N2025$\",\n  \"_username\": \"admin\",\n  \"_password\": \"ypnj9uje87LrZ67!!!\",\n  \"url\":\"https://ekstere.eco\",\n  \"api_login_url\":\"/rest/V1/integration\",\n  \"api_url\":\"/rest/V1\",\n  \"endoints\":{\n    \"_adminToken\": \"/admin/token\",\n    \"_categories_GET\":\"/categories\",\n    \"_categories_CREATE\":\"/categories\",\n    \"_categories_UPDATE\":\"/categories\",\n    \"_products_GET\": \"/products\",\n    \"_products_CREATE\": \"/products\",\n    \"_products_UPDATE\": \"/products\",\n    \"_annonce_GET\": \"/ads/validated\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3792,
+        -1792
+      ],
+      "id": "529959f6-8d4f-4290-8f16-c07a35b55229",
+      "name": "_CONFIG1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG1').item.json.url }}{{ $('_CONFIG1').item.json.api_url }}{{ $('_CONFIG1').item.json.endoints._annonce_GET }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "dateFrom",
+              "value": "={{ $json.dateFrom }}"
+            },
+            {
+              "name": "dateTo",
+              "value": "={{ $json.dateTo }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('CONNECTION_MAGENTO1').item.json.data }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2320,
+        -1648
+      ],
+      "id": "92926903-1d24-4061-b911-94bd45dcde39",
+      "name": "GET_MAGENTO_PRODUCTS1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "files",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -4272,
+        -672
+      ],
+      "id": "cba42118-4861-4bf2-8914-bff27fe26326",
+      "name": "Split_out_destination1",
+      "alwaysOutputData": true,
+      "disabled": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG1').item.json.url }}/rest/V1/products/{{ $json.sku_extracted }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('CONNECTION_MAGENTO1').item.json.data }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -560,
+        -1152
+      ],
+      "id": "5a3ca0bf-eda2-442d-a022-7462119b3d06",
+      "name": "HTTP Request",
+      "executeOnce": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "sku_extracted",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        -448,
+        -1584
+      ],
+      "id": "74f38116-0cf5-45c1-ad2d-94f925af6842",
+      "name": "Remove Duplicates3",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const months = [];\nconst now = new Date();\n\n// Génère les 120 derniers mois (10 ans)\nfor (let i = 0; i < 120; i++) {\n  let start = new Date(now.getFullYear(), now.getMonth() - i, 1);\n  let end = new Date(now.getFullYear(), now.getMonth() - i + 1, 0);\n\n  months.push({\n    json: {\n      dateFrom: start.toISOString().split('T')[0], // Format yyyy-MM-dd\n      dateTo: end.toISOString().split('T')[0],\n      mois_label: start.toLocaleString('default', { month: 'long', year: 'numeric' })\n    }\n  });\n}\n\nreturn months;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3408,
+        -1792
+      ],
+      "id": "035889ab-ebc5-4b8e-ba0b-c1b7f0988bee",
+      "name": "Code in JavaScript1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -2720,
+        -1792
+      ],
+      "id": "bcdb9b3e-3d8e-4b11-9c5e-3f7362e30b26",
+      "name": "Loop Over Items",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Réponds uniquement sous format JSON en mettant uniquement la réponse et rien d'autre.\n\nEn gros on veut juste une petite description de la pratique et des points forts du vélo ({{ $('HTTP Request').item.json.name }} de catégorie {{ $json.name }}), sans citer les composants, en 3/4 lignes max. \n\nEx : \n{\n \"Positionnement et pratique\": \"Le Specialized Turbo Levo Comp Alloy s’adresse aux riders recherchant un VTTAE performant et polyvalent, idéal pour les sorties all-mountain, les terrains techniques et les longues journées en montagne.\"\n}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1120,
+        -1344
+      ],
+      "id": "78fef134-5d31-4998-8032-d3de1eb2f41e",
+      "name": "AI Agent2",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "builtInTools": {
+          "webSearch": {
+            "searchContextSize": "medium",
+            "allowedDomains": "google.com",
+            "country": "FR"
+          }
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1136,
+        -1056
+      ],
+      "id": "e457ddbd-dbd6-4431-8ae8-decfe949c29a",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "32WdHhHsqLWHn8BM",
+          "name": "OpenAi_ekstere"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -1328,
+        -1440
+      ],
+      "id": "25981615-eead-4251-8003-fa0446565632",
+      "name": "Limit1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "removeItemsSeenInPreviousExecutions",
+        "dedupeValue": "={{ $json.files[0].parents[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        -1568,
+        -1440
+      ],
+      "id": "b2b9d25a-877f-485a-80ef-65331feb8af3",
+      "name": "Remove Duplicates",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG1').item.json.url }}{{ $('_CONFIG1').item.json.api_url }}/categories/{{ $json.category_id }}\n",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('CONNECTION_MAGENTO1').item.json.data }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        576,
+        -1088
+      ],
+      "id": "ee3ffae1-da6c-453f-9960-ef066559d56b",
+      "name": "Get_categorie1"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "extension_attributes.category_links",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -880
+      ],
+      "id": "3c3da6eb-6513-425d-af0e-bb637e8a8de6",
+      "name": "Split Out",
+      "executeOnce": false
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -3200,
+        -1792
+      ],
+      "id": "db24b64f-626b-404b-9f3d-2ba14d8779c2",
+      "name": "Limit2",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        416,
+        -1104
+      ],
+      "id": "aeca4497-4c18-4671-82df-852ba5ddb232",
+      "name": "Loop Over Items2",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// 1. On récupère TOUTES les itérations du nœud Get_categorie1\n// La syntaxe .all() est la plus sûre pour récupérer tous les items d'une boucle\nconst allCategories = $(\"Get_categorie1\").all();\n\n// 2. Vos mots-clés (on les met en minuscule pour simplifier)\nconst targets = [\n  \"vtt\", \"route\", \"urbain\", \"trekking\", \"trekkin\", \n  \"route performance\", \"speed bike\", \"urbain/trekking\", \n  \"vtc/fitness\", \"vtc\", \"pliable/compact\", \"enfant\", \"bmx/dirt/trial\"\n];\n\nlet typeVelo = \"Non défini\";\nlet idVelo = null;\nlet nomsTrouves = []; // Pour vous aider à débugger\n\n// 3. On boucle sur les catégories récupérées\nfor (const item of allCategories) {\n  const name = item.json.name;\n  if (!name) continue;\n  \n  nomsTrouves.push(name); // On stocke le nom pour le voir en sortie\n  const categoryNameLower = name.toLowerCase();\n\n  // On cherche si un de nos mots-clés est présent dans le nom de la catégorie\n  const found = targets.find(t => categoryNameLower.includes(t.toLowerCase()));\n\n  if (found) {\n    typeVelo = name;\n    idVelo = item.json.id;\n    break; // On s'arrête au premier match trouvé\n  }\n}\n\n// 4. On retourne le résultat\nreturn {\n  type_velo_final: typeVelo,\n  id_categorie_principale: idVelo,\n  debug_tous_les_noms_scannes: nomsTrouves.join(\", \") // Utile pour voir ce que le code a lu\n};\n\n\n\n\n\n\n\n\n\n// 1. Récupérer TOUS les résultats renvoyés par le nœud \"Get_categorie1\"\n// même s'ils ont été générés dans une boucle, $items les récupère tous.\n/**\nconst allCategories = $items(\"Get_categorie1\");\n// 2. Définir les mots-clés que vous cherchez (en minuscule pour comparer facilement)\n\nconst targets = [\"vtt\", \"route\", \"urbain\", \"trekking\", \"trekkin\", \"Route performance\", \"Speed Bike\", \"Urbain/Trekking\", \"VTC/Fitness\", \"VTC\", \"Pliable/Compact\", \"Enfant\", \"BMX/Dirt/Trial\"];\n\n// 3. Chercher la catégorie qui correspond\nlet typeVelo = \"Non défini\";\nlet idVelo = null;\n\nfor (const item of allCategories) {\n  const categoryName = item.json.name.toLowerCase();\n  \n  // On vérifie si le nom contient l'un de nos mots-clés\n  const match = targets.find(t => categoryName.includes(t.toLowerCase()));\n  \n  if (match) {\n    typeVelo = item.json.name; // On garde le nom propre (ex: \"VTT\")\n    idVelo = item.json.id;\n    break; // On s'arrête dès qu'on a trouvé la catégorie principale\n  }\n}\n\n// 4. On retourne le résultat final\nreturn {\n  type_velo_final: typeVelo,\n  id_categorie_principale: idVelo\n};**/"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -208,
+        -1584
+      ],
+      "id": "4930d534-d22f-4bbf-a1c5-6c799ee789e0",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"dryRun\":true,\n  \"base_url\": \"https://cote-velo.fr\",\n  \"login\": \"erle\",\n  \"password\": \"5LK76879KF\",\n  \"entrypoints\": {\n    \"login\": \"/rest/V1/integration/admin/token\",\n    \"brands\": \"/rest/V1/brands\",\n    \"categories\": \"/rest/V1/categories\",\n    \"models\": \"/rest/V1/models\"\n  },\n  \"params\":{\n    \"brand\": \"{{ $json.query?.brand_name || \"\" }}\",\n    \"model\": \"{{ $json.query?.model_name || \"\" }}\",\n    \"year\": \"{{ $json.query?.model_year || \"\" }}\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2448,
+        -288
+      ],
+      "id": "94a7df7e-c248-4302-83d7-a1645e079e7b",
+      "name": "_CONFIG Cote-Velo1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const total = 40000;\nconst limit = 5000;\nconst pages = Math.ceil(total / limit);\n\nreturn Array.from({ length: pages }, (_, i) => ({\n  json: {\n    limit,\n    offset: i * limit ,\n  },\n}));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2032,
+        -288
+      ],
+      "id": "1b259ee1-3a66-4915-9ea3-326e75521987",
+      "name": "Create API calls Loop"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -1776,
+        -288
+      ],
+      "id": "32b8fa18-a789-43c0-8c47-25833be5a08d",
+      "name": "Loop Over Items3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f00cf609-0355-491a-becf-29feeb049527",
+              "leftValue": "={{ $json.brand.name +' - ' + $json.model + ' - ' + $json.year}}",
+              "rightValue": "={{ $('HTTP Request').item.json.name.toLowerCase() }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {
+          "ignoreCase": false
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -976,
+        -176
+      ],
+      "id": "f7c4f334-e074-42f1-a8e4-b927225a4521",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "list",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -1296,
+        -272
+      ],
+      "id": "b8fabe40-3a80-46c0-8281-fff0362d2fa6",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG Cote-Velo1').first().json.base_url }}/rest/V1/ad/sku/{{ $('HTTP Request').item.json.sku }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "={{ $('Login token1').first().json.token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2176,
+        -96
+      ],
+      "id": "341e6cfc-6ec6-4b7a-a4b9-f7c1ab370ee6",
+      "name": "Get all models1",
+      "alwaysOutputData": true,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG Cote-Velo1').first().json.base_url }}{{ $('_CONFIG Cote-Velo1').item.json.entrypoints.models }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "limit",
+              "value": "={{ $json.limit }}"
+            },
+            {
+              "name": "offset",
+              "value": "={{ $json.offset }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "={{ $('Login token1').first().json.token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1504,
+        -272
+      ],
+      "id": "de8bdcda-e38e-4f46-98e8-f709be4a9cc0",
+      "name": "Get all models",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.base_url }}{{ $json.entrypoints.login }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "username",
+              "value": "={{ $json.login }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $json.password }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2272,
+        -288
+      ],
+      "id": "0c2c7bed-4c23-4b83-aa9b-19d52e34cd07",
+      "name": "Login token1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "eda3862f-6f34-45cc-9f65-6d68015861b8",
+              "leftValue": " \"vtt\", \"route\", \"urbain\", \"trekking\",   \"route performance\", \"speed bike\", \"urbain/trekking\",   \"vtc/fitness\", \"vtc\", \"pliable/compact\", \"enfant\", \"bmx/dirt/trial\", \"vélos spéciaux\",",
+              "rightValue": "={{ $json.name.toLowerCase() }}",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        800,
+        -1088
+      ],
+      "id": "f220fbe5-f924-47d1-863c-310aae5fe540",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1qArYVDtdDK6d5s2DpgAvpfr2UAaX6XpNUepUwtkvTA0",
+          "mode": "list",
+          "cachedResultName": "Dossiers_photo_n8n",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1qArYVDtdDK6d5s2DpgAvpfr2UAaX6XpNUepUwtkvTA0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 123814419,
+          "mode": "list",
+          "cachedResultName": "Alerte process",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1qArYVDtdDK6d5s2DpgAvpfr2UAaX6XpNUepUwtkvTA0/edit#gid=123814419"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Dossiers": "={{ $('Code in JavaScript3').item.json.sku_extracted }}",
+            "Date": "={{ $now }}",
+            "Dossier parent": "=https://drive.google.com/drive/folders/{{ $('Code in JavaScript3').item.json.original_item_info.files[0].parents[0] }}",
+            "Modele": "={{ $('HTTP Request').item.json.name }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Dossiers",
+              "displayName": "Dossiers",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Dossier parent",
+              "displayName": "Dossier parent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modele",
+              "displayName": "Modele",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1424,
+        -1344
+      ],
+      "id": "10d9f6d5-82ba-4a56-b0c3-d1811e9a71b6",
+      "name": "Append row in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7JAwvDgccaa2DtIC",
+          "name": "Google Sheets account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "laLMB6ANiVLJp2TB",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/laLMB6ANiVLJp2TB",
+          "cachedResultName": "Process_Bike_Categories"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        112,
+        -1152
+      ],
+      "id": "a819668a-8c68-480f-9fb4-e2354a4cd563",
+      "name": "Call 'Process_Bike_Categories'"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"sku\": \"{{ $json.sku }}\",\n  \"name\": \"{{ $json.name.replace(/ - \\d{4}$/, '') }}\",\n  \"token\": \"{{ $('CONNECTION_MAGENTO1').item.json.data }}\",\n  \"url\": \"{{ $('Code in JavaScript3').item.json.original_item_info.files[0].parents[0] }}\"\n}\n ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -352,
+        -1152
+      ],
+      "id": "c09e149b-1e3a-4a64-8271-f91b74d857c2",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -2992,
+        -1792
+      ],
+      "id": "feed90ba-7086-4908-9323-5e22fe8c8aa8",
+      "name": "Wait",
+      "webhookId": "3b30010f-df76-4d19-a18f-6c87778c3298"
+    },
+    {
+      "parameters": {
+        "amount": 45
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1952,
+        -2032
+      ],
+      "id": "4b400e57-b445-48f9-ad00-9105600a1d02",
+      "name": "Wait1",
+      "webhookId": "fa34d7d0-9abd-40b3-bb59-f1791f2d8f58"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -144,
+        -1152
+      ],
+      "id": "16581a16-32d0-44aa-a004-3aaed47c9909",
+      "name": "Wait2",
+      "webhookId": "037755e3-5c9d-473f-b181-a7ca3513f023"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "69a058e5-6c4c-46bf-bcef-dfa1825efb9d",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "EKS",
+              "operator": {
+                "type": "string",
+                "operation": "startsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1040,
+        -1872
+      ],
+      "id": "68b10107-c0f8-40c7-845c-aae8b3879f41",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  kind: \"{{ $json.kind }}\",\n  driveId: \"{{ $json.driveId }}\",\n  mimeType: \"{{ $json.mimeType }}\",\n  id: \"{{ $json.id }}\",\n  name: \"{{ $json.name.replace(\" -\",\"\") }}\",\n  teamDriveId: \"{{ $json.teamDriveId }}\",\n  EKS: \"{{ $json.name.slice(0, 11) }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -752,
+        -1872
+      ],
+      "id": "b8cc6acf-e415-454e-af8d-51436ec1586d",
+      "name": "Edit Fields2"
+    }
+  ],
+  "pinData": {
+    "Edit_photo": [
+      {
+        "json": {
+          "Dossiers": "EKS00005144",
+          "Date": "2026-06-04T11:10:19.101+02:00",
+          "Dossier parent": "https://drive.google.com/drive/folders/15PT34HlT-rLHmewwjUjY4vNIryTkzk04",
+          "Modele": "EKS00005144"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "_CONFIG": {
+      "main": [
+        [
+          {
+            "node": "CONNECTION_MAGENTO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET_MAGENTO_PRODUCTS": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [],
+        [],
+        [],
+        [],
+        []
+      ]
+    },
+    "_CONFIG Cote-Velo": {
+      "main": [
+        [
+          {
+            "node": "Login token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Login token": {
+      "main": [
+        [
+          {
+            "node": "_CONFIG",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "_CONFIG_MAGENTO": {
+      "main": [
+        [
+          {
+            "node": "Get_Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET_Destination_SUBFOLDERS": {
+      "main": [
+        [
+          {
+            "node": "Split_out_destination",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split_out_destination": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Map_infos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Switch2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Switch3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        []
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        []
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_Token": {
+      "main": [
+        [
+          {
+            "node": "Get_velos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_velos": {
+      "main": [
+        [
+          {
+            "node": "GET_Destination_SUBFOLDERS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_categorie": {
+      "main": [
+        [
+          {
+            "node": "Get_elec",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_elec": {
+      "main": [
+        []
+      ]
+    },
+    "Map_infos": {
+      "main": [
+        [
+          {
+            "node": "Get_categorie",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch2": {
+      "main": [
+        [
+          {
+            "node": "Analyze document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "Analyze document": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CONNECTION_MAGENTO": {
+      "main": [
+        [
+          {
+            "node": "GET_MAGENTO_PRODUCTS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit_photo": {
+      "main": [
+        [
+          {
+            "node": "_CONFIG1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET_DRIVE_SUBFOLDERS": {
+      "main": [
+        [
+          {
+            "node": "Split_Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LIST_IMAGES": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_EKS_Folders": {
+      "main": [
+        [
+          {
+            "node": "Split_out_sources_folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split_Folder": {
+      "main": [
+        [
+          {
+            "node": "Get_EKS_Folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        []
+      ]
+    },
+    "Get_Processed_Folders": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split_out_sources_folders": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Code in JavaScript3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "LIST_IMAGES",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CONNECTION_MAGENTO1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "_CONFIG1": {
+      "main": [
+        [
+          {
+            "node": "CONNECTION_MAGENTO1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET_MAGENTO_PRODUCTS1": {
+      "main": [
+        [
+          {
+            "node": "GET_DRIVE_SUBFOLDERS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Limit2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "GET_MAGENTO_PRODUCTS1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Remove Duplicates3": {
+      "main": [
+        []
+      ]
+    },
+    "AI Agent2": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Limit1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_categorie1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        []
+      ]
+    },
+    "Limit2": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Get_categorie1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "_CONFIG Cote-Velo1": {
+      "main": [
+        [
+          {
+            "node": "Login token1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create API calls Loop": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items3": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Get all models",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Loop Over Items3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get all models": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Login token1": {
+      "main": [
+        [
+          {
+            "node": "Create API calls Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet2": {
+      "main": [
+        []
+      ]
+    },
+    "Call 'Process_Bike_Categories'": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Get_Processed_Folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Call 'Process_Bike_Categories'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "81713f06-303a-4aa3-94e5-5c48ea5a1731",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "aca6ed7ec8875b2fbca26169c7cd9cbc432770c08b36ede295ebecdc45904a16"
+  },
+  "id": "KW6riozYJz1LeKah",
+  "tags": []
+}

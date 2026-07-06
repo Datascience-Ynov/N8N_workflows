@@ -1,0 +1,2419 @@
+{
+  "name": "Price_Changed_Alert",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.url }}{{ $json.api_login_url }}{{ $json.endoints._adminToken }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "username",
+              "value": "={{ $json.username }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $json.password }}"
+            }
+          ]
+        },
+        "options": {
+          "allowUnauthorizedCerts": true,
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2112,
+        1328
+      ],
+      "id": "81394b6d-92d5-4f5e-b32f-0f6efa59c2df",
+      "name": "CONNECTION_MAGENTO",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"username\": \"n8nAgent\",\n  \"password\": \"N8Nagent_N8N2025$\",\n  \"_username\": \"admin\",\n  \"_password\": \"ypnj9uje87LrZ67!!!\",\n  \"url\":\"https://ekstere.eco\",\n  \"api_login_url\":\"/rest/V1/integration\",\n  \"api_url\":\"/rest/V1\",\n  \"endoints\":{\n    \"_adminToken\": \"/admin/token\",\n    \"_categories_GET\":\"/categories\",\n    \"_categories_CREATE\":\"/categories\",\n    \"_categories_UPDATE\":\"/categories\",\n    \"_products_GET\": \"/products\",\n    \"_products_CREATE\": \"/products\",\n    \"_products_UPDATE\": \"/products\",\n    \"_annonce_GET\": \"/ads/validated\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1664,
+        1088
+      ],
+      "id": "56244b32-9825-4a07-aeee-9ff3ce6cf1a9",
+      "name": "_CONFIG",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG').item.json.url }}{{ $('_CONFIG').item.json.api_url }}{{ $('_CONFIG').item.json.endoints._annonce_GET }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "dateFrom",
+              "value": "={{$now.minus(350, 'days').format('yyyy-MM-dd')}}"
+            },
+            {
+              "name": "dateTo",
+              "value": "={{ $now }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.data }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1664,
+        1328
+      ],
+      "id": "88694ef6-bfcc-4ea0-9a28-cc76b36c7da0",
+      "name": "GET_MAGENTO_PRODUCTS",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.is_electric }}",
+                    "rightValue": true,
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "equals"
+                    },
+                    "id": "db090d3b-132f-480a-a87f-e6040c4ccf6f"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "00212b65-5471-4f1c-9f42-78619473e5c1",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "32ce7751-779e-47b3-aff5-1cbcaf5f1394",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "98be5d9c-c930-4ddb-ac4f-ad435d203156",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "23e95682-b768-48ff-8228-7766e3475bcd",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -1200,
+        1216
+      ],
+      "id": "65697eae-e6ce-45da-8077-604910c05605",
+      "name": "Switch",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -2384,
+        -1200
+      ],
+      "id": "26b3df3a-bc40-44ba-8c8a-eca37154e22e",
+      "name": "When Executed by Another Workflow",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"dryRun\":true,\n  \"base_url\": \"https://cote-velo.fr\",\n  \"login\": \"erle\",\n  \"password\": \"5LK76879KF\",\n  \"entrypoints\": {\n    \"login\": \"/rest/V1/integration/admin/token\",\n    \"brands\": \"/rest/V1/brands\",\n    \"categories\": \"/rest/V1/categories\",\n    \"models\": \"/rest/V1/models\"\n  },\n  \"params\":{\n    \"brand\": \"{{ $json.query?.brand_name || \"\" }}\",\n    \"model\": \"{{ $json.query?.model_name || \"\" }}\",\n    \"year\": \"{{ $json.query?.model_year || \"\" }}\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2112,
+        1088
+      ],
+      "id": "876cdc54-6006-439f-8aeb-f537ea349d0e",
+      "name": "_CONFIG Cote-Velo",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.base_url }}{{ $json.entrypoints.login }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "username",
+              "value": "={{ $json.login }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $json.password }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1904,
+        1088
+      ],
+      "id": "637928ee-dbe5-4742-8a81-e777633a5399",
+      "name": "Login token",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"baseUrl\": \"https://ekstere.eco\",\n  \"tokenEndpoint\": \"/rest/V1/integration/admin/token\",\n  \"productsUrl\": \"/rest/V1/products\",\n  \"username\": \"api_magento\",\n  \"password\": \"E28hBaZmdb2K\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2656,
+        -1616
+      ],
+      "id": "a08be89c-7e2b-4bc8-af07-b63931bac3df",
+      "name": "_CONFIG_MAGENTO",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "='1FIzuuvFV0CH8OG3u5ahfUgTB8FkaCmie' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
+            },
+            {
+              "name": "fields",
+              "value": "files(id,name,mimeType)"
+            },
+            {
+              "name": "supportsAllDrives",
+              "value": "true"
+            },
+            {
+              "name": "includeItemsFromAllDrives",
+              "value": "true"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1504,
+        1088
+      ],
+      "id": "044d94bd-46fe-43a5-944f-29157da3ba30",
+      "name": "GET_Destination_SUBFOLDERS",
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "L0XtXKdv6jILumlS",
+          "name": "Google Drive account"
+        }
+      },
+      "disabled": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "files",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -1392,
+        1328
+      ],
+      "id": "3b6b481b-2a25-46b2-b75f-c699e79d3a5c",
+      "name": "Split_out_destination",
+      "alwaysOutputData": true,
+      "disabled": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "=https://ekstere.eco/rest/V1/products/{{ $json.sku }}\n",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "=Authorization",
+              "value": "=Bearer {{ $('Get_Token').item.json.token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -224,
+        912
+      ],
+      "id": "8a5eacbe-8961-48cd-b64e-fb339c2552f8",
+      "name": "HTTP Request2",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Get_categorie').item.json.name }}",
+                    "rightValue": "route",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "2c651ace-32c1-4a3e-8767-2988d46a7efb"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Route"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "a796c9fd-20f1-49e4-aaa1-a4eea683bd02",
+                    "leftValue": "={{ $('Get_categorie').item.json.name }}",
+                    "rightValue": "VTT",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "VTT"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "d0098271-622f-469d-a3a8-0d88ad37ccd3",
+                    "leftValue": "={{ $('Get_categorie').item.json.name }}",
+                    "rightValue": "Cargo",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Cargo"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "790b27c8-a774-4554-9d98-098a223871f3",
+                    "leftValue": "={{ $('Get_categorie').item.json.name }}",
+                    "rightValue": "Gravel",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Gravel"
+            }
+          ]
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -32,
+        1136
+      ],
+      "id": "885683bb-bb1b-4045-840b-914e051a5dd8",
+      "name": "Switch1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Vélo de {{ $('Get_categorie').item.json.name }} musculaire, \n\nPour un vélo reconditionné : [catégorie vélo] [électrique], [kilométrage], [millésime], [taille], [taille roues]\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1264,
+        832
+      ],
+      "id": "fef07422-fbdf-4a63-90cd-6d4efa351f54",
+      "name": "AI Agent",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1072,
+        1072
+      ],
+      "id": "09cb5e53-0cc5-445c-949a-5aa44bd9c0b9",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "xlJHR2vquKNzOD5w",
+          "name": "my_gemini_key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "=Tu es un expert vélo, extrait les données demandées du texte:{{ $('HTTP Request2').item.json.custom_attributes[19].value }}\n",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "Catégorie de vélo",
+              "description": "Extrait la catégorie de ce vélo"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        752,
+        1184
+      ],
+      "id": "8f9e802f-7bfa-48d1-9dda-4414fea17022",
+      "name": "Information Extractor",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        752,
+        1280
+      ],
+      "id": "b24962a0-16ee-4105-aadd-e5dde00110f9",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "32WdHhHsqLWHn8BM",
+          "name": "OpenAi_ekstere"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.baseUrl }}{{ $json.tokenEndpoint }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "username",
+              "value": "={{ $json.username }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $json.password }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text",
+              "outputPropertyName": "token"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2432,
+        -1616
+      ],
+      "id": "948943f7-1c4b-4fd2-b91d-1dbbfcd44b80",
+      "name": "Get_Token",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG_MAGENTO').item.json.baseUrl + $('_CONFIG_MAGENTO').item.json.productsUrl + '?searchCriteria[pageSize]=10000&searchCriteria[currentPage]=1' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1984,
+        -1616
+      ],
+      "id": "93a61720-e378-454f-9706-c09f58627f22",
+      "name": "Get_velos",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG_MAGENTO').item.json.baseUrl }}/rest/V1/categories/{{ $('HTTP Request2').item.json.extension_attributes.category_links[1].category_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Get_Token').item.json.token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -448,
+        1280
+      ],
+      "id": "5eaa87e5-7aa5-47c5-a701-8517f7e1d5a0",
+      "name": "Get_categorie",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('HTTP Request2').item.json.custom_attributes[28].value }}",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "4c285a0f-a39e-45c7-9e3f-20332ec47962"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Reconditionné"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "8d978678-a2be-4893-a0c1-51736b5d30eb",
+                    "leftValue": "={{ $('HTTP Request2').item.json.custom_attributes[28].value }}",
+                    "rightValue": "0",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "New"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        1008
+      ],
+      "id": "5e2cf036-aecf-4358-8256-dce97782197e",
+      "name": "Switch2",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('HTTP Request2').item.json.custom_attributes[28].value }}",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "4c285a0f-a39e-45c7-9e3f-20332ec47962"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Reconditionné"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "8d978678-a2be-4893-a0c1-51736b5d30eb",
+                    "leftValue": "={{ $('HTTP Request2').item.json.custom_attributes[28].value }}",
+                    "rightValue": "0",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "New"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        352,
+        1200
+      ],
+      "id": "2b1135c8-9ba9-42f8-b5ba-cf2b95359bd3",
+      "name": "Switch3",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG_MAGENTO').item.json.baseUrl }}/rest/V1/categories/{{ $('HTTP Request2').item.json.extension_attributes.category_links[0].category_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Get_Token').item.json.token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -128,
+        1264
+      ],
+      "id": "b45562e1-07e3-4049-b2a7-2cfa1894223c",
+      "name": "Get_elec",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Récupération des attributs du produit\nconst attributes = $json.custom_attributes || [];\n\n// 2. Dictionnaires complets basés sur vos captures d'écran\nconst mapping = {\n  frame_size: {\n    // Tailles standards\n    \"10150\": \"Taille unique\", \"10034\": \"TU\", \"8196\": \"XXS\", \"24\": \"XS\", \"8483\": \"S\", \n    \"26\": \"M\", \"27\": \"L\", \"28\": \"XL\", \"29\": \"XXL\",\n    // Tailles en cm\n    \"9621\": \"33cm\", \"9622\": \"34cm\", \"9623\": \"35cm\", \"9624\": \"36cm\", \"8197\": \"37cm\", \n    \"9582\": \"38cm\", \"9583\": \"39cm\", \"9579\": \"40cm\", \"9580\": \"41cm\", \"9581\": \"42cm\", \n    \"9610\": \"43cm\", \"8199\": \"44cm\", \"8201\": \"45cm\", \"8202\": \"46cm\", \"8203\": \"47cm\", \n    \"8204\": \"48cm\", \"9589\": \"49cm\", \"9625\": \"50cm\", \"8206\": \"51cm\", \"8207\": \"52cm\", \n    \"9597\": \"53cm\", \"9626\": \"54cm\", \"8219\": \"55cm\", \"8222\": \"56cm\", \"9598\": \"57cm\", \n    \"9599\": \"58cm\", \"9600\": \"59cm\", \"9601\": \"60cm\", \"9602\": \"61cm\", \"9603\": \"62cm\", \n    \"8208\": \"63cm\",\n    // Tailles en pouces (\")\n    \"9611\": \"10\\\"\", \"9612\": \"12\\\"\", \"8217\": \"13\\\"\", \"8218\": \"14\\\"\", \"8220\": \"15\\\"\", \n    \"8221\": \"16\\\"\", \"8223\": \"17\\\"\", \"8224\": \"18\\\"\", \"8209\": \"19\\\"\", \"8210\": \"20\\\"\", \n    \"9604\": \"21\\\"\", \"9605\": \"22\\\"\", \"9617\": \"24\\\"\", \"9618\": \"26\\\"\",\n    // BMX / Spécifiques\n    \"8228\": \"Mini (43-45cm)\", \"8229\": \"Junior (45-48cm)\", \"8230\": \"Expert (48-50cm)\", \n    \"8231\": \"Pro (50-52cm)\", \"8232\": \"Pro XL (53cm)\", \"8233\": \"Pro XXL (+53cm)\", \n    \"8234\": \"Unique\", \"8467\": \"Enfant\"\n  },\n  frame_material: {\n    \"42\": \"Carbone\", \"7521\": \"Aluminium\", \"7734\": \"Aluminium/Carbone\", \"43\": \"Titane\", \n    \"7458\": \"Chromoly\", \"41\": \"Acier\", \"8238\": \"Autre\"\n  },\n  wheel_size: {\n    \"9572\": \"10\\\"\", \"9627\": \"16\\\"\", \"9650\": \"21\\\"\", \"9649\": \"22\\\"\", \"9659\": \"25\\\"\", \n    \"9628\": \"27,5\\\"\", \"9917\": \"27,5\\\" (S)\", \"9648\": \"28\\\"\", \"9629\": \"28\\\"(700C)\", \n    \"9918\": \"29\\\" (M, L, XL)\", \"8239\": \"12\\\"\", \"7453\": \"14\\\"\", \"7335\": \"16\\\"\", \n    \"7333\": \"18\\\"\", \"30\": \"20\\\"\", \"31\": \"24\\\"\", \"32\": \"26\\\"\", \"8264\": \"27,5\\\"(650B)\", \n    \"7356\": \"27,5\\\"+\", \"8263\": \"28\\\"(700C)\", \"35\": \"29\\\"\", \"9507\": \"29\\\"/27,5\\\"\", \"7733\": \"Autre\"\n  },\n  wheel_material: {\n    \"5535\": \"Aluminium\", \"5536\": \"Carbone\", \"8194\": \"Autre\"\n  },\n  shock_absorber: {\n    \"37\": \"Semi-rigide (avant)\", \n    \"38\": \"Tout suspendu (avant & arrière)\", \n    \"39\": \"Pas de suspension\"\n  }\n};\n\n// 3. Fonction utilitaire pour extraire la valeur\nconst getVal = (code, dict) => {\n  const attr = attributes.find(a => a.attribute_code === code);\n  if (!attr) return null;\n  const val = String(attr.value);\n  return dict[val] || val; // Retourne le label, ou l'ID si pas trouvé\n};\n\n// 4. Construction de l'objet de sortie\nreturn {\n  sku: $json.sku,\n  name: $json.name,\n  prix: $json.price,\n  // Application du mapping\n  taille_cadre: getVal('ekstere_frame_size', mapping.frame_size),\n  matiere_cadre: getVal('ekstere_frame_material', mapping.frame_material),\n  taille_roues: getVal('ekstere_wheel_size', mapping.wheel_size),\n  matiere_jantes: getVal('ekstere_wheel_material', mapping.wheel_material),\n  type_suspension: getVal('ekstere_shock_absorber', mapping.shock_absorber),\n  // Flags simples\n  is_reconditionne: attributes.find(a => a.attribute_code === 'ekstere_is_reconditioned')?.value === \"1\" ? \"Oui\" : \"Non\",\n  is_new: attributes.find(a => a.attribute_code === 'ekstere_is_new')?.value === \"1\" ? \"Oui\" : \"Non\"\n};\n\n\n\n\n\n\n/**\n\n// On récupère le tableau des attributs personnalisés\nconst attributes = $json.custom_attributes;\n\n// Fonction pour extraire une valeur par son code\nconst getVal = (code) => {\n  const attr = attributes.find(a => a.attribute_code === code);\n  return attr ? attr.value : null;\n};\n\nreturn {\n  sku: $json.sku,\n  nom: $json.name,\n  prix: $json.price,\n  taille_cadre_id: getVal('ekstere_frame_size'), // Renvoie \"26\"\n  matiere_cadre_id: getVal('ekstere_frame_material'), // Renvoie \"42\"\n  taille_roues_id: getVal('ekstere_wheel_size'),\n  is_reconditionne: getVal('ekstere_is_reconditioned') === \"1\" ? \"Oui\" : \"Non\",\n  is_electrique: getVal('ekstere_transmission_type') // À vérifier pour l'électrique\n};\n**/"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        1232
+      ],
+      "id": "c7e51106-056d-4db5-8402-1486578c6441",
+      "name": "Map_infos",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "document",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "text": "=Analyse this document and suggest a quick description of 4 lines, of this bicycle with those param in french:\n* {{ $('Get_categorie').item.json.name }}\n* {{ $('Map_infos').item.json.taille_roues }}\n* {{ $('Map_infos').item.json.taille_cadre }}\n* {{ $('Map_infos').item.json.name }}",
+        "documentUrls": "https://docs.google.com/spreadsheets/d/19Qsj9BGwNr0ipoP-VH_t_ygmAa5IMlb4Qz6c_FokZ1Y/edit?usp=sharing",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        480,
+        1120
+      ],
+      "id": "69aa5ca3-7167-4b09-a08f-16eea4fee631",
+      "name": "Analyze document",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "xlJHR2vquKNzOD5w",
+          "name": "my_gemini_key"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        816,
+        992
+      ],
+      "id": "6d796834-3745-4886-9560-47c39ac782e0",
+      "name": "AI Agent1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        720,
+        1120
+      ],
+      "id": "2cdb7439-3198-42fd-82cc-b2e22ce45327",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "32WdHhHsqLWHn8BM",
+          "name": "OpenAi_ekstere"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "items",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -1872,
+        -1728
+      ],
+      "id": "942831a4-3f84-4451-859d-12935d9edab3",
+      "name": "Split Out",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -1008,
+        944
+      ],
+      "id": "5e0e5b6d-f13a-4903-b8d9-bf202c00e70c",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "7c9e1d38-00f6-40d5-98cc-0244f1c25e84",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "1",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -240,
+        -736
+      ],
+      "id": "e27be2da-c75d-44ba-9b79-968080a1091e",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -496,
+        912
+      ],
+      "id": "b2931efe-3007-4b1c-a0da-a2e5c908d2fe",
+      "name": "Wait",
+      "webhookId": "47c2684c-e79b-4a9c-87a9-0ab98a641352",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1C6NM_TqBVrDjdXqQ7DgmcLRlPBCr-77_QogWAtpzUpg",
+          "mode": "list",
+          "cachedResultName": "Alerte_prix_file",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1C6NM_TqBVrDjdXqQ7DgmcLRlPBCr-77_QogWAtpzUpg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Feuille 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1C6NM_TqBVrDjdXqQ7DgmcLRlPBCr-77_QogWAtpzUpg/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "SKU": "={{ $json.sku }}",
+            "Modèle": "={{ $json.name }}",
+            "Prix": "={{ $json.price }}"
+          },
+          "matchingColumns": [
+            "SKU"
+          ],
+          "schema": [
+            {
+              "id": "SKU",
+              "displayName": "SKU",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Modèle",
+              "displayName": "Modèle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prix",
+              "displayName": "Prix",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        0,
+        912
+      ],
+      "id": "dfe66e52-8885-4a35-96b2-32e7064d1ac4",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7JAwvDgccaa2DtIC",
+          "name": "Google Sheets account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const magentoItems = $items(\"Split Out\");\nconst sheetItems = $items(\"Get_processed_velos\");\n\n// On crée une \"map\" pour chercher les prix du Sheet par SKU très rapidement\nconst sheetMap = {};\nsheetItems.forEach(item => {\n  if (item.json.SKU) {\n    sheetMap[item.json.SKU] = {\n      prix: parseFloat(item.json.Prix),\n      nom: item.json.Modèle\n    };\n  }\n});\n\nconst results = [];\n\nfor (const item of magentoItems) {\n  const m = item.json;\n  const sku = m.sku;\n  const prixActuel = parseFloat(m.price);\n  const existant = sheetMap[sku];\n\n  if (!existant) {\n    // Cas 1 : Le vélo n'est pas dans le Sheet\n    results.push({ json: { ...m, action: 'AJOUTER', raison: 'Nouveau vélo' } });\n  } else if (existant.prix !== prixActuel) {\n    // Cas 2 : Le prix a changé\n    results.push({ \n      json: { \n        ...m, \n        action: 'UPDATE_PRIX', \n        ancien_prix: existant.prix, \n        nouveau_prix: prixActuel,\n        raison: `Le prix a changé : ${existant.prix}€ -> ${prixActuel}€`\n      } \n    });\n  }\n}\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2512,
+        1120
+      ],
+      "id": "feea6f0b-07db-4cbd-8805-8852330e8160",
+      "name": "Code in JavaScript",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1C6NM_TqBVrDjdXqQ7DgmcLRlPBCr-77_QogWAtpzUpg",
+          "mode": "list",
+          "cachedResultName": "Alerte_prix_file",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1C6NM_TqBVrDjdXqQ7DgmcLRlPBCr-77_QogWAtpzUpg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 106892010,
+          "mode": "list",
+          "cachedResultName": "Feuille 2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1C6NM_TqBVrDjdXqQ7DgmcLRlPBCr-77_QogWAtpzUpg/edit#gid=106892010"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -576,
+        -1008
+      ],
+      "id": "1e54568c-7453-44c3-9d51-94c227024dc5",
+      "name": "Get_processed_velos",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7JAwvDgccaa2DtIC",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Récupère les dossiers déjà traités depuis le Google Sheet\nconst sheetItems = $items(\"Get_Processed_velos\", 0);\nconst processedNames = sheetItems\n  .map(i => i.json.Modele?.trim().toLowerCase())\n  .filter(v => v && v.length > 0);\n\n// Récupère les dossiers depuis Google Drive\nconst driveItems = $items(\"Split_out\", 0);\nconst newFolders = driveItems.filter(i => {\n  const name = (i.json.name || \"\").trim().toLowerCase();\n  return name && !processedNames.includes(name);\n});\n\n// Retourne uniquement les nouveaux dossiers\nreturn newFolders.map(i => ({\n  json: {\n    name: i.json.name,\n    id: i.json.id\n  }\n}));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -784,
+        912
+      ],
+      "id": "78a33035-c80e-4ad5-8925-8713bb95c3b5",
+      "name": "Code in JavaScript1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "sku",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2880,
+        1104
+      ],
+      "id": "309174e6-8a72-4c67-8ec4-2f9cf9717e7e",
+      "name": "Merge",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "sku",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        608,
+        -832
+      ],
+      "id": "862834e7-0a28-4e73-8b1d-a68f9eb9dc5f",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "688353bd-2939-4f44-bf9d-52847bafdafe",
+              "leftValue": "={{ $json.ekstere_status }}",
+              "rightValue": "validated",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "0069eb44-5d40-40e3-b8cf-b187c608f041",
+              "leftValue": "={{ $json.qty }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        -816
+      ],
+      "id": "8ff32d9e-92ed-4e3d-8572-da70d53df8f8",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "ql8CkxXHHgtCgnla",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/ql8CkxXHHgtCgnla",
+          "cachedResultName": "MAJ_BDD_velo"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        1728,
+        -944
+      ],
+      "id": "d8f9310d-aad7-4dcd-b22e-6aa6b2eb3817",
+      "name": "Call 'MAJ_BDD_velo'"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 7
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1936,
+        -528
+      ],
+      "id": "2750c748-6f86-4d5c-b39c-fede2af25e6b",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -2224,
+        -1616
+      ],
+      "id": "c907d79f-4023-4b54-9709-ab677d625d35",
+      "name": "Wait1",
+      "webhookId": "c6a82bca-ec04-4a34-a3ae-e32a2ad214f5",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "spaceId": "spaces/AAQAV97fdAA",
+        "messageUi": {
+          "text": "=Nouveau prix pour le {{ \"*\"+$json['Modèle']+\"*\" }} : \n\n  * Prix Spécial Initial: [ {{ $json['Prix Spécial']  ? \"*\" + $json['Prix Spécial'] + \"*\" : \"*\"+ \"Aucun\" + \"*\"}} ]\n\n  * Nouveau Prix Spécial: [ {{ $json.special_price ? \"*\" +$json.special_price +\"*\" : \"*\"+ \"Aucun\" + \"*\"}} ]\n\n  * Prix Neuf: [ {{\"*\"+ $json.Prix + \"*\"}} ]\n\n  * SKU : [{{ \"*\"+$json.sku +\"*\"}}]\n\n  * Atelier : [{{\"*\"+ $json.ekstere_control_center +\"*\"}}]\n\n  * URL_Magento: \"https://ekstere.eco/admin_fhy4jh/catalog/product/edit/id/{{ $json.id }}\"\n\nPensez à réimprimer l’étiquette."
+        },
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleChat",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        -768
+      ],
+      "id": "bd38c205-7df8-47e5-b148-58540d2a6c3d",
+      "name": "Alerte_message",
+      "webhookId": "eb3b28f9-897f-4869-bb67-73127f6864f0",
+      "credentials": {
+        "googleApi": {
+          "id": "76LsKuYVxJDonzoi",
+          "name": "Google - ekstere - Service account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.url }}{{ $json.api_login_url }}{{ $json.endoints._adminToken }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "username",
+              "value": "={{ $json.username }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $json.password }}"
+            }
+          ]
+        },
+        "options": {
+          "allowUnauthorizedCerts": true,
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -880,
+        -608
+      ],
+      "id": "d1696f1c-99d8-4eb3-b355-c4ff518a5170",
+      "name": "CONNECTION_MAGENTO1"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"username\": \"n8nAgent\",\n  \"password\": \"N8Nagent_N8N2025$\",\n  \"_username\": \"admin\",\n  \"_password\": \"ypnj9uje87LrZ67!!!\",\n  \"url\":\"https://ekstere.eco\",\n  \"api_login_url\":\"/rest/V1/integration\",\n  \"api_url\":\"/rest/V1\",\n  \"endoints\":{\n    \"_adminToken\": \"/admin/token\",\n    \"_categories_GET\":\"/categories\",\n    \"_categories_CREATE\":\"/categories\",\n    \"_categories_UPDATE\":\"/categories\",\n    \"_products_GET\": \"/products\",\n    \"_products_CREATE\": \"/products\",\n    \"_products_UPDATE\": \"/products\",\n    \"_annonce_GET\": \"/ads/validated\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1088,
+        -592
+      ],
+      "id": "dfa0af12-4fe7-4987-85b3-ed837dd7dff8",
+      "name": "_CONFIG1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG1').item.json.url }}{{ $('_CONFIG1').item.json.api_url }}{{ $('_CONFIG1').item.json.endoints._annonce_GET }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "dateFrom",
+              "value": "={{$now.minus(15, 'years').format('yyyy-MM-dd')}}"
+            },
+            {
+              "name": "dateTo",
+              "value": "={{ $now }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.data }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -544,
+        -624
+      ],
+      "id": "79131e6a-b943-4d3c-bdba-2aa9a434ce3a",
+      "name": "GET_MAGENTO_PRODUCTS1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1C6NM_TqBVrDjdXqQ7DgmcLRlPBCr-77_QogWAtpzUpg",
+          "mode": "list",
+          "cachedResultName": "Alerte_prix_file",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1C6NM_TqBVrDjdXqQ7DgmcLRlPBCr-77_QogWAtpzUpg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1837174363,
+          "mode": "list",
+          "cachedResultName": "Feuille 3",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1C6NM_TqBVrDjdXqQ7DgmcLRlPBCr-77_QogWAtpzUpg/edit#gid=1837174363"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -2032,
+        896
+      ],
+      "id": "968d6271-4670-4175-a48d-523e4666c7ec",
+      "name": "Get_processed_velos1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7JAwvDgccaa2DtIC",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.url }}{{ $json.api_login_url }}{{ $json.endoints._adminToken }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "username",
+              "value": "={{ $json.username }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $json.password }}"
+            }
+          ]
+        },
+        "options": {
+          "allowUnauthorizedCerts": true,
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2560,
+        864
+      ],
+      "id": "01b28c30-503f-4bcc-9258-91fd4222f527",
+      "name": "CONNECTION_MAGENTO2"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"username\": \"n8nAgent\",\n  \"password\": \"N8Nagent_N8N2025$\",\n  \"_username\": \"admin\",\n  \"_password\": \"ypnj9uje87LrZ67!!!\",\n  \"url\":\"https://ekstere.eco\",\n  \"api_login_url\":\"/rest/V1/integration\",\n  \"api_url\":\"/rest/V1\",\n  \"endoints\":{\n    \"_adminToken\": \"/admin/token\",\n    \"_categories_GET\":\"/categories\",\n    \"_categories_CREATE\":\"/categories\",\n    \"_categories_UPDATE\":\"/categories\",\n    \"_products_GET\": \"/products\",\n    \"_products_CREATE\": \"/products\",\n    \"_products_UPDATE\": \"/products\",\n    \"_annonce_GET\": \"/ads/validated\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2800,
+        864
+      ],
+      "id": "6e6a8997-a359-41b0-8a7e-c286d64c6a7e",
+      "name": "_CONFIG2"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG2').item.json.url }}{{ $('_CONFIG2').item.json.api_url }}{{ $('_CONFIG2').item.json.endoints._annonce_GET }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "dateFrom",
+              "value": "={{$now.minus(25, 'years').format('yyyy-MM-dd')}}"
+            },
+            {
+              "name": "dateTo",
+              "value": "={{ $now }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.data }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2272,
+        896
+      ],
+      "id": "70d7d78a-5a7c-49a3-862e-389249afdf00",
+      "name": "GET_MAGENTO_PRODUCTS2"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "08ce34ac-68fc-43fc-a063-823fe7faca8c",
+                    "leftValue": "={{ $json.Prix != $json.price &&  $json['Prix Spécial'] != $json.special_price }}",
+                    "rightValue": "=false",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Prix Neuf et Spécial"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.Prix }}",
+                    "rightValue": "={{ $json.price }}",
+                    "operator": {
+                      "type": "number",
+                      "operation": "notEquals"
+                    },
+                    "id": "4d450f6d-7452-4abd-a020-f9101757c6f9"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Prix neuf"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "85947094-21a5-4871-8a61-f8ba25781d08",
+                    "leftValue": "={{ $json['Prix Spécial'] }}",
+                    "rightValue": "={{ $json.special_price }}",
+                    "operator": {
+                      "type": "number",
+                      "operation": "notEquals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Prix Spécial"
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        784,
+        -896
+      ],
+      "id": "94c24d0f-506e-457c-8370-adb9ee031445",
+      "name": "Switch4"
+    },
+    {
+      "parameters": {
+        "spaceId": "spaces/AAQAV97fdAA",
+        "messageUi": {
+          "text": "=Nouveau prix pour le {{ \"*\"+$json['Modèle']+\"*\" }} : \n\n  * Prix Neuf Initial: [ {{ $json.Prix  ? \"*\" + $json.Prix + \"*\" : \"*\"+ \"Aucun\" + \"*\"}} ]\n\n  * Nouveau Prix Neuf: [ {{ $json.price ? \"*\" +$json.price +\"*\" : \"*\"+ \"Aucun\" + \"*\"}} ]\n\n  * Prix Spécial: [ {{ $json['Prix Spécial']  ? \"*\" + $json['Prix Spécial'] + \"*\" : \"*\"+ \"Aucun\" + \"*\"}} ]\n\n  * SKU : [{{ \"*\"+$json.sku +\"*\"}}]\n\n  * Atelier : [{{\"*\"+ $json.ekstere_control_center +\"*\"}}]\n\n  * URL_Magento: \"https://ekstere.eco/admin_fhy4jh/catalog/product/edit/id/{{ $json.id }}\"\n\nPensez à réimprimer l’étiquette."
+        },
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleChat",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        -944
+      ],
+      "id": "68ff26d8-085e-4b31-a4d6-ac58a4ea07f1",
+      "name": "Alerte_message1",
+      "webhookId": "eb3b28f9-897f-4869-bb67-73127f6864f0",
+      "credentials": {
+        "googleApi": {
+          "id": "76LsKuYVxJDonzoi",
+          "name": "Google - ekstere - Service account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"baseUrl\": \"https://ekstere.eco\",\n  \"tokenEndpoint\": \"/rest/V1/integration/admin/token\",\n  \"productsUrl\": \"/rest/V1/products\",\n  \"username\": \"api_magento\",\n  \"password\": \"E28hBaZmdb2K\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        800,
+        -1744
+      ],
+      "id": "aadc25a6-c601-4e2a-a952-4f815e46c65e",
+      "name": "_CONFIG_MAGENTO1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.baseUrl }}{{ $json.tokenEndpoint }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "username",
+              "value": "={{ $json.username }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $json.password }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text",
+              "outputPropertyName": "token"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1024,
+        -1760
+      ],
+      "id": "4af8b661-0fda-49ff-bf9c-614e6df7e1e4",
+      "name": "Get_Token1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG_MAGENTO1').item.json.baseUrl + $('_CONFIG_MAGENTO1').item.json.productsUrl + '?searchCriteria[pageSize]=100&searchCriteria[currentPage]=1' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1760,
+        -1152
+      ],
+      "id": "a66883be-2782-4e88-a39e-7244b26796c5",
+      "name": "Get_velos1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG_MAGENTO1').item.json.baseUrl }}{{ $('_CONFIG_MAGENTO1').item.json.productsUrl }}/{{ $('Switch4').item.json.sku }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1232,
+        -1760
+      ],
+      "id": "6ffde412-1c2d-4a23-af5b-c10ba466e0e9",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('_CONFIG_MAGENTO1').item.json.baseUrl }}/rest/V1/categories/4651",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Get_Token1').item.json.token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1440,
+        -1760
+      ],
+      "id": "f065eac4-13fd-4662-90ef-445cefa6f7dd",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "spaceId": "spaces/AAQAV97fdAA",
+        "messageUi": {
+          "text": "=Nouveau prix pour le {{ \"*\"+$json['Modèle']+\"*\" }} : \n\n  * Prix Neuf Initial: [ {{ $json.Prix  ? \"*\" + $json.Prix + \"*\" : \"*\"+ \"Aucun\" + \"*\"}} ]\n\n  * Nouveau Prix Neuf: [ {{ $json.price ? \"*\" +$json.price +\"*\" : \"*\"+ \"Aucun\" + \"*\"}} ]\n\n  * Prix Spécial Initial: [ {{ $json['Prix Spécial']  ? \"*\" + $json['Prix Spécial'] + \"*\" : \"*\"+ \"Aucun\" + \"*\"}} ]\n\n  * Nouveau Prix Spécial: [ {{ $json.special_price ? \"*\" +$json.special_price +\"*\" : \"*\"+ \"Aucun\" + \"*\"}} ]\n\n  * SKU : [{{ \"*\"+$json.sku +\"*\"}}]\n\n  * Atelier : [{{\"*\"+ $json.ekstere_control_center +\"*\"}}]\n\n  * URL_Magento: \"https://ekstere.eco/admin_fhy4jh/catalog/product/edit/id/{{ $json.id }}\"\n\nPensez à réimprimer l’étiquette."
+        },
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleChat",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        -1152
+      ],
+      "id": "9d02113e-4a86-4ff2-9957-430cb18d434f",
+      "name": "Alerte_message2",
+      "webhookId": "eb3b28f9-897f-4869-bb67-73127f6864f0",
+      "credentials": {
+        "googleApi": {
+          "id": "76LsKuYVxJDonzoi",
+          "name": "Google - ekstere - Service account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "CONNECTION_MAGENTO": {
+      "main": [
+        [
+          {
+            "node": "GET_MAGENTO_PRODUCTS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "_CONFIG": {
+      "main": [
+        [
+          {
+            "node": "CONNECTION_MAGENTO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET_MAGENTO_PRODUCTS": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [],
+        [],
+        [],
+        [],
+        []
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        []
+      ]
+    },
+    "_CONFIG Cote-Velo": {
+      "main": [
+        [
+          {
+            "node": "Login token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Login token": {
+      "main": [
+        [
+          {
+            "node": "_CONFIG",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "_CONFIG_MAGENTO": {
+      "main": [
+        [
+          {
+            "node": "Get_Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET_Destination_SUBFOLDERS": {
+      "main": [
+        [
+          {
+            "node": "Split_out_destination",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split_out_destination": {
+      "main": [
+        []
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Switch2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Switch3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        []
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        []
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_Token": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_velos": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_categorie": {
+      "main": [
+        [
+          {
+            "node": "Get_elec",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_elec": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map_infos": {
+      "main": [
+        [
+          {
+            "node": "Get_categorie",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch2": {
+      "main": [
+        [
+          {
+            "node": "Analyze document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "Analyze document": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        []
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        []
+      ]
+    },
+    "Get_processed_velos": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Switch4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Call 'MAJ_BDD_velo'": {
+      "main": [
+        []
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get_processed_velos",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "_CONFIG1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Get_velos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alerte_message": {
+      "main": [
+        [
+          {
+            "node": "Call 'MAJ_BDD_velo'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CONNECTION_MAGENTO1": {
+      "main": [
+        [
+          {
+            "node": "GET_MAGENTO_PRODUCTS1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "_CONFIG1": {
+      "main": [
+        [
+          {
+            "node": "CONNECTION_MAGENTO1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET_MAGENTO_PRODUCTS1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_processed_velos1": {
+      "main": [
+        []
+      ]
+    },
+    "CONNECTION_MAGENTO2": {
+      "main": [
+        [
+          {
+            "node": "GET_MAGENTO_PRODUCTS2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "_CONFIG2": {
+      "main": [
+        [
+          {
+            "node": "CONNECTION_MAGENTO2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET_MAGENTO_PRODUCTS2": {
+      "main": [
+        [
+          {
+            "node": "Get_processed_velos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch4": {
+      "main": [
+        [
+          {
+            "node": "Alerte_message2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alerte_message1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alerte_message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alerte_message1": {
+      "main": [
+        [
+          {
+            "node": "Call 'MAJ_BDD_velo'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "_CONFIG_MAGENTO1": {
+      "main": [
+        [
+          {
+            "node": "Get_Token1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_Token1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alerte_message2": {
+      "main": [
+        [
+          {
+            "node": "Call 'MAJ_BDD_velo'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "7b14118e-3710-48ce-9856-d0f0f87bd5fd",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "aca6ed7ec8875b2fbca26169c7cd9cbc432770c08b36ede295ebecdc45904a16"
+  },
+  "id": "xkVmpbWa4BrVzMqN",
+  "tags": []
+}
