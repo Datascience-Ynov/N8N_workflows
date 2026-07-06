@@ -1,0 +1,1387 @@
+{
+  "name": "[AGENT] ekstere AI Assistant",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "N8N-agent",
+        "options": {
+          "responseData": "{   \"text\": \"⏳ Je m’en occupe… je reviens vers toi dans un instant.\" }",
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1552,
+        -336
+      ],
+      "id": "76faa0c9-ebc6-4d95-8df5-af523e6bad58",
+      "name": "Webhook",
+      "webhookId": "e7bb41ed-f592-4e3b-9ec1-cc20fd47b405"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=<language>YOU ALWAYS THINK IN ENGLISH BUT ANSWER IN FRENCH</language>\n<role>\nYou are the ekstere AI Dispatcher, the first point of contact for all user requests within the ekstere internal automation system. You are the intelligent router that ensures every request is properly understood and enriched before execution. Your personality embodies ekstere values: accessible, expert, pragmatic, and fundamentally skeptical of vague requests. You speak French naturally.\n</role>\n\n<core_mission>\nYour ONLY mission is to route user requests through the prompt enrichment process. You do NOT execute requests directly. You are the quality gatekeeper that ensures every instruction is crystal clear before any action is taken.\n\n**CRITICAL RULE: You MUST ALWAYS call the `enrich_prompt` tool for EVERY user request, no exceptions.**\n</core_mission>\n\n<instructions>\n<workflow>\nWhen you receive a user message, follow this MANDATORY process:\n\n1. **Acknowledge receipt** (brief, friendly)\n2. **IMMEDIATELY call the `enrich_prompt` tool** with the user's request\n3. **Present the enrichment result** to the user\n4. **If clarity is insufficient** (score < 9/10): relay the questions back to the user\n5. **If clarity is achieved** (score ≥ 9/10): confirm and prepare for execution\n\nYou CANNOT skip step 2. Even if the request seems clear, the enrichment tool must validate it.\n</workflow>\n\n<tool_usage_rules>\n### enrich_prompt Tool (MANDATORY FOR ALL REQUESTS)\n\n**When to use:** ALWAYS. For every single user request without exception.\n\n**What it does:** \n- Analyzes the user's request across multiple dimensions\n- Identifies ambiguities and missing context\n- Generates clarifying questions if needed\n- Produces a structured, execution-ready prompt when clarity is achieved\n\n**How to call it:**\nPass the user's raw message as the input. The tool will handle the rest.\n\n**Example calls:**\n- User says: \"Aide-moi avec le SEO\" → Call enrich_prompt immediately\n- User says: \"Crée 10 posts Instagram\" → Call enrich_prompt immediately  \n- User says: \"Bonjour\" → Call enrich_prompt (even for greetings, to establish context)\n- User provides answers to previous questions → Call enrich_prompt with updated context\n\n**Never attempt to:**\n- Answer the request yourself without calling the tool\n- Make assumptions about what the user wants\n- Execute actions directly\n- Skip the enrichment process \"because it seems simple\"\n</tool_usage_rules>\n\n<response_guidelines>\n### First Contact (New Request)\n```\n\"👋 Bien reçu ! Je vais analyser ta demande pour m'assurer de bien comprendre tous les détails...\"\n\n[CALL enrich_prompt TOOL]\n\n[Present result based on tool output]\n```\n\n### Presenting Enrichment Results\n\n**If clarity_score < 9/10:**\n```\n\"📋 Voici ce que j'ai compris :\n[reformulation from tool]\n\n🤔 Pour t'aider au mieux, j'ai besoin de précisions sur :\n[list critical questions from tool]\n\n[list important questions if any]\n\n💡 Ces détails me permettront de générer exactement ce dont tu as besoin, aligné avec notre ADN ekstere.\"\n```\n\n**If ready_to_launch = true:**\n```\n\"✅ Parfait, j'ai maintenant toutes les informations nécessaires !\n\n📋 Récapitulatif :\n[reformulation from tool]\n\n🎯 Je suis prêt à lancer la génération. On y va ? \n\n[Si oui, je transmets le prompt enrichi à l'équipe d'exécution]\"\n```\n\n### Handling Follow-up Answers\nWhen user provides answers to your questions:\n```\n\"Merci pour ces précisions ! Je mets à jour ma compréhension...\"\n\n[CALL enrich_prompt TOOL with updated context]\n\n[Continue the refinement cycle]\n```\n\n### Tone Guidelines\n- **Conversational but efficient:** Pas de blabla inutile, va droit au but\n- **Pédagogique:** Explique pourquoi tu poses des questions\n- **Bienveillant:** Les questions ne sont pas un jugement mais une aide\n- **Pragmatique:** Focus sur l'actionnable\n- **French naturally:** C'est un outil interne ekstere, parle français sans forcer\n</response_guidelines>\n\n<what_you_cannot_do>\nYou CANNOT:\n- Execute content generation yourself\n- Skip the enrichment process\n- Make assumptions and proceed without validation\n- Answer user questions directly without tool assistance\n- Provide generic advice without context validation\n\nYour role is strictly to route and refine, not to execute.\n</what_you_cannot_do>\n\n<context>\n### About ekstere\n- Mission: Rendre le vélo durable, accessible et heureux pour tous\n- Values: Sustainability, Trust, Accessibility, Premium Quality, Community\n- Tone: Accessible yet expert, pedagogical without bullshit, pragmatic and demanding\n- Products: Vélos électriques reconditionnés, services de maintenance, suivi digital\n\n### Available Tools\nCurrently, you have access to:\n1. **enrich_prompt** (MANDATORY for all requests)\n   - Analyzes and structures user requests\n   - Generates clarifying questions\n   - Produces execution-ready prompts\n\n[Future tools will be added here as the system evolves]\n\n### Current Date & Time\n{{ $now.toISO() }}\n</context>\n\n<examples>\n\n### Example 1: Vague Marketing Request\n**User:** \"J'ai besoin de contenu marketing\"\n\n**Dispatcher:**\n\"👋 Reçu ! Je vais analyser ta demande pour identifier exactement quel type de contenu tu souhaites créer...\"\n\n[CALLS enrich_prompt tool]\n\n\"📋 J'ai commencé à analyser ta demande et j'ai besoin de précisions essentielles :\n\n**Questions critiques :**\n1. Quel format de contenu ? (article blog, posts réseaux sociaux, newsletter, landing page...)\n2. Quel objectif business ? (leads, engagement, notoriété, vente...)\n3. Quelle audience cible ? (prospects, clients, partenaires...)\n\n**Questions importantes :**\n4. Quelle période ou deadline ?\n5. Y a-t-il un sujet/angle spécifique ?\n\n💡 Ces infos me permettront de te proposer du contenu parfaitement aligné avec nos guidelines ekstere.\"\n\n---\n\n### Example 2: Clearer Request\n**User:** \"Crée-moi 5 posts LinkedIn sur les avantages du vélo reconditionné pour novembre\"\n\n**Dispatcher:**\n\"👋 Super, je vois l'idée ! Je lance l'analyse pour m'assurer qu'on couvre tous les aspects...\"\n\n[CALLS enrich_prompt tool]\n\n\"📋 Voici ce que j'ai compris :\n- 5 posts LinkedIn\n- Sujet : avantages VAE reconditionné  \n- Publication : novembre\n\n🤔 Quelques précisions pour optimiser :\n\n**Critiques :**\n1. Quelle cible précise ? (particuliers indécis, entreprises, prescripteurs...)\n2. Quel angle prioritaire ? (économie, écologie, qualité, tous ?)\n\n**Important :**\n3. Quel ton ? (inspirant, pédagogique, commercial soft...)\n4. Y a-t-il des modèles/offres ekstere à mettre en avant ?\n\nClarté actuelle : 6/10 - on y est presque !\"\n\n---\n\n### Example 3: User Provides Answers\n**User:** \"Cible les particuliers 30-45 ans en réflexion achat. Ton pédagogique. Mets en avant notre garantie 2 ans.\"\n\n**Dispatcher:**\n\"Parfait, merci pour ces précisions ! Je relance l'enrichissement avec ces éléments...\"\n\n[CALLS enrich_prompt tool with updated context]\n\n\"✅ Excellent, maintenant c'est clair !\n\n📋 Récapitulatif final :\n- 5 posts LinkedIn pour novembre\n- Cible : particuliers 30-45 ans en considération\n- Angle : avantages VAE reconditionné (focus garantie ekstere)\n- Ton : pédagogique, expert mais accessible\n- Objectif : rassurer et générer des leads qualifiés\n\nClarté : 9/10 ✨\n\n🚀 Je suis prêt à générer ces posts en respectant notre ADN ekstere. On lance ?\"\n\n---\n\n### Example 4: Simple Greeting (Still Use Tool)\n**User:** \"Salut, tu peux m'aider ?\"\n\n**Dispatcher:**\n\"👋 Salut ! Bien sûr, je suis là pour ça. Laisse-moi d'abord comprendre ton contexte...\"\n\n[CALLS enrich_prompt tool]\n\n\"Je vois que tu cherches de l'aide, mais je n'ai pas encore assez de détails sur ce dont tu as besoin.\n\nDis-moi concrètement : sur quoi veux-tu de l'aide ? \n- Création de contenu (articles, posts, newsletters) ?\n- Analyse de données marketing (GA, GSC) ?\n- Support projet (specs, planning, recherche) ?\n- Autre chose ?\n\n💡 Plus tu es précis, mieux je peux t'accompagner !\"\n\n</examples>\n\n<critical_reminders>\n1. **NEVER skip the enrich_prompt tool** - it's mandatory for quality assurance\n2. **You are a router, not an executor** - don't try to answer requests yourself\n3. **Embrace the iterative process** - clarity takes time, and that's okay\n4. **Trust the tool's judgment** - if it says clarity is 4/10, relay those questions\n5. **Stay aligned with ekstere values** - every interaction reflects our brand\n6. **Be patient with users** - vague requests are normal, your job is to refine them\n7. **Keep it conversational** - you're helpful, not bureaucratic\n\nRemember: Your success is measured by the quality of the prompts you generate, not the speed at which you rush through them. Slow down to go fast.\n</critical_reminders>\n\n<error_handling>\nIf the enrich_prompt tool fails or returns an error:\n1. Acknowledge the issue transparently\n2. Ask the user to rephrase or provide more context manually\n3. Log the error for technical review\n4. Offer to break down the request into smaller parts\n\nNever pretend you can proceed without the tool working properly.\n</error_handling>\n\nDEMANDE DE L'UTILISATEUR:\n{{ $json.event.message.text }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -1648,
+        1360
+      ],
+      "id": "e44b4612-f1a8-46e2-94a0-ed10aae6ae2c",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "redisIndex": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreRedis",
+      "typeVersion": 1.3,
+      "position": [
+        -1648,
+        1584
+      ],
+      "id": "a05ca8b7-7a1b-4e97-9594-351cbde0ce33",
+      "name": "Redis Vector Store",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {
+          "stripNewLines": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -1568,
+        1792
+      ],
+      "id": "32057713-00a7-4a6d-9b9e-05dbe315d1b6",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "1bQ6RbV407rxG6pu",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "CZZrL9tjYqgOUlhv",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/CZZrL9tjYqgOUlhv",
+          "cachedResultName": "[OMKUnity] Prompt Optimizer"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "previous_prompt": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('previous_prompt', ``, 'string') }}",
+            "answers_to_questions": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('answers_to_questions', ``, 'string') }}",
+            "iteration_number": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('iteration_number', ``, 'string') }}",
+            "max_prompt_length": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('max_prompt_length', ``, 'string') }}",
+            "user_context": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('user_context', ``, 'json') }}",
+            "id_memory": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_memory', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "previous_prompt",
+              "displayName": "previous_prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "answers_to_questions",
+              "displayName": "answers_to_questions",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "iteration_number",
+              "displayName": "iteration_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "max_prompt_length",
+              "displayName": "max_prompt_length",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "user_context",
+              "displayName": "user_context",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "object",
+              "removed": false
+            },
+            {
+              "id": "id_memory",
+              "displayName": "id_memory",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -1360,
+        1584
+      ],
+      "id": "9306353f-b451-49cb-b450-5473e73d81bf",
+      "name": "Call '[OMKUnity] Prompt Optimizer'"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1776,
+        1584
+      ],
+      "id": "e1cc2726-bff0-44f7-9cfb-e53772a8c166",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "5pTghVwrfcz026Vc",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.first();\nconst body = item.json.body ?? item.json;\nconst chat = body.chat ?? {};\nconst ceo = body.commonEventObject ?? {};\n\nconst payload =\n  chat.appCommandPayload ??\n  chat.messagePayload ??\n  chat.cardClickPayload ??\n  chat.appActionPayload ??\n  null;\n\nconst message = payload?.message ?? chat.message ?? null;\nconst space = payload?.space ?? message?.space ?? {};\nconst user = chat.user ?? payload?.user ?? body.user_context ?? {};\n\nconst annotations = message?.annotations ?? [];\nconst slashAnn = annotations.find(a => a.type === 'SLASH_COMMAND');\n\nconst normalized = {\n  // Contexte\n  hostApp: ceo.hostApp ?? 'CHAT',\n  platform: ceo.platform ?? 'WEB',\n  userLocale: ceo.userLocale ?? 'fr',\n  eventTime: chat.eventTime ?? new Date().toISOString(),\n\n  // Dialog\n  isDialogEvent: !!payload?.isDialogEvent,\n  dialogEventType: payload?.dialogEventType ?? null, // REQUEST_DIALOG, SUBMIT_DIALOG\n  invokedFunction: payload?.common?.invokedFunction ?? payload?.invokedFunction ?? null,\n\n  // Typage de l’event\n  eventType: payload?.appCommandMetadata ? 'SLASH_COMMAND'\n           : payload?.action ? 'CARD_CLICKED'\n           : message ? 'MESSAGE'\n           : 'UNKNOWN',\n\n  // Slash command\n  commandId: payload?.appCommandMetadata?.appCommandId ?? null,\n  commandName: slashAnn?.slashCommand?.commandName ?? null,\n\n  // Texte\n  messageText: (message?.argumentText ?? message?.text ?? '').trim(),\n  messageTextFull: message?.text ?? '',\n\n  // Espace / thread / user\n  threadName: message?.thread?.name ?? null,\n  spaceName: space?.name ?? null,\n  spaceType: space?.type ?? null,\n  isDM: space?.type === 'DM' || space?.singleUserBotDm === true,\n\n  userName: user?.displayName ?? 'Utilisateur',\n  userEmail: user?.email ?? null,\n  userId: user?.name ?? user?.email ?? null,\n\n  // Analytics simples\n  detectedLanguage: /[à-ÿ]/i.test(message?.text ?? '') ? 'fr' : 'en',\n  wordCount: (message?.text ?? '').trim().split(/\\s+/).filter(Boolean).length,\n\n  _raw: { body, payload, message, space, user }\n};\n\nreturn [{ json: normalized }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1328,
+        -432
+      ],
+      "id": "d2722106-17c6-4279-bd56-41b94d78abdf",
+      "name": "NormalizeEvent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Répond à l'utilisateur\nvoici son payload :\n{{ $json._raw.payload.toJsonString() }}\n\nTOOLS : TU DOIS TOULOURS UTILISER L'OUTIL RAG D'EKSTERERE CONNECTE POUR PARFAIRE TA REPONSE\n\nTU DOIS REPONDRE DANS LE FORMAT ATTENDU PAR GOOGLE CHAT API POUR LA MISE EN FORME PARFAITE\n\nPOUR RAPPEL : \nUse markdown formatting in Google Chat\nTo add markdown formatting to your Google Chat messages, you can include special characters in the text.\nFormat option\tMarkdown example\nBold\t*Text*\nItalicize\t_Text_\nStrikethrough\t~Text~\nInline code block\t`Text`\nMulti-line code block\t```Text```\nBullet\t- Text or * Text\nTips:\n\nAn inline code block wraps the text.\nAfter a multi-line code block is sent, you can use a toggle to turn the line wrapping on or off.",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -320,
+        -32
+      ],
+      "id": "6d7e6f5c-5601-43e9-adfc-2626319e9bf2",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-flash-latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        208
+      ],
+      "id": "c871e92e-99f4-4a45-966d-562e60b41770",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "5pTghVwrfcz026Vc",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "spaceId": "={{ $('NormalizeEvent').item.json.spaceName }}",
+        "jsonParameters": true,
+        "messageJson": "={ \n  \"text\": {{ JSON.stringify($json.output||$json.content.parts[0].text).replaceAll('\"','\\\"').replaceAll('\\n','\\\\n')}},\n  \"thread\": {\n    \"name\": \"{{ $('NormalizeEvent').first().json.threadName }}\"\n  }\n}",
+        "additionalFields": {
+          "requestId": ""
+        }
+      },
+      "type": "n8n-nodes-base.googleChat",
+      "typeVersion": 1,
+      "position": [
+        736,
+        -320
+      ],
+      "id": "760e37e1-af02-46a9-bfd3-8fc8026b7ede",
+      "name": "Create a message",
+      "webhookId": "87e66694-a7ce-4350-a2f1-4e699e252d1b",
+      "credentials": {
+        "googleApi": {
+          "id": "76LsKuYVxJDonzoi",
+          "name": "Google - ekstere - Service account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('NormalizeEvent').first().json.spaceName + ':' +\n   ( $('NormalizeEvent').first().json.threadName ?? 'NO_THREAD') + ':' +\n   ( $('NormalizeEvent').first().json.userId ?? 'NO_USER') }}\n",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -304,
+        -624
+      ],
+      "id": "fdf9f1db-0da7-4ae6-a8de-8f09a93c6c40",
+      "name": "Simple Memory1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{$json.eventType}}",
+                    "rightValue": "SLASH_COMMAND",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "1d82108e-36b6-47ad-8a61-ce995e2c8de7"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "SLASH_COMMAND"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b7202265-c400-4e41-a1cc-1cc8498596ec",
+                    "leftValue": "={{$json.eventType}}",
+                    "rightValue": "CARD_CLICKED",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "CARD_CLICKED"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "244a6f4d-07fd-488f-8806-e6f333a53ab0",
+                    "leftValue": "={{$json.eventType}}",
+                    "rightValue": "MESSAGE",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "MESSAGE"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "UnknownEvent"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        -1104,
+        -464
+      ],
+      "id": "931a089a-da07-423c-b474-97ed2d674344",
+      "name": "RouteByEventType"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{$json.commandName}}",
+                    "rightValue": "/content-ideas",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "1d82108e-36b6-47ad-8a61-ce995e2c8de7"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "/content-ideas"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b7202265-c400-4e41-a1cc-1cc8498596ec",
+                    "leftValue": "={{$json.commandName}}",
+                    "rightValue": "/article-plan",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "/article-plan"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c9668d96-a0d3-4ad6-a39e-8912a25e4ea4",
+                    "leftValue": "={{$json.commandName}}",
+                    "rightValue": "/social-post",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "=/social-post"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "54af5528-db37-4584-88db-5b1b7c962f96",
+                    "leftValue": "={{$json.commandName}}",
+                    "rightValue": "/seo-audit",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "=/seo-audit"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "07a21193-aca5-4253-bf53-4afe98461d5f",
+                    "leftValue": "={{$json.commandName}}",
+                    "rightValue": "/meeting-notes",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "/meeting-notes"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b985ce29-c58d-4d18-8046-0f8705dd0d45",
+                    "leftValue": "={{$json.commandName}}",
+                    "rightValue": "/help",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "=/help"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "UnknownEvent"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        -880,
+        -912
+      ],
+      "id": "f1ba8ea6-fc1d-47d6-a56f-ef15b549e197",
+      "name": "RouteByCommand"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "45ef9c64-0305-4b37-8a80-a0dcafc7c5ca",
+              "name": "prompt",
+              "value": "=Contexte utilisateur : \n- Commande invoquée : {{$json.commandName}} \n- Texte fourni : \"{{$json.messageText}}\" \n- Utilisateur : {{$json.userName}} ({{$json.userEmail}})  \n\nRôle de la commande : \n- /ekstere-content-ideas : proposer des idées de contenu pertinentes pour le blog ou les réseaux sociaux, alignées sur le secteur de l’utilisateur. \n- Tu peux suggérer plusieurs angles, titres et formats.  \n\nTâche : - Déduis l’intention exacte de l’utilisateur. \n- Si possible, propose directement 3 à 5 idées de contenu très concrètes, en tenant compte du texte fourni. \n- Si le brief est trop vague, pose 1 question de clarification puis propose au moins 2 idées exemples.  Rappelle-toi : tu dois retourner UNIQUEMENT un JSON suivant le schéma défini dans le message système.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -656,
+        -1232
+      ],
+      "id": "94ca2f19-fa63-441e-8eb9-0d9749558cb3",
+      "name": "Prompt \"content-ideas\""
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.prompt }}",
+        "options": {
+          "systemMessage": "=Tu es “ekstere AI”, l’assistant conversationnel de la plateforme ekstere. \n\nEn premier lieu TU DOIS TOUJOURS UTILISER L'OUTIL [CORE] RAG Agent avec une demande de précision sur les aspects branding d'ekstere et connaitre parfaitement l'entreprise et le positionnement de marque.\n\nAucune reflexion avant d'avoir bien pris en compte les réponse du du RAG.\n\nObjectif :\n- Comprendre l’intention de l’utilisateur dans Google Chat.\n- Générer des réponses parfaitement rédigées, en français, professionnelles, claires et actionnables.\n- T’aligner sur la commande slash invoquée (ex: /ekstere-content-ideas, /ekstere-article-plan, etc.).\n\nContraintes générales :\n- Toujours répondre en français.\n- Ton : expert, bienveillant, concret. Phrase courte, structurée, sans jargon inutile.\n- Ne jamais parler de “prompt”, de “modèle” ni de “tokens”.\n- Si l’information est insuffisante, pose 1 (et une seule) question de clarification, puis propose un exemple de réponse possible.\n\nSchéma de sortie text en markdown structuré:\nTu dois TOUJOURS renvoyer un markdown simple valide, sans commentaire ni explication, de la forme :\n\nSI UNE URL  EST TRANSMISE APPELER L'OUTIP HTTPREQUEST ET ANALYSER LA PAGE"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -256,
+        -864
+      ],
+      "id": "4ddb6c87-869b-4268-98a4-2cfa484ea106",
+      "name": "AI - Orchestrator"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5.2-chat-latest",
+          "mode": "list",
+          "cachedResultName": "gpt-5.2-chat-latest"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -432,
+        -624
+      ],
+      "id": "7d7d8f38-990c-4906-9388-6adc89879b8c",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "1bQ6RbV407rxG6pu",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cfb9f8fc-8308-4f07-b706-d562755eaa84",
+              "name": "output",
+              "value": "={{ $json.output.replaceAll('```','').replaceAll('\\n','').replaceAll('json','') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        160,
+        -320
+      ],
+      "id": "345d8d7a-bdf5-420a-83ed-4d2838f1f226",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "description": "TU ES L'OUTIL RAG d'ekstere ",
+        "workflowId": {
+          "__rl": true,
+          "value": "wKG4Fl0qSnT9K6XZ",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/wKG4Fl0qSnT9K6XZ",
+          "cachedResultName": "[CORE] RAG Agent"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -176,
+        -624
+      ],
+      "id": "2e6fcd73-89ae-4f33-b193-c52e0fc284da",
+      "name": "Call '[CORE] RAG Agent'"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Répond en langauge naturel sur la base de cette réponse IA\nREPONSE : {{ $json.output.replaceAll('```','').replace('json','').replaceAll('\\\\n','').toJsonString().replaceAll('\\\\','') }}\n\nTU DOIS TRANSFOMER LE JSON DE LA REPONSE RECU EN LANGAUGE NATUREL SANS OMETTRE QUOI QUE CE SOIT\n\nTU DOIS REPONDRE DANS LE FORMAT ATTENDU PAR GOOGLE CHAT API POUR LA MISE EN FORME PARFAITE\n\nPOUR RAPPEL : \nUse markdown formatting in Google Chat\nTo add markdown formatting to your Google Chat messages, you can include special characters in the text.\nFormat option\tMarkdown example\nBold\t*Text*\nItalicize\t_Text_\nStrikethrough\t~Text~\nInline code block\t`Text`\nMulti-line code block\t```Text```\nBullet\t- Text or * Text\nTips:\n\nAn inline code block wraps the text.\nAfter a multi-line code block is sent, you can use a toggle to turn the line wrapping on or off.",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        384,
+        -320
+      ],
+      "id": "bb1dc9d1-71be-43c6-8912-bfa3ef912a1c",
+      "name": "AI Agent2"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3-flash-preview",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        464,
+        -96
+      ],
+      "id": "ebb9bc85-ea58-491d-bc5e-2269aa3492c9",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "5pTghVwrfcz026Vc",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "976904b1-c457-4096-a536-01dbeb9962cf",
+              "name": "output",
+              "value": "={{ $json.output.replaceAll('#','').replaceAll('```','').replaceAll('json','')||$json.output.replaceAll('#','').replaceAll('```','').replaceAll('json','').parseJson().text  }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1776,
+        832
+      ],
+      "id": "e0544f89-4fd2-4d1e-8d17-098d6c9b0302",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"text\": \"Bonjour *Erlé* ! Je suis ravi d'être à votre service. Comment puis-je vous aider aujourd'hui dans cet espace `Marketing` ?\",\n  \"thread\": {\n    \"name\": \"spaces/AAQAYF11kdM/threads/YWETTdtGjTI\"\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -1776,
+        512
+      ],
+      "id": "33674a50-1120-4998-861b-6861570d1813",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "45ef9c64-0305-4b37-8a80-a0dcafc7c5ca",
+              "name": "prompt",
+              "value": "=Contexte utilisateur : - Commande invoquée : {{$json.commandName}} - Texte fourni : \"{{$json.messageText}}\" - Utilisateur : {{$json.userName}} ({{$json.userEmail}})  Rôle de la commande : - /article-plan : tu dois concevoir la structure complète la plus SEO friendly pour l'article demandé. - Tu peux suggérer plusieurs angles, titres et formats.  Tâche : - Déduis l’intention exacte de l’utilisateur. - Si possible, propose directement une structure riche et alignée avec l'image de la marque ekstere.eco et des briefs très concrèts pour chaque partie, en tenant compte des mots clés SEO short/middle/long traine et des clusters sémantiques fourni. - Si le brief est trop vague, pose 1 question de clarification puis propose au moins 2 idées exemples.  Rappelle-toi : tu dois retourner UNIQUEMENT un JSON suivant le schéma défini dans le message système.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -656,
+        -1040
+      ],
+      "id": "d3d2a780-02ab-42a1-91d1-671651e0552e",
+      "name": "Prompt \"article-plan\""
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "45ef9c64-0305-4b37-8a80-a0dcafc7c5ca",
+              "name": "prompt",
+              "value": "=Contexte utilisateur :\n- Commande invoquée : {{$json.commandName}}\n- Texte fourni : \"{{$json.messageText}}\"\n- Utilisateur : {{$json.userName}} ({{$json.userEmail}})\n\nRôle de la commande :\n- /social-post : créer un post réseaux sociaux prêt à publier, aligné avec la marque Ekstere (ton pro, clair, utile, orienté conversion sans être agressif).\n- Sorties attendues : 2 à 4 variantes + suggestions visuel + hashtags + CTA.\n\nTâche :\n- Déduis l’intention exacte (annonce, insight, promo, recrutement, storytelling, éducatif…).\n- Déduis la plateforme si possible (LinkedIn / Instagram / X / Facebook). Si non précisée : pose 1 question de clarification (plateforme + objectif) MAIS propose quand même au moins 2 variantes par défaut (LinkedIn).\n- Propose :\n  1) Un “hook” (1ère ligne forte),\n  2) Corps du post (scannable, listes courtes),\n  3) CTA (DM / lien vitrine / prise de contact),\n  4) 5–12 hashtags (selon plateforme),\n  5) Idées de visuels (carousel, photo, avant/après…).\n\nRappelle-toi : tu dois retourner UNIQUEMENT un JSON suivant le schéma défini dans le message système.\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -656,
+        -848
+      ],
+      "id": "816fb2c1-508e-426e-946e-4a8554e0d4bc",
+      "name": "Prompt \"social-post\""
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "45ef9c64-0305-4b37-8a80-a0dcafc7c5ca",
+              "name": "prompt",
+              "value": "=Contexte utilisateur :\n- Commande invoquée : {{$json.commandName}}\n- Texte fourni : \"{{$json.messageText}}\"\n- Utilisateur : {{$json.userName}} ({{$json.userEmail}})\n\nRôle de la commande :\n- /seo-audit : produire un audit SEO actionnable (priorisé) d’une page, d’un type de contenu ou d’un sujet.\n- Objectif : augmenter trafic qualifié + conversions pour ekstere.eco (vélos / e-bikes / reconditionné / occasion / services).\n\nTâche :\n- Si l’utilisateur fournit une URL, un slug, un titre de page ou un mot-clé : fais un audit structuré.\n- Si le brief est trop vague : pose 1 question (URL ou page cible + intention + zone géographique) MAIS propose quand même un audit “baseline” (checklist + priorisation).\n\nAttendus :\n- Diagnostic par blocs : intention & SERP, Title/Meta, Hn, contenu (depth + EEAT), maillage interne, schema, FAQ/snippets, images, perf/tech (CWV), duplicate/cannibalisation, local SEO si pertinent.\n- Un plan d’actions “Impact x Effort” : Quick wins (48h), Next (2 semaines), Build (30 jours).\n- Recommandations de mots-clés : short/middle/long tail + clusters sémantiques (si possible).\n\nRappelle-toi : tu dois retourner UNIQUEMENT un JSON suivant le schéma défini dans le message système.\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -656,
+        -656
+      ],
+      "id": "abfde6c5-afa4-45f9-ab36-e741922f2940",
+      "name": "Prompt \"/seo-audit\""
+    },
+    {
+      "parameters": {
+        "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [
+        -48,
+        -624
+      ],
+      "id": "31fd17b6-df9d-48c3-86a4-e0ff554be4f9",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "45ef9c64-0305-4b37-8a80-a0dcafc7c5ca",
+              "name": "prompt",
+              "value": "=Contexte utilisateur :\n- Commande invoquée : {{$json.commandName}}\n- Texte fourni : \"{{$json.messageText}}\"\n- Utilisateur : {{$json.userName}} ({{$json.userEmail}})\n\nRôle de la commande :\n- /help : expliquer les commandes disponibles d’Ekstere AI + donner des exemples d’usage.\n- Important : la plupart des workflows sont déclenchés via le chat bot Google “Ekstere AI”, en DM (privé) ou dans des spaces d’équipe.\n\nTâche :\n- Affiche la liste des commandes + ce qu’elles font + 1 exemple chacune.\n- Si l’utilisateur demande “quoi faire” sans contexte : propose 3 parcours (SEO / contenu / veille) et propose la commande la plus adaptée.\n- Rappelle comment formuler une demande efficace (brief en 1 phrase + contexte + objectif + audience + contraintes).\n\nCommandes à documenter :\n- /content-ideas\n- /article-plan\n- /social-post\n- /seo-audit\n- /competitor-watch\n- /brand-check\n- /help\n\nRappelle-toi : tu dois retourner UNIQUEMENT un JSON suivant le schéma défini dans le message système.\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -656,
+        -464
+      ],
+      "id": "748b3e5f-cb60-4274-88a0-073581dfc07e",
+      "name": "Prompt \"/help\""
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1776,
+        -528
+      ],
+      "id": "98acdf88-f675-473f-a660-50cdc94a6944",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n    \"headers\": {\n      \"host\": \"agent.ekstere.eco\",\n      \"x-real-ip\": \"74.125.214.71\",\n      \"x-forwarded-for\": \"74.125.214.71\",\n      \"x-forwarded-proto\": \"https\",\n      \"x-forwarded-host\": \"agent.ekstere.eco\",\n      \"connection\": \"upgrade\",\n      \"content-length\": \"4767\",\n      \"content-type\": \"application/json; charset=utf-8\",\n      \"authorization\": \"Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjZhOTA2ZWMxMTlkN2JhNDZhNmE0M2VmMWVhODQyZTM0YThlZTA4YjQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL2FnZW50LmVrc3RlcmUuZWNvL3dlYmhvb2svTjhOLWFnZW50IiwiYXpwIjoiMTA5MDY5NjUwNzc3MTEyOTA4ODk1IiwiZW1haWwiOiJzZXJ2aWNlLTczNzIzMzY3OTU1QGdjcC1zYS1nc3VpdGVhZGRvbnMuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZXhwIjoxNzY2NDkxNzUwLCJpYXQiOjE3NjY0ODgxNTAsImlzcyI6Imh0dHBzOi8vYWNjb3VudHMuZ29vZ2xlLmNvbSIsInN1YiI6IjEwOTA2OTY1MDc3NzExMjkwODg5NSJ9.eO63Trl_9Yy9R8OcVyYSt9QM3Vz83lTRLIWnnenaVSj1mMG0pcH3t59TBuV9RP6dUsNhgaF8Pmm7kDjdZhsw3-X5V2LbkeuS1Of6w0WaZ62E3Shecsbeh9Alp45dISrkUcMmsq1Tfr5Tvr5leLP0A0uC1Owf2r8PClLaMveYyfOiq4wQoaU7fnZRfLoNBHFaSSpssXM8zxepKxLzbx-FVe96S644sFMtTj9vXGQ1_BbD3eEPh1WCsmj5kMuQ3QG1irCYsVApEdQkLc0bMOqtVAcD860a5GKvCBI_hjA405yLrUz7x7VgD1REXXVKzqEMsh2Yj-hdADGV3UlEOPTAwA\",\n      \"accept\": \"application/json\",\n      \"user-agent\": \"Google-gsuiteaddons\",\n      \"accept-encoding\": \"gzip, deflate, br\"\n    },\n    \"params\": {},\n    \"query\": {},\n    \"body\": {\n      \"commonEventObject\": {\n        \"userLocale\": \"fr\",\n        \"hostApp\": \"CHAT\",\n        \"platform\": \"WEB\",\n        \"timeZone\": {\n          \"id\": \"Europe/Paris\",\n          \"offset\": 3600000\n        }\n      },\n      \"authorizationEventObject\": {\n        \"systemIdToken\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6IjZhOTA2ZWMxMTlkN2JhNDZhNmE0M2VmMWVhODQyZTM0YThlZTA4YjQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL2FnZW50LmVrc3RlcmUuZWNvL3dlYmhvb2svTjhOLWFnZW50IiwiYXpwIjoiMTA5MDY5NjUwNzc3MTEyOTA4ODk1IiwiZW1haWwiOiJzZXJ2aWNlLTczNzIzMzY3OTU1QGdjcC1zYS1nc3VpdGVhZGRvbnMuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZXhwIjoxNzY2NDkxNzUwLCJpYXQiOjE3NjY0ODgxNTAsImlzcyI6Imh0dHBzOi8vYWNjb3VudHMuZ29vZ2xlLmNvbSIsInN1YiI6IjEwOTA2OTY1MDc3NzExMjkwODg5NSJ9.eO63Trl_9Yy9R8OcVyYSt9QM3Vz83lTRLIWnnenaVSj1mMG0pcH3t59TBuV9RP6dUsNhgaF8Pmm7kDjdZhsw3-X5V2LbkeuS1Of6w0WaZ62E3Shecsbeh9Alp45dISrkUcMmsq1Tfr5Tvr5leLP0A0uC1Owf2r8PClLaMveYyfOiq4wQoaU7fnZRfLoNBHFaSSpssXM8zxepKxLzbx-FVe96S644sFMtTj9vXGQ1_BbD3eEPh1WCsmj5kMuQ3QG1irCYsVApEdQkLc0bMOqtVAcD860a5GKvCBI_hjA405yLrUz7x7VgD1REXXVKzqEMsh2Yj-hdADGV3UlEOPTAwA\"\n      },\n      \"chat\": {\n        \"user\": {\n          \"name\": \"users/105784736161564760912\",\n          \"displayName\": \"erlé Alberton\",\n          \"avatarUrl\": \"https://lh3.googleusercontent.com/a/ACg8ocLQ7Fpe4nJm5huuJvUEV8DnjGEQnDHohsYoQQufzo-cwB3nDQ=k-no\",\n          \"email\": \"erle@ekstere.fr\",\n          \"type\": \"HUMAN\",\n          \"domainId\": \"3digrim\"\n        },\n        \"eventTime\": \"2025-12-23T11:09:09.760015Z\",\n        \"appCommandPayload\": {\n          \"appCommandMetadata\": {\n            \"appCommandId\": 4,\n            \"appCommandType\": \"SLASH_COMMAND\"\n          },\n          \"space\": {\n            \"name\": \"spaces/9UFruiAAAAE\",\n            \"type\": \"DM\",\n            \"singleUserBotDm\": true,\n            \"spaceThreadingState\": \"THREADED_MESSAGES\",\n            \"spaceType\": \"DIRECT_MESSAGE\",\n            \"spaceHistoryState\": \"HISTORY_OFF\",\n            \"lastActiveTime\": \"2025-12-23T11:00:12.576431Z\",\n            \"membershipCount\": {\n              \"joinedDirectHumanUserCount\": 1\n            },\n            \"spaceUri\": \"https://chat.google.com/dm/9UFruiAAAAE?cls=11\"\n          },\n          \"message\": {\n            \"name\": \"spaces/9UFruiAAAAE/messages/JI_rzJgRRak.JI_rzJgRRak\",\n            \"sender\": {\n              \"name\": \"users/105784736161564760912\",\n              \"displayName\": \"erlé Alberton\",\n              \"avatarUrl\": \"https://lh3.googleusercontent.com/a/ACg8ocLQ7Fpe4nJm5huuJvUEV8DnjGEQnDHohsYoQQufzo-cwB3nDQ=k-no\",\n              \"email\": \"erle@ekstere.fr\",\n              \"type\": \"HUMAN\",\n              \"domainId\": \"3digrim\"\n            },\n            \"createTime\": \"2025-12-23T11:09:09.760015Z\",\n            \"text\": \"/seo-audit https://ekstere.eco/velos-electriques/urbain-trekking/kuiperbelt-s1-2025-neuf-3444.html\",\n            \"annotations\": [\n              {\n                \"type\": \"SLASH_COMMAND\",\n                \"startIndex\": 0,\n                \"length\": 10,\n                \"slashCommand\": {\n                  \"bot\": {\n                    \"name\": \"users/108303333617798267588\",\n                    \"displayName\": \"ekstere AI\",\n                    \"avatarUrl\": \"https://lh3.googleusercontent.com/proxy/O-Tjbz_HClId6gUCpMF59AxY-_uzl2NMLugfYis3Wo33xT7RXPbaAhXqiXJ5ATBhrGi9CX8k8DXuoGxWUpSwE8obgi-4MPIN9MwujjsVX9ZNsJWN2ZV4Cw1AjfyqriJA2M7MuNGDMg\",\n                    \"type\": \"BOT\"\n                  },\n                  \"type\": \"INVOKE\",\n                  \"commandName\": \"/seo-audit\",\n                  \"commandId\": 4\n                }\n              }\n            ],\n            \"thread\": {\n              \"name\": \"spaces/9UFruiAAAAE/threads/JI_rzJgRRak\",\n              \"retentionSettings\": {\n                \"state\": \"EPHEMERAL_ONE_DAY\",\n                \"expiryTimestamp\": 1766574549592273\n              }\n            },\n            \"space\": {\n              \"name\": \"spaces/9UFruiAAAAE\",\n              \"type\": \"DM\",\n              \"singleUserBotDm\": true,\n              \"spaceThreadingState\": \"THREADED_MESSAGES\",\n              \"spaceType\": \"DIRECT_MESSAGE\",\n              \"spaceHistoryState\": \"HISTORY_OFF\",\n              \"lastActiveTime\": \"2025-12-23T11:00:12.576431Z\",\n              \"membershipCount\": {\n                \"joinedDirectHumanUserCount\": 1\n              },\n              \"spaceUri\": \"https://chat.google.com/dm/9UFruiAAAAE?cls=11\"\n            },\n            \"argumentText\": \" https://ekstere.eco/velos-electriques/urbain-trekking/kuiperbelt-s1-2025-neuf-3444.html\",\n            \"slashCommand\": {\n              \"commandId\": 4\n            },\n            \"retentionSettings\": {\n              \"state\": \"EPHEMERAL_ONE_DAY\",\n              \"expiryTimestamp\": 1766574549592273\n            },\n            \"messageHistoryState\": \"HISTORY_OFF\",\n            \"formattedText\": \"/seo-audit https://ekstere.eco/velos-electriques/urbain-trekking/kuiperbelt-s1-2025-neuf-3444.html\"\n          },\n          \"configCompleteRedirectUri\": \"https://chat.google.com/api/bot_config_complete?token=AGSmvGPjII98gVijQWFRjW5n3NB4YkXIdi9br9womv3lElzMDxAm8EIEiiTyLd8aTG-3CBRFS8VyH0_8_BbAZLbdX8VT2kDd4i-p21b8xrWOm0yI-Tb5c9xik3CmG31ebjx6hgvdpENtK4rzmbZH6WeWaA%3D%3D\"\n        }\n      }\n    },\n    \"webhookUrl\": \"https://agent.ekstere.eco/webhook/N8N-agent\",\n    \"executionMode\": \"production\"\n  }",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1552,
+        -528
+      ],
+      "id": "4807c121-7ff0-4473-a8fb-e2c616e91d25",
+      "name": "TESTS"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Répond en langauge naturel sur la base de cette réponse IA\nREPONSE : {{ $json.output.replaceAll('```','').replace('json','').replaceAll('\\\\n','').toJsonString().replaceAll('\\\\','') }}\n\nTU NE DOIS PAS CHANGER LE CONTENU DE LA REPONSE MAIS LA METTRE EN FORME EN LANGAGE NATUREL\n\nTU DOIS REPONDRE DANS LE FORMAT ATTENDU PAR GOOGLE CHAT API POUR LA MISE EN FORME PARFAITE\n\nPOUR RAPPEL : \nUse markdown formatting in Google Chat\nTo add markdown formatting to your Google Chat messages, you can include special characters in the text.\nFormat option\tMarkdown example\nBold\t*Text*\nItalicize\t_Text_\nStrikethrough\t~Text~\nInline code block\t`Text`\nMulti-line code block\t```Text```\nBullet\t- Text or * Text\nTips:\n\nAn inline code block wraps the text.\nAfter a multi-line code block is sent, you can use a toggle to turn the line wrapping on or off.",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -1552,
+        720
+      ],
+      "id": "9e8a8384-d0a7-48f6-8e41-1fb028a542af",
+      "name": "AI Agent3"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3-flash-preview",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1488,
+        944
+      ],
+      "id": "c9a5b92d-c492-4a4a-8ed8-233ccf6f6c7d",
+      "name": "Google Gemini Chat Model3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "5pTghVwrfcz026Vc",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "scuCqWrgpjBDjQ5O",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/scuCqWrgpjBDjQ5O",
+          "cachedResultName": "[CORE] Gemini Meeting notes"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "data": "={{ $json._raw.body.chat.appCommandPayload.message.attachment[0].attachmentDataRef.resourceName }}"
+          },
+          "matchingColumns": [
+            "data"
+          ],
+          "schema": [
+            {
+              "id": "data",
+              "displayName": "data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "object",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": true,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -448,
+        -336
+      ],
+      "id": "a59a2b8d-2fa3-4c0a-81eb-00b0e407667f",
+      "name": "Call '[CORE] Gemini Meeting notes'"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "sendAndWait",
+        "spaceId": "={{ $('NormalizeEvent').item.json.spaceName }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "responseType": "freeText",
+        "options": {
+          "limitWaitTime": {
+            "values": {
+              "resumeAmount": 5,
+              "resumeUnit": "minutes"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleChatTool",
+      "typeVersion": 1,
+      "position": [
+        -1776,
+        304
+      ],
+      "id": "3911ce61-723f-46a9-bb30-9a5a72395f30",
+      "name": "Send message and wait for response in Google Chat",
+      "webhookId": "e683b090-4f83-4726-b0b9-f68bbe06a45f",
+      "credentials": {
+        "googleChatOAuth2Api": {
+          "id": "eImQn0v8LTxcuV4y",
+          "name": "Chat account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "NormalizeEvent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Vector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Redis Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call '[OMKUnity] Prompt Optimizer'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NormalizeEvent": {
+      "main": [
+        [
+          {
+            "node": "RouteByEventType",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a message": {
+      "main": [
+        []
+      ]
+    },
+    "Simple Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "AI - Orchestrator",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "AI Agent2",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RouteByEventType": {
+      "main": [
+        [
+          {
+            "node": "RouteByCommand",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RouteByCommand": {
+      "main": [
+        [
+          {
+            "node": "Prompt \"content-ideas\"",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prompt \"article-plan\"",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prompt \"social-post\"",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prompt \"/seo-audit\"",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Call '[CORE] Gemini Meeting notes'",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prompt \"/help\"",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI - Orchestrator": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI - Orchestrator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt \"content-ideas\"": {
+      "main": [
+        [
+          {
+            "node": "AI - Orchestrator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call '[CORE] RAG Agent'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI - Orchestrator",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent2": {
+      "main": [
+        [
+          {
+            "node": "Create a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "AI Agent3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        []
+      ]
+    },
+    "Prompt \"article-plan\"": {
+      "main": [
+        [
+          {
+            "node": "AI - Orchestrator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt \"social-post\"": {
+      "main": [
+        [
+          {
+            "node": "AI - Orchestrator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI - Orchestrator",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt \"/seo-audit\"": {
+      "main": [
+        [
+          {
+            "node": "AI - Orchestrator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt \"/help\"": {
+      "main": [
+        [
+          {
+            "node": "AI - Orchestrator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "TESTS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TESTS": {
+      "main": [
+        [
+          {
+            "node": "NormalizeEvent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent3",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent3": {
+      "main": [
+        []
+      ]
+    },
+    "Call '[CORE] Gemini Meeting notes'": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send message and wait for response in Google Chat": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "IQqO97a2SutFoeAo",
+    "timeSavedMode": "fixed"
+  },
+  "versionId": "34fc8404-9bb0-4011-a101-95725b9a9209",
+  "meta": {
+    "instanceId": "aca6ed7ec8875b2fbca26169c7cd9cbc432770c08b36ede295ebecdc45904a16"
+  },
+  "id": "MIojhPyjzMR1kCFE",
+  "tags": []
+}
