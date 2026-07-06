@@ -1,0 +1,2081 @@
+{
+  "name": "Web_search_trustin_1",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "={{ $json.best_url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1344,
+        -48
+      ],
+      "id": "80cf3810-5b36-479f-b694-333dc270db75",
+      "name": "HTTP Request3",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "text": "=Tu es un expert vélo. On cherche les informations concernant {{ $('Filter_Champs').item.json.fields_to_extract }}  du modele {{ $('Loop2').item.json.brand }} {{ $('Loop2').item.json.model }} {{ $('Loop2').item.json.year }} en f.\n\nUtilise les infos présentes dans ce texte si la spec est mentionnée {{ $node[\"HTML_Cleaner\"].json.cleaned_html }}.\n\nRéponds avec le nom exact de la caractéristique demandée.\n\n\"IMPORTANT : Tous les champs doivent obligatoirement être des chaînes de caractères (String). Si une information est manquante ou n'existe pas pour ce type de vélo (ex: moteur sur un vélo non-électrique), renvoie une chaîne vide \"\" ou le texte \"Non spécifié\". Ne renvoie JAMAIS la valeur null.\"",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "Cadre",
+              "description": "Extrait toute la description de la section cadre de ce vélo, Renvoie une string vide si non trouvé"
+            },
+            {
+              "name": "Fourche",
+              "description": "Extrait toute la description de la section fourche de ce vélo, Renvoie une string vide si non trouvé"
+            },
+            {
+              "name": "Amortisseur",
+              "description": "Extrait toute la description de la section amortisseur de ce vélo, Renvoie une string vide si non trouvé"
+            },
+            {
+              "name": "Roues",
+              "description": "Extrait toute la description de la section Roues de ce vélo, Renvoie une string vide si non trouvé"
+            },
+            {
+              "name": "Pneus",
+              "description": "Extrait toute la description de la section  Pneus de ce vélo, Renvoie une string vide si non trouvé"
+            },
+            {
+              "name": "Dérailleur arrière",
+              "description": "Extrait toute la description de la section  Dérailleur arrière de ce vélo, Renvoie une string vide si non trouvé"
+            },
+            {
+              "name": "Pédalier",
+              "description": "Extrait toute la description de la section  Pédalier de ce vélo, Renvoie une string vide si non trouvé"
+            },
+            {
+              "name": "Boitier de pédalier",
+              "description": "Extrait toute la description de la section Boitier de Pédalier de ce vélo, Renvoie une string vide si non trouvé"
+            },
+            {
+              "name": "Plateaux",
+              "description": "Extrait toute la description de la section  Plateaux de ce vélo, Renvoie une string vide si non trouvé"
+            },
+            {
+              "name": "Kit de Freinage",
+              "description": "Extrait toute la description de la section Kit de Freinage de ce vélo, Renvoie une string vide si non trouvé"
+            },
+            {
+              "name": "Moteur",
+              "description": "Extrait toute la description de la section  Moteur de ce vélo, Renvoie une string vide si non trouvé"
+            },
+            {
+              "name": "Batterie",
+              "description": "Extrait toute la description de la section Batterie de ce vélo, Renvoie une string vide si non trouvé"
+            },
+            {
+              "name": "Chargeur",
+              "description": "Extrait toute la description de la section Chargeur de ce vélo, Renvoie une string vide si non trouvé"
+            },
+            {
+              "name": "URL_search",
+              "description": "={{ $('Loop2').item.json.best_url }}"
+            },
+            {
+              "name": "NUM_ID",
+              "description": "={{ $('Loop2').item.json.NUM_ID }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        2240,
+        -64
+      ],
+      "id": "bc2d8a2b-b365-4367-a2a3-adcd916350ba",
+      "name": "Information Extractor1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "builtInTools": {
+          "webSearch": {
+            "searchContextSize": "medium",
+            "allowedDomains": "=bike-discount.de, cyclable.com, Google.com, alltricks.fr, my-velo.fr, sport2000.fr"
+          }
+        },
+        "options": {
+          "textFormat": {
+            "textOptions": {
+              "type": "json_object"
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        2320,
+        128
+      ],
+      "id": "ab3a047d-4889-4e7f-ac5a-a34bf04b7b87",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "1bQ6RbV407rxG6pu",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "APIFY_URL",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer APIFY_TOKEN"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"country\": \"FR\",\n  \"include_merged\": true,\n  \"keyword\": \"Fiche technique \\\"{{ $json.Marque }}\\\" \\\"{{ $json['Modèle'] }}\\\" \\\"{{ $json['Millésime'] }}\",\n  \"limit\": \"10\"\n}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 60000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -256,
+        -80
+      ],
+      "id": "5ece1869-4b87-42dc-9add-01c709bb9629",
+      "name": "Apify_request"
+    },
+    {
+      "parameters": {
+        "jsCode": "let html = $json.data; // On récupère le HTML brut du noeud précédent\n\nif (html) {\n  // 1. Supprimer les balises <script> et <style> et leur contenu\n  html = html.replace(/<script\\b[^>]*>([\\s\\S]*?)<\\/script>/gmi, \"\");\n  html = html.replace(/<style\\b[^>]*>([\\s\\S]*?)<\\/style>/gmi, \"\");\n  \n  // 2. Supprimer les commentaires HTML\n  html = html.replace(/<!--[\\s\\S]*?-->/g, \"\");\n\n  // 3. Optionnel : Supprimer les balises SVG (souvent très lourdes en code)\n  html = html.replace(/<svg\\b[^>]*>([\\s\\S]*?)<\\/svg>/gmi, \"\");\n\n  // 4. Nettoyer les espaces multiples pour gagner des tokens\n  html = html.replace(/\\s+/g, ' ').trim();\n}\n\nreturn {\n  cleaned_html: html\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1552,
+        -64
+      ],
+      "id": "590e3124-3de8-4701-ad25-11c0f016632a",
+      "name": "HTML_Cleaner"
+    },
+    {
+      "parameters": {
+        "jsCode": "/**const techColumns = [\n  \"Cadre\", \"Fourche\", \"Amortisseur\", \"Roues\", \"Pneus\", \n  \"Dérailleur arrière\", \"Pédalier\", \"Boitier de pédalier\", \n  \"Plateaux\", \"Kit de Freinage\", \"Moteur\", \"Batterie\", \"Chargeur\"\n];\n\n// 1. Récupérer TOUTES les extractions déjà faites dans cette loop\n// On utilise .all() pour voir les résultats des itérations passées\nlet foundFields = {};\ntry {\n  const previousExtractions = $('Information Extractor1').all();\n  \n  // On fusionne les résultats trouvés jusqu'ici\n  previousExtractions.forEach(exec => {\n    // On suppose que l'IA renvoie un objet JSON dans 'output'\n    const data = exec.json.output || {};\n    for (const key of techColumns) {\n      if (data[key] && data[key] !== \"??\" && data[key] !== \"Non spécifié\" && data[key] !== \"\") {\n        foundFields[key] = data[key];\n      }\n    }\n  });\n} catch (e) {\n  // Au premier tour de boucle, le nœud n'a pas encore de données, c'est normal\n}\n\n// 2. Déterminer ce qu'il reste à chercher\nconst missingFields = techColumns.filter(col => !foundFields[col]);\n\n// 3. Préparer la sortie\nreturn {\n  cleaned_html: $json.cleaned_html, // On fait passer le HTML\n  fields_to_extract: missingFields.join(\", \"),\n  already_found: foundFields,\n  is_complete: missingFields.length === 0,\n  needs_ai: missingFields.length > 0,\n  best_url: $json.best_url\n};\n**/\n\n\n\n\n\n\n\n\n\n\n\nconst items = $input.all();\n\nconst techColumns = [\n  \"Cadre\",\n  \"Fourche\",\n  \"Amortisseur\",\n  \"Roues\",\n  \"Pneus\",\n  \"Dérailleur arrière\",\n  \"Pédalier\",\n  \"Boitier de pédalier\",\n  \"Plateaux\",\n  \"Kit de Freinage\",\n  \"Moteur\",\n  \"Batterie\",\n  \"Chargeur\"\n];\n\nfunction isEmptyValue(value) {\n  return (\n    value === \"[empty]\" ||\n    value === \"empty\" ||\n    value === undefined ||\n    value === null ||\n    String(value).trim() === \"\" ||\n    String(value).toLowerCase() === \"null\"\n  );\n}\n\nfor (const item of items) {\n  const missingFields = techColumns.filter(col => isEmptyValue(item.json[col]));\n\n  item.json.fields_to_extract = missingFields.join(\", \");\n  item.json.missing_fields_array = missingFields;\n  item.json.needs_extraction = missingFields.length > 0;\n}\n\nreturn items.filter(item => item.json.needs_extraction);"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1776,
+        -48
+      ],
+      "id": "c55ad9b1-0920-4152-8d98-60c9bb59e960",
+      "name": "Filter_Champs"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "d9bb4bd4-b46a-4aee-a1a6-efc6edf09a53",
+              "leftValue": "={{ $json.needs_ai }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1984,
+        -48
+      ],
+      "id": "9f0b75f7-d337-47c7-823b-e0bfd5292a5d",
+      "name": "If",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Récupérer l'extraction (IA) actuelle\nconst aiInput = $input.item.json;\nlet extracted = aiInput.output || aiInput.Extraction || {};\n\nif (typeof extracted === 'string') {\n  try { extracted = JSON.parse(extracted); } catch(e) { extracted = {}; }\n}\n\n// 2. Récupérer le vélo original (Toujours au début du sous-workflow)\n// .all()[0] est sûr ici car le sous-workflow ne reçoit qu'UN vélo à la fois\nconst originalBike = $('Execute_Workflow_Trigger').all()[0].json;\n\n// 3. Récupérer le lien actuel (via le nœud Loop)\n// Le nœud Loop contient déjà l'URL et les infos du lien en cours\nconst currentLoopData = $('Loop2').item.json;\n\n// 4. Fusionner le tout\nreturn {\n  ...originalBike,\n  ...extracted,\n  best_url: currentLoopData.best_url || \"URL non trouvée\",\n  NUM_ID: originalBike.NUM_ID // On s'assure que l'ID est bien présent pour le merge final\n};\n\n// 1. Récupérer l'extraction (IA) actuelle\n/**const extractionInput = $input.item.json;\nlet extracted = extractionInput.output || extractionInput.Extraction || {};\n\nif (typeof extracted === 'string') {\n  try { extracted = JSON.parse(extracted); } catch(e) { extracted = {}; }\n}\n\n// 2. Récupérer l'index de l'item en cours dans la boucle\nconst currentIndex = $input.item.index;\n\n// 3. Récupérer les données du vélo original (Toujours le premier item du trigger dans l'enfant)\n// On utilise .all()[0] pour bypasser le système de pairing\nconst originalBike = $('Execute_Workflow_Trigger').all()[0].json;\n\n// 4. Récupérer les données du lien actuel (URL, etc.) via l'index\n// Cela permet d'éviter l'erreur \"Paired item data unavailable\"\nconst currentLinkData = $('Link_Cleaner').all()[currentIndex].json;\n\n// 5. Fusionner le tout\nreturn {\n  ...originalBike,\n  ...extracted,\n  NUM_ID: originalBike.NUM_ID, // Sécurité pour le merge final\n  best_url: currentLinkData.best_url // On récupère l'URL proprement\n};**/\n\n\n\n\n\n\n\n/**const techColumns = [\"Cadre\", \"Fourche\", \"Amortisseur\", \"Roues\", \"Pneus\", \"Dérailleur arrière\", \"Pédalier\", \"Boitier de pédalier\", \"Plateaux\", \"Kit de Freinage\", \"Moteur\", \"Batterie\", \"Chargeur\"];\n\n// 1. RÉCUPÉRER LES INFOS DU VÉLO ACTUEL (Sortie du loop extérieur)\n// On utilise .item pour avoir l'élément de l'itération actuelle de la grande boucle\n// Remplace 'Loop Over Items1' par le nom exact de ton loop extérieur\nconst currentBikeMetadata = $('Loop1').item.json;\nconst currentSku = currentBikeMetadata.NUM_ID; // On suppose que le SKU est dans 'Code'\n\n// 2. RÉCUPÉRER TOUTES LES EXTRACTIONS ET FILTRER PAR SKU\n// On ne veut que les extractions qui concernent le vélo en cours\nconst allExtractions = $('Information Extractor1').all().filter(item => {\n  return item.json.NUM_ID === currentSku; \n});\n\n// 3. PRÉPARER L'OBJET FINAL AVEC LES DONNÉES DU VÉLO ACTUEL\nlet finalBike = { ...currentBikeMetadata };\n\n// 4. FUSIONNER LES RÉSULTATS\nallExtractions.forEach(item => {\n  let extracted = item.json.output || item.json.Extraction || {};\n  \n  // Gestion si l'IA renvoie du texte JSON au lieu d'un objet\n  if (typeof extracted === 'string') {\n    try { extracted = JSON.parse(extracted); } catch(e) { extracted = {}; }\n  }\n\n  techColumns.forEach(col => {\n    // On définit ce qu'on considère comme une valeur \"vide\"\n    const isCurrentEmpty = !finalBike[col] || \n                           finalBike[col] === \"\" || \n                           finalBike[col] === \"??\" || \n                           finalBike[col] === \"Non spécifié\" ||\n                           String(finalBike[col]).toLowerCase() === \"null\";\n    \n    // On définit si la nouvelle valeur trouvée est \"valide\"\n    const newValue = extracted[col];\n    const isNewValid = newValue && \n                       newValue !== \"??\" && \n                       newValue !== \"\" && \n                       newValue !== \"null\" && \n                       newValue !== \"Non spécifié\";\n\n    // Si le champ est vide et qu'on a trouvé une info valide, on remplit\n    if (isCurrentEmpty && isNewValid) {\n      finalBike[col] = newValue;\n      // On garde l'URL source pour savoir d'où vient l'info\n      finalBike[col + \"_Source\"] = item.json.best_url; \n    }\n  });\n});\n\nreturn finalBike;**/\n\n\n\n//partie append: 10/04/26; 00:30\n/**const techColumns = [\"Cadre\", \"Fourche\", \"Amortisseur\", \"Roues\", \"Pneus\", \"Dérailleur arrière\", \"Pédalier\", \"Boitier de pédalier\", \"Plateaux\", \"Kit de Freinage\", \"Moteur\", \"Batterie\", \"Chargeur\", \"URL_search\"];\n\n// 1. Récupérer les données de la ligne originale (le tout premier nœud Sheet)\n// On utilise .first() car on traite un lot pour UN seul vélo à la fois\nconst originalData=$('Execute_Workflow_Trigger').item.json;\n  //$('Sheet').all().json;\n\n// 2. Récupérer TOUTES les exécutions de l'extracteur pour ce vélo\nconst allExtractions = $('Information Extractor1').all();\n\n// 3. Préparer l'objet final en commençant par les données d'origine\nlet finalBike = { ...originalData };\n\n// 4. Parcourir chaque extraction faite dans la boucle\nallExtractions.forEach(item => {\n  // On récupère les données (gestion du format string ou objet)\n  let extracted = item.json.output || item.json.Extraction || {};\n  if (typeof extracted === 'string') {\n    try { extracted = JSON.parse(extracted); } catch(e) { extracted = {}; }\n  }\n\n  // On récupère l'URL source qui était traitée lors de cette itération\n  // n8n permet de retrouver l'item parent (l'URL de Code in JavaScript4)\n  const sourceUrl = item.json.source_url || \"URL inconnue\"; \n\n  techColumns.forEach(col => {\n    // Si le champ dans finalBike est vide ou égal à \"??\"\n    const isCurrentEmpty = !finalBike[col] || finalBike[col] === \"\" || finalBike[col] === \"??\" || String(finalBike[col]).toLowerCase() === \"null\";\n    \n    // Si l'IA a trouvé une valeur valide\n    const newValue = extracted[col];\n    const isNewValid = newValue && newValue !== \"??\" && newValue !== \"\" && newValue !== \"null\";\n\n    if (isCurrentEmpty && isNewValid) {\n      finalBike[col] = newValue;\n      // On crée une colonne dynamique pour la traçabilité\n      finalBike[col + \"_Source\"] = item.json.best_url; \n    }\n  });\n});\n\nreturn finalBike;**/\n\n\n\n\n\n\n\n\n/**const techColumns = [\"Cadre\", \"Fourche\", \"Amortisseur\", \"Roues\", \"Pneus\", \"Dérailleur arrière\", \"Pédalier\", \"Boitier de pédalier\", \"Plateaux\", \"Kit de Freinage\", \"Moteur\", \"Batterie\", \"Chargeur\"];\n\nconst allExtractions = $('Information Extractor1').all();\nlet finalBike = {};\n\n// On parcourt chaque extraction et on remplit les trous au fur et à mesure\nallExtractions.forEach(item => {\n  const extracted = item.json.output || {};\n  techColumns.forEach(col => {\n    // Si on n'a pas encore cette info, on la prend\n    if (!finalBike[col] && extracted[col] && extracted[col] !== \"??\") {\n      finalBike[col] = extracted[col];\n    }\n  });\n});**/\n\n//return finalBike;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2528,
+        -224
+      ],
+      "id": "9f4866f6-c2eb-42bb-843e-3fb7966d7514",
+      "name": "Final_result1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1T1MadU1jIwqnUjfOy4DBTXP6zuNNc8nbYnpchUVLUt0",
+          "mode": "list",
+          "cachedResultName": "KTM_Trustin_test",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1T1MadU1jIwqnUjfOy4DBTXP6zuNNc8nbYnpchUVLUt0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 279063103,
+          "mode": "list",
+          "cachedResultName": "Test_completion",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1T1MadU1jIwqnUjfOy4DBTXP6zuNNc8nbYnpchUVLUt0/edit#gid=279063103"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Actif",
+              "displayName": "Actif",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Origine de la data",
+              "displayName": "Origine de la data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Marque",
+              "displayName": "Marque",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Millésime",
+              "displayName": "Millésime",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modèle",
+              "displayName": "Modèle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prix (€)",
+              "displayName": "Prix (€)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prix batterie",
+              "displayName": "Prix batterie",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prix moteur",
+              "displayName": "Prix moteur",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prix hors CE",
+              "displayName": "Prix hors CE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Catégorie vélo",
+              "displayName": "Catégorie vélo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Catégorie vélo 2",
+              "displayName": "Catégorie vélo 2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Catégorie vélo 3",
+              "displayName": "Catégorie vélo 3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Géométrie",
+              "displayName": "Géométrie",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Matière Cadre",
+              "displayName": "Matière Cadre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Suspension",
+              "displayName": "Suspension",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Débattement",
+              "displayName": "Débattement",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Type de frein",
+              "displayName": "Type de frein",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modèle de frein",
+              "displayName": "Modèle de frein",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Roues-diamètre",
+              "displayName": "Roues-diamètre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Transmission-type",
+              "displayName": "Transmission-type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Dérailleur AR-modèle",
+              "displayName": "Dérailleur AR-modèle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Plateau",
+              "displayName": "Plateau",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nbr de vitesse",
+              "displayName": "Nbr de vitesse",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Moteur marque",
+              "displayName": "Moteur marque",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Moteur modèle",
+              "displayName": "Moteur modèle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Batterie marque",
+              "displayName": "Batterie marque",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Batterie capacité",
+              "displayName": "Batterie capacité",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cadre",
+              "displayName": "Cadre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Fourche",
+              "displayName": "Fourche",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Amortisseur",
+              "displayName": "Amortisseur",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Roues",
+              "displayName": "Roues",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Pneus",
+              "displayName": "Pneus",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Manettes de vitesse",
+              "displayName": "Manettes de vitesse",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Dérailleur Avant",
+              "displayName": "Dérailleur Avant",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Dérailleur arrière",
+              "displayName": "Dérailleur arrière",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Pédalier",
+              "displayName": "Pédalier",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Boitier de pédalier",
+              "displayName": "Boitier de pédalier",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Plateaux",
+              "displayName": "Plateaux",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cassette",
+              "displayName": "Cassette",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Chaine",
+              "displayName": "Chaine",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Pédales",
+              "displayName": "Pédales",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Selle",
+              "displayName": "Selle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tige de selle",
+              "displayName": "Tige de selle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cintre",
+              "displayName": "Cintre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Potence",
+              "displayName": "Potence",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Jeu de direction",
+              "displayName": "Jeu de direction",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Kit de Freinage",
+              "displayName": "Kit de Freinage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Moteur",
+              "displayName": "Moteur",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Batterie",
+              "displayName": "Batterie",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ecran de commande",
+              "displayName": "Ecran de commande",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Chargeur",
+              "displayName": "Chargeur",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Poids (kg)",
+              "displayName": "Poids (kg)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Taille",
+              "displayName": "Taille",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Lien photo ekstere",
+              "displayName": "Lien photo ekstere",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Product Code",
+              "displayName": "Product Code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Eclairage",
+              "displayName": "Eclairage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Garantie",
+              "displayName": "Garantie",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Garde-Boue",
+              "displayName": "Garde-Boue",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Porte-Bagage",
+              "displayName": "Porte-Bagage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Béquille",
+              "displayName": "Béquille",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cell12",
+              "displayName": "Cell12",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cell13",
+              "displayName": "Cell13",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cell14",
+              "displayName": "Cell14",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cell15",
+              "displayName": "Cell15",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "URL_search",
+              "displayName": "URL_search",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "best_url",
+              "displayName": "best_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2720,
+        -64
+      ],
+      "id": "832817c4-1087-4132-95b5-fea1167aabfe",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "j0bySWbSpGGr2xqQ",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1T1MadU1jIwqnUjfOy4DBTXP6zuNNc8nbYnpchUVLUt0",
+          "mode": "list",
+          "cachedResultName": "KTM_Trustin_test",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1T1MadU1jIwqnUjfOy4DBTXP6zuNNc8nbYnpchUVLUt0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1640174370,
+          "mode": "list",
+          "cachedResultName": "Test_merge",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1T1MadU1jIwqnUjfOy4DBTXP6zuNNc8nbYnpchUVLUt0/edit#gid=1640174370"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Actif",
+              "displayName": "Actif",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Origine de la data",
+              "displayName": "Origine de la data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Marque",
+              "displayName": "Marque",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Millésime",
+              "displayName": "Millésime",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modèle",
+              "displayName": "Modèle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prix (€)",
+              "displayName": "Prix (€)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prix batterie",
+              "displayName": "Prix batterie",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prix moteur",
+              "displayName": "Prix moteur",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prix hors CE",
+              "displayName": "Prix hors CE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Catégorie vélo",
+              "displayName": "Catégorie vélo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Catégorie vélo 2",
+              "displayName": "Catégorie vélo 2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Catégorie vélo 3",
+              "displayName": "Catégorie vélo 3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Géométrie",
+              "displayName": "Géométrie",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Matière Cadre",
+              "displayName": "Matière Cadre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Suspension",
+              "displayName": "Suspension",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Débattement",
+              "displayName": "Débattement",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Type de frein",
+              "displayName": "Type de frein",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Modèle de frein",
+              "displayName": "Modèle de frein",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Roues-diamètre",
+              "displayName": "Roues-diamètre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Transmission-type",
+              "displayName": "Transmission-type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Dérailleur AR-modèle",
+              "displayName": "Dérailleur AR-modèle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Plateau",
+              "displayName": "Plateau",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nbr de vitesse",
+              "displayName": "Nbr de vitesse",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Moteur marque",
+              "displayName": "Moteur marque",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Moteur modèle",
+              "displayName": "Moteur modèle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Batterie marque",
+              "displayName": "Batterie marque",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Batterie capacité",
+              "displayName": "Batterie capacité",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cadre",
+              "displayName": "Cadre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Fourche",
+              "displayName": "Fourche",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Amortisseur",
+              "displayName": "Amortisseur",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Roues",
+              "displayName": "Roues",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Pneus",
+              "displayName": "Pneus",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Manettes de vitesse",
+              "displayName": "Manettes de vitesse",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Dérailleur Avant",
+              "displayName": "Dérailleur Avant",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Dérailleur arrière",
+              "displayName": "Dérailleur arrière",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Pédalier",
+              "displayName": "Pédalier",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Boitier de pédalier",
+              "displayName": "Boitier de pédalier",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Plateaux",
+              "displayName": "Plateaux",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cassette",
+              "displayName": "Cassette",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Chaine",
+              "displayName": "Chaine",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Pédales",
+              "displayName": "Pédales",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Selle",
+              "displayName": "Selle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tige de selle",
+              "displayName": "Tige de selle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cintre",
+              "displayName": "Cintre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Potence",
+              "displayName": "Potence",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Jeu de direction",
+              "displayName": "Jeu de direction",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Kit de Freinage",
+              "displayName": "Kit de Freinage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Moteur",
+              "displayName": "Moteur",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Batterie",
+              "displayName": "Batterie",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ecran de commande",
+              "displayName": "Ecran de commande",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Chargeur",
+              "displayName": "Chargeur",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Poids (kg)",
+              "displayName": "Poids (kg)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Taille",
+              "displayName": "Taille",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Lien photo ekstere",
+              "displayName": "Lien photo ekstere",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Product Code",
+              "displayName": "Product Code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Eclairage",
+              "displayName": "Eclairage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Garantie",
+              "displayName": "Garantie",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Garde-Boue",
+              "displayName": "Garde-Boue",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Porte-Bagage",
+              "displayName": "Porte-Bagage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Béquille",
+              "displayName": "Béquille",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cell12",
+              "displayName": "Cell12",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cell13",
+              "displayName": "Cell13",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cell14",
+              "displayName": "Cell14",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Cell15",
+              "displayName": "Cell15",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sku",
+              "displayName": "sku",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "match_found",
+              "displayName": "match_found",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "error",
+              "displayName": "error",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Cadre_Confiance",
+              "displayName": "Cadre_Confiance",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Fourche_Confiance",
+              "displayName": "Fourche_Confiance",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Amortisseur_Confiance",
+              "displayName": "Amortisseur_Confiance",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Roues_Confiance",
+              "displayName": "Roues_Confiance",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Pneus_Confiance",
+              "displayName": "Pneus_Confiance",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Dérailleur arrière_Confiance",
+              "displayName": "Dérailleur arrière_Confiance",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Pédalier_Confiance",
+              "displayName": "Pédalier_Confiance",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Boitier de pédalier_Confiance",
+              "displayName": "Boitier de pédalier_Confiance",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Plateaux_Confiance",
+              "displayName": "Plateaux_Confiance",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Kit de Freinage_Confiance",
+              "displayName": "Kit de Freinage_Confiance",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Moteur_Confiance",
+              "displayName": "Moteur_Confiance",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Batterie_Confiance",
+              "displayName": "Batterie_Confiance",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Chargeur_Confiance",
+              "displayName": "Chargeur_Confiance",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        864,
+        -304
+      ],
+      "id": "e25167f6-2f05-4594-bacd-f22d58424d80",
+      "name": "Append row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "j0bySWbSpGGr2xqQ",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1056,
+        -304
+      ],
+      "id": "b9770c37-65de-42c6-aae2-4217b82fd37d",
+      "name": "Wait",
+      "webhookId": "f820874a-09b2-48e7-b0b9-6bb5ebb7ba14",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const techColumns = [\"Cadre\", \"Fourche\", \"Amortisseur\", \"Roues\", \"Pneus\", \"Dérailleur arrière\", \"Pédalier\", \"Boitier de pédalier\", \"Plateaux\", \"Kit de Freinage\", \"Moteur\", \"Batterie\", \"Chargeur\"];\n\n// 1. Récupérer le vélo original\nconst originalBike = $('Execute_Workflow_Trigger').all()[0].json;\nconst currentId = originalBike.NUM_ID;\n\n// 2. Récupérer TOUTES les lignes de Final_result1 produites dans ce workflow\nconst allProcessedLines = $('Final_result1').all();\n\nlet finalMergedBike = { ...originalBike };\n\n// 3. Logique du vote majoritaire par colonne\ntechColumns.forEach(col => {\n  let counts = {};\n  let originalValues = {};\n\n  allProcessedLines.forEach(line => {\n    let val = line.json[col];\n    // On valide la donnée\n    if (val && val !== \"??\" && val !== \"\" && val !== \"null\" && String(val).toLowerCase() !== \"non spécifié\") {\n      const norm = val.toString().trim().toUpperCase();\n      counts[norm] = (counts[norm] || 0) + 1;\n      originalValues[norm] = val.toString().trim();\n    }\n  });\n\n  // Trouver le vainqueur du vote\n  let winnerNorm = \"\";\n  let max = 0;\n  for (const [norm, count] of Object.entries(counts)) {\n    if (count > max) {\n      max = count;\n      winnerNorm = norm;\n    }\n  }\n\n  if (winnerNorm) {\n    finalMergedBike[col] = originalValues[winnerNorm];\n    finalMergedBike[col + \"_Confiance\"] = `${max}/${allProcessedLines.length}`;\n  } else {\n    finalMergedBike[col] = \"\";\n    finalMergedBike[col + \"_Confiance\"] = \"0\";\n  }\n});\n\nreturn finalMergedBike;\n\n\n\n/**const techColumns = [\"Cadre\", \"Fourche\", \"Amortisseur\", \"Roues\", \"Pneus\", \"Dérailleur arrière\", \"Pédalier\", \"Boitier de pédalier\", \"Plateaux\", \"Kit de Freinage\", \"Moteur\", \"Batterie\", \"Chargeur\"];\n\n// 1. Récupérer le vélo original (toujours le premier item du trigger)\nconst originalBike = $('Execute_Workflow_Trigger').all()[0].json;\nconst currentId = originalBike.NUM_ID;\n\n// 2. Récupérer TOUTES les lignes produites par Final_result1\n// On utilise .all() pour avoir la liste brute\nconst allProcessedLines = $('Final_result1').all();\n\nlet finalMergedBike = { ...originalBike };\n\n// 3. Logique du vote majoritaire\ntechColumns.forEach(col => {\n  let counts = {};\n  let originalValues = {};\n\n  allProcessedLines.forEach(line => {\n    let val = line.json[col];\n    if (val && val !== \"??\" && val !== \"\" && val !== \"null\" && String(val).toLowerCase() !== \"non spécifié\") {\n      const norm = val.trim().toUpperCase();\n      counts[norm] = (counts[norm] || 0) + 1;\n      originalValues[norm] = val.trim();\n    }\n  });\n\n  let winner = \"\";\n  let max = 0;\n  for (const [norm, count] of Object.entries(counts)) {\n    if (count > max) {\n      max = count;\n      winner = originalValues[norm];\n    }\n  }\n\n  finalMergedBike[col] = winner || \"\";\n  finalMergedBike[col + \"_Confiance\"] = winner ? `${max}/${allProcessedLines.length}` : \"0\";\n});\n\nreturn finalMergedBike;**/\n\n\n\n\n\n\n\n\n//00:31, 10/04\n/**const techColumns = [\"Cadre\", \"Fourche\", \"Amortisseur\", \"Roues\", \"Pneus\", \"Dérailleur arrière\", \"Pédalier\", \"Boitier de pédalier\", \"Plateaux\", \"Kit de Freinage\", \"Moteur\", \"Batterie\", \"Chargeur\"];\n\n// 1. Récupérer les infos du vélo envoyées par le Parent\nconst originalData = $('Execute_Workflow_Trigger').item.json;\n\n// 2. Récupérer TOUTES les extractions IA de ce workflow enfant\n// Puisqu'on est dans l'enfant, Information Extractor1 ne contient que les liens de CE vélo\nconst allExtractions = $('Information Extractor1').all();\n\nlet mergedBike = { ...originalData };\n\n// 3. Vote majoritaire\ntechColumns.forEach(col => {\n  let counts = {};\n  let originalValues = {};\n\n  allExtractions.forEach(item => {\n    let data = item.json.output || item.json.Extraction || {};\n    if (typeof data === 'string') { try { data = JSON.parse(data); } catch(e) { data = {}; } }\n\n    let val = data[col];\n    if (val && val !== \"??\" && val !== \"null\" && val !== \"\" && val.toLowerCase() !== \"non spécifié\") {\n      let norm = val.trim().toUpperCase();\n      counts[norm] = (counts[norm] || 0) + 1;\n      originalValues[norm] = val.trim();\n    }\n  });\n\n  let winner = \"\";\n  let max = 0;\n  for (const [norm, count] of Object.entries(counts)) {\n    if (count > max) {\n      max = count;\n      winner = originalValues[norm];\n    }\n  }\n\n  mergedBike[col] = winner || \"\";\n  mergedBike[col + \"_Confiance\"] = winner ? `${max}/${allExtractions.length}` : \"0\";\n});\n\nreturn mergedBike;**/\n\n\n\n\n//10/04/26\n/**\n const techColumns = [\n  \"Cadre\", \"Fourche\", \"Amortisseur\", \"Roues\", \"Pneus\", \n  \"Dérailleur arrière\", \"Pédalier\", \"Boitier de pédalier\", \n  \"Plateaux\", \"Kit de Freinage\", \"Moteur\", \"Batterie\", \"Chargeur\"\n];\n\n// 1. On récupère l'élément qui arrive dans ce nœud (le signal 'Done')\n// On l'utilise pour savoir quel vélo on traite actuellement.\nconst inputItems = $input.all();\nif (inputItems.length === 0) return [];\n\n// On récupère le NUM_ID depuis l'entrée (passé par Link_cleaner ou le loop)\nconst currentId = inputItems[0].json.Num_id || inputItems[0].json.NUM_ID;\n\n// 2. Récupérer les données originales du vélo depuis le nœud 'Sheet' (SANS .first())\n// On cherche manuellement dans la liste brute le vélo qui a le bon ID.\nconst allSheetData = $('Sheet').all();\nconst originalBike = allSheetData.find(b => b.json.NUM_ID === currentId);\n\nif (!originalBike) {\n  throw new Error(\"Impossible de retrouver les données d'origine pour le vélo ID : \" + currentId);\n}\n\n// Initialiser le vélo final avec les colonnes du Google Sheet\nlet mergedBike = { ...originalBike.json };\n\n// 3. Récupérer TOUTES les extractions de l'IA (SANS .item)\n// On filtre pour ne garder que les lignes qui appartiennent à ce vélo\nconst allExtractions = $('Information Extractor1').all().filter(e => {\n  // On compare l'ID stocké par l'IA avec notre ID actuel\n  return (e.json.Num_id === currentId || e.json.sku === currentId || e.json.NUM_ID === currentId);\n});\n\n// 4. Logique du Vote Majoritaire (fréquence)\ntechColumns.forEach(col => {\n  let counts = {};\n  let originalFormat = {}; // Pour garder la casse (Majuscules/Minuscules) du gagnant\n\n  allExtractions.forEach(item => {\n    let data = item.json.output || item.json.Extraction || {};\n    \n    // Support si l'IA renvoie du texte JSON au lieu d'un objet\n    if (typeof data === 'string') {\n      try { data = JSON.parse(data); } catch(e) { data = {}; }\n    }\n\n    let val = data[col];\n\n    // Nettoyage et validation (on ignore les \"??\" et les vides)\n    if (val && val !== \"??\" && val !== \"null\" && val !== \"\" && val.toLowerCase() !== \"non spécifié\") {\n      let normalized = val.toString().trim().toUpperCase();\n      counts[normalized] = (counts[normalized] || 0) + 1;\n      originalFormat[normalized] = val.toString().trim();\n    }\n  });\n\n  // Trouver la valeur qui revient le plus souvent\n  let winner = \"\";\n  let max = 0;\n  for (const [norm, count] of Object.entries(counts)) {\n    if (count > max) {\n      max = count;\n      winner = originalFormat[norm];\n    }\n  }\n\n  // On enregistre le gagnant dans la colonne\n  mergedBike[col] = winner || \"\";\n  \n  // On ajoute un score de confiance (ex: 8/10 sites sont d'accord)\n  mergedBike[col + \"_Confiance\"] = winner ? `${max}/${allExtractions.length}` : \"0\";\n});\n\nreturn mergedBike;\n**/\n\n\n\n\n\n\n\n/**const techColumns = [\"Cadre\", \"Fourche\", \"Amortisseur\", \"Roues\", \"Pneus\", \"Dérailleur arrière\", \"Pédalier\", \"Boitier de pédalier\", \"Plateaux\", \"Kit de Freinage\", \"Moteur\", \"Batterie\", \"Chargeur\"];\n\n// 1. Identifier le vélo que l'on traite (via NUM_ID ou Code)\nconst bikeData = $('Loop1').item.json;\nconst currentSku = bikeData.NUM_ID;\n\n// 2. Récupérer TOUTES les lignes produites par Final_result1 depuis le début\n// On filtre pour ne prendre que celles du vélo actuel\nconst allVersions = $('Final_result1').all().filter(item => item.json.NUM_ID === currentSku);\n\nlet finalMergedBike = { ...bikeData };\n\n// 3. Appliquer le vote majoritaire pour chaque colonne technique\ntechColumns.forEach(col => {\n  let counts = {};\n  let originalValues = {};\n\n  allVersions.forEach(version => {\n    let val = version.json[col];\n\n    // On ignore les valeurs vides ou invalides\n    if (val && val !== \"??\" && val !== \"\" && val !== \"null\" && String(val).toLowerCase() !== \"non spécifié\") {\n      const normalized = val.trim().toUpperCase();\n      counts[normalized] = (counts[normalized] || 0) + 1;\n      originalValues[normalized] = val.trim(); // On garde la version \"jolie\"\n    }\n  });\n\n  // Trouver la valeur la plus répétée\n  let winner = \"\";\n  let max = 0;\n  for (const [val, count] of Object.entries(counts)) {\n    if (count > max) {\n      max = count;\n      winner = originalValues[val];\n    }\n  }\n\n  // On assigne le gagnant à la colonne\n  finalMergedBike[col] = winner || \"\";\n  finalMergedBike[col + \"_Confiance\"] = winner ? `${max}/${allVersions.length}` : \"0\";\n});\n\nreturn finalMergedBike;**/\n\n\n\n\n\n\n\n\n\n\n\n\n/**\n\nconst techColumns = [\n  \"Cadre\", \"Fourche\", \"Amortisseur\", \"Roues\", \"Pneus\", \n  \"Dérailleur arrière\", \"Pédalier\", \"Boitier de pédalier\", \n  \"Plateaux\", \"Kit de Freinage\", \"Moteur\", \"Batterie\", \"Chargeur\"\n];\n\n// 1. RÉCUPÉRER LES INFOS DU VÉLO ACTUEL (Depuis la boucle extérieure)\n// Remplace 'Loop Over Items1' par le nom exact de ton loop qui contient les vélos\nconst currentBike = $('Loop1').item.json;\nconst currentSku = currentBike.NUM_ID ; // On utilise le Code/SKU pour filtrer\n\n// 2. RÉCUPÉRER ET FILTRER LES EXTRACTIONS POUR CE VÉLO UNIQUEMENT\nconst allExtractions = $('Information Extractor1').all().filter(item => {\n  return item.json.NUM_ID === currentSku;\n});\n\n// Initialiser l'objet final avec les métadonnées du vélo en cours\nlet mergedBike = { ...currentBike };\n\n// 3. LOGIQUE DE VOTE MAJORITAIRE\ntechColumns.forEach(col => {\n  let counts = {};\n  let originalValues = {}; // Pour garder la casse originale (Majuscules/Minuscules) du gagnant\n\n  allExtractions.forEach(item => {\n    let data = item.json.output || item.json.Extraction || {};\n    \n    // Support si l'IA renvoie une string JSON au lieu d'un objet\n    if (typeof data === 'string') {\n      try { data = JSON.parse(data); } catch(e) { data = {}; }\n    }\n\n    let val = data[col];\n\n    // Nettoyage et validation de la donnée\n    if (val && val !== \"??\" && val !== \"null\" && val !== \"\" && \n        !val.includes(\"??\") && val.toLowerCase() !== \"non spécifié\") {\n      \n      const normalized = val.trim().toUpperCase();\n      counts[normalized] = (counts[normalized] || 0) + 1;\n      \n      // On stocke la version \"jolie\" du texte pour l'utiliser à la fin\n      if (!originalValues[normalized]) {\n        originalValues[normalized] = val.trim();\n      }\n    }\n  });\n\n  // 4. TROUVER LE GAGNANT DU VOTE\n  let winnerNormalized = \"\";\n  let maxCount = 0;\n  let totalVotesForCol = 0;\n\n  for (const [valNorm, count] of Object.entries(counts)) {\n    totalVotesForCol += count;\n    if (count > maxCount) {\n      maxCount = count;\n      winnerNormalized = valNorm;\n    }\n  }\n\n  // 5. ENREGISTRER LE RÉSULTAT\n  if (winnerNormalized) {\n    mergedBike[col] = originalValues[winnerNormalized]; // On met la version \"propre\"\n    mergedBike[col + \"_Confiance\"] = `${maxCount}/${totalVotesForCol}`;\n  } else {\n    mergedBike[col] = \"\"; // Ou \"Non trouvé\"\n    mergedBike[col + \"_Confiance\"] = \"0/0\";\n  }\n});\n\nreturn mergedBike;**/\n\n\n\n\n\n\n\n\n/**const techColumns = [\n  \"Cadre\", \"Fourche\", \"Amortisseur\", \"Roues\", \"Pneus\", \n  \"Dérailleur arrière\", \"Pédalier\", \"Boitier de pédalier\", \n  \"Plateaux\", \"Kit de Freinage\", \"Moteur\", \"Batterie\", \"Chargeur\", \"URL_search\"\n];\n\n// 1. Récupérer TOUTES les extractions de l'IA pour CE vélo précis (les 10 lignes)\nconst allExtractions = $('Information Extractor1').all();\n\n// 2. Récupérer les infos d'origine du vélo (depuis le nœud Sheet ou le premier loop)\nconst originalData = $('Sheet').first().json;\n\n// Initialiser l'objet final avec les données de base\nlet mergedBike = { ...originalData };\n\n// 3. Pour chaque colonne technique, on va compter les occurrences\ntechColumns.forEach(col => {\n  let counts = {};\n  let valuesFound = [];\n\n  allExtractions.forEach(item => {\n    let data = item.json.output || item.json.Extraction || {};\n    \n    // Parser si c'est du texte\n    if (typeof data === 'string') {\n      try { data = JSON.parse(data); } catch(e) { data = {}; }\n    }\n\n    let val = data[col];\n\n    // On ignore les valeurs vides ou inutiles\n    if (val && val !== \"??\" && val !== \"null\" && val !== \"\" && !val.includes(\"??\") && val.toLowerCase() !== \"non spécifié\") {\n      val = val.trim().toUpperCase(); // Normalisation pour bien compter\n      valuesFound.push(val);\n      counts[val] = (counts[val] || 0) + 1;\n    }\n  });\n\n  // 4. Trouver la valeur la plus répétée (le Mode)\n  let mostFrequentValue = \"\";\n  let maxCount = 0;\n\n  for (const [value, count] of Object.entries(counts)) {\n    if (count > maxCount) {\n      maxCount = count;\n      mostFrequentValue = value;\n    }\n  }\n\n  // On enregistre le gagnant du vote\n  mergedBike[col] = mostFrequentValue || \"Non trouvé\";\n  \n  // Optionnel : Ajouter le score de confiance (ex: 9/12)\n  if (mostFrequentValue) {\n    mergedBike[col + \"_Confiance\"] = `${maxCount}/${valuesFound.length}`;\n  }\n});\n\nreturn mergedBike;**/"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        704,
+        -176
+      ],
+      "id": "1fe23cf5-441c-4382-a4f8-2b3b615c4266",
+      "name": "merge_all_results"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1072,
+        -48
+      ],
+      "id": "2af0c64e-c123-4c30-9c61-de797124ab69",
+      "name": "Wait2",
+      "webhookId": "924a463b-1c76-4204-97d7-8e742acb723f",
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2880,
+        -16
+      ],
+      "id": "d8ac5393-4fec-4b44-9e40-29ae450cc03e",
+      "name": "Wait3",
+      "webhookId": "8a7225e0-2908-4a70-a257-7498d00eab88",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        528,
+        -80
+      ],
+      "id": "9149c4d5-b1a1-4f31-bc21-0d17764c8354",
+      "name": "Loop2"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -560,
+        -80
+      ],
+      "id": "230cf329-babf-4929-88cb-db6203627aab",
+      "name": "Execute_Workflow_Trigger"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Récupérer les infos du vélo ACTUEL\nconst bikeInfo = $('Execute_Workflow_Trigger').item.json;\n\nconst targetBrand = String(bikeInfo.Marque || \"\").toLowerCase().trim();\nconst targetModel = String(bikeInfo.Modèle || \"\").toLowerCase().trim();\nconst targetYearFull = String(bikeInfo.Millésime || \"\").trim(); // ex: \"2025\"\nconst targetYearShort = targetYearFull.slice(-2); // ex: \"25\"\n\n// Découpage en mots-clés obligatoires\nconst mandatoryWords = [targetBrand, ...targetModel.split(/[\\s-]+/)]\n  .filter(word => word.length >= 2);\n\nconst allMatches = [];\n\n// 2. Analyse de tous les résultats renvoyés par Apify\nfor (const item of $input.all()) {\n  const data = item.json;\n  const organicResults = data.results || data.organicResults || data.organic || [];\n\n  for (const res of organicResults) {\n    if (!res.title) continue;\n\n    const title = res.title.toLowerCase();\n    const url = (res.url || \"\").toLowerCase();\n\n    // Condition 1 : TOUS les mots (marque + modèle) sont dans le titre ?\n    const hasAllWords = mandatoryWords.every(word => title.includes(word));\n\n    // Condition 2 : L'année est présente dans le titre ou l'URL ?\n    const yearRegex = new RegExp(`(\\\\b${targetYearFull}\\\\b|\\\\b${targetYearShort}\\\\b)`);\n    const hasRightYear = yearRegex.test(title) || url.includes(targetYearFull);\n\n    // ✅ Condition 3 : EXCLURE les liens Ekstere (auto-référence)\n    // On retire tout ce qui contient \"ekstere\" (couvre ekstere.fr, ekstere.eco, etc.)\n    const isInternalLink = url.includes(\"ekstere\");\n\n    // Si c'est bon et que ce n'est PAS un lien ekstere\n    if (hasAllWords && hasRightYear && !isInternalLink) {\n      allMatches.push({\n        json: {\n          Num_id: bikeInfo.NUM_ID,\n          sku: bikeInfo.Code || null,\n          best_url: res.url,\n          best_title: res.title,\n          brand: targetBrand,\n          model: targetModel,\n          year: targetYearFull,\n          match_found: true\n        }\n      });\n    }\n  }\n}\n\n// 3. Gestion de l'absence de résultats\nif (allMatches.length === 0) {\n  return [{\n    json: {\n      Num_id: bikeInfo.NUM_ID,\n      sku: bikeInfo.Code || null,\n      match_found: false,\n      error: `Aucun lien externe trouvé pour ${targetBrand} ${targetModel} ${targetYearFull}`\n    }\n  }];\n}\n\nreturn allMatches;\n\n/**\n/// 1. Récupérer les infos du vélo ACTUEL (depuis la boucle extérieure)\n// Remplace 'Loop Over Items1' par le nom exact de ton loop qui contient les vélos\nconst bikeInfo = $('Execute_Workflow_Trigger').item.json\n  //$('Loop1').item.json;\n\nconst targetBrand = String(bikeInfo.Marque || \"\").toLowerCase().trim();\nconst targetModel = String(bikeInfo.Modèle || \"\").toLowerCase().trim();\nconst targetYearFull = String(bikeInfo.Millésime || \"\").trim(); // ex: \"2025\"\nconst targetYearShort = targetYearFull.slice(-2); // ex: \"25\"\n\n// Découpage en mots-clés obligatoires (Marque + tous les mots du modèle)\nconst mandatoryWords = [targetBrand, ...targetModel.split(/[\\s-]+/)]\n  .filter(word => word.length >= 2);\n\nconst allMatches = [];\n\n// 2. Analyse de tous les résultats renvoyés par Apify\nfor (const item of $input.all()) {\n  const data = item.json;\n  // Apify met les résultats soit dans .results, soit dans .organicResults\n  const organicResults = data.results || data.organicResults || data.organic || [];\n\n  for (const res of organicResults) {\n    if (!res.title) continue;\n\n    const title = res.title.toLowerCase();\n    const url = (res.url || \"\").toLowerCase();\n\n    // Condition 1 : Est-ce que TOUS les mots sont dans le titre ?\n    const hasAllWords = mandatoryWords.every(word => title.includes(word));\n\n    // Condition 2 : Est-ce que l'année est présente dans le titre ou l'URL ?\n    const yearRegex = new RegExp(`(\\\\b${targetYearFull}\\\\b|\\\\b${targetYearShort}\\\\b)`);\n    const hasRightYear = yearRegex.test(title) || url.includes(targetYearFull);\n\n    // Si c'est bon, on ajoute à la liste\n    if (hasAllWords && hasRightYear) {\n      allMatches.push({\n        json: {\n          Num_id: bikeInfo.NUM_ID, // Corrigé ici (plus besoin de rappeler le noeud Sheet)\n          sku: bikeInfo.Code || null, // TRÈS IMPORTANT pour le filtre final\n          best_url: res.url,\n          best_title: res.title,\n          brand: targetBrand,\n          model: targetModel,\n          year: targetYearFull,\n          match_found: true\n        }\n      });\n    }\n  }\n}\n\n// 3. Gestion de l'absence de résultats\nif (allMatches.length === 0) {\n  return [{\n    json: {\n      Num_id: bikeInfo.NUM_ID,\n      sku: bikeInfo.Code || null,\n      match_found: false,\n      error: `Aucun lien trouvé pour ${targetBrand} ${targetModel} ${targetYearFull}`\n    }\n  }];\n}\n\nreturn allMatches;\n**/\n\n\n\n\n/**  \n // 1. Récupération des infos de référence du vélo (Sheet)\nconst bikeInfo = $('Sheet').first().json;\n\nconst targetBrand = String(bikeInfo.Marque || \"\").toLowerCase().trim();\nconst targetModel = String(bikeInfo.Modèle || \"\").toLowerCase().trim();\nconst targetYearFull = String(bikeInfo.Millésime || \"\").trim(); // ex: \"2025\"\nconst targetYearShort = targetYearFull.slice(-2); // ex: \"25\"\n\n// Découpage en mots-clés obligatoires (Marque + tous les mots du modèle)\n// ex: [\"sunn\", \"asphalt\", \"finest\"]\nconst mandatoryWords = [targetBrand, ...targetModel.split(/[\\s-]+/)]\n  .filter(word => word.length >= 2);\n\nconst allMatches = [];\n\n// 2. Analyse de tous les résultats renvoyés par Apify\nfor (const item of $input.all()) {\n  const data = item.json;\n  const organicResults = data.results || data.organicResults || [];\n\n  for (const res of organicResults) {\n    if (!res.title) continue;\n\n    const title = res.title.toLowerCase();\n    const url = (res.url || \"\").toLowerCase();\n\n    // Condition 1 : Est-ce que TOUS les mots (marque + modèle) sont dans le titre ?\n    const hasAllWords = mandatoryWords.every(word => title.includes(word));\n\n    // Condition 2 : Est-ce que l'année est présente dans le titre ou l'URL ?\n    // On cherche l'année entière (2025) ou courte (25)\n    const yearRegex = new RegExp(`(\\\\b${targetYearFull}\\\\b|\\\\b${targetYearShort}\\\\b)`);\n    const hasRightYear = yearRegex.test(title) || url.includes(targetYearFull);\n\n    // Si les deux conditions sont remplies, on ajoute ce lien à la liste des résultats\n    if (hasAllWords && hasRightYear) {\n      allMatches.push({\n        json: {\n          Num_id: $('Sheet').first().json.NUM_ID,\n          best_url: res.url,\n          best_title: res.title,\n          sku: bikeInfo.Code || null,\n          brand: targetBrand,\n          model: targetModel,\n          year: targetYearFull,\n          match_found: true\n        }\n      });\n    }\n  }\n}\n\n// 3. Si aucun lien n'a été trouvé du tout, on renvoie une info d'erreur pour ne pas bloquer\nif (allMatches.length === 0) {\n  return [{\n    json: {\n      match_found: false,\n      error: `Aucun lien trouvé pour ${targetBrand} ${targetModel} ${targetYearFull}`\n    }\n  }];\n}\n\nreturn allMatches;**/\n\n\n\n\n\n\n\n\n/**\n  \n for (const item of $input.all()) {\n  const data = item.json;\n\n  const organicResults =\n    data.organicResults ||\n    data.organic ||\n    data.results ||\n    [];\n\n  const first = organicResults[0];\n\n  return [\n    {\n      json: {\n        query: data.searchQuery || data.query || null,\n        best_title: first?.title || null,\n        best_url: first?.url || first?.link || null,\n        best_snippet: first?.description || first?.snippet || null,\n      }\n    }\n  ];\n}\n\nreturn [];\n**/"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        16,
+        -80
+      ],
+      "id": "ddc818cd-ef3b-4603-a2d2-8d3d5ffd2aa6",
+      "name": "Link_Cleaner"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "846d9c22-c58d-4a45-8d05-b3af98af7644",
+              "leftValue": "={{ $json.best_url }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        224,
+        -80
+      ],
+      "id": "eae03112-882c-4e56-aae7-7fbf901f8e08",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// On récupère les infos originales du trigger (le début du sous-workflow)\nconst originalBike = $('Execute_Workflow_Trigger').all()[0].json;\n\n// On renvoie le vélo original avec une petite note d'erreur\nreturn {\n  ...originalBike,\n  status: \"Aucun lien trouvé\"\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        368,
+        -224
+      ],
+      "id": "185d8989-c320-4326-afc4-f4f9cb6d8987",
+      "name": "Prepare_empty_bike"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "HTTP Request3": {
+      "main": [
+        [
+          {
+            "node": "HTML_Cleaner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor1": {
+      "main": [
+        [
+          {
+            "node": "Final_result1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Information Extractor1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apify_request": {
+      "main": [
+        [
+          {
+            "node": "Link_Cleaner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML_Cleaner": {
+      "main": [
+        [
+          {
+            "node": "Filter_Champs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter_Champs": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Final_result1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "merge_all_results": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "Loop2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop2": {
+      "main": [
+        [
+          {
+            "node": "merge_all_results",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute_Workflow_Trigger": {
+      "main": [
+        [
+          {
+            "node": "Apify_request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Link_Cleaner": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Loop2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare_empty_bike",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare_empty_bike": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "6da7f451-4c24-4c0c-87c1-deb01db874ed",
+  "meta": {
+    "instanceId": "aca6ed7ec8875b2fbca26169c7cd9cbc432770c08b36ede295ebecdc45904a16"
+  },
+  "id": "QTLaO8uTx6CMr4qQ",
+  "tags": []
+}
