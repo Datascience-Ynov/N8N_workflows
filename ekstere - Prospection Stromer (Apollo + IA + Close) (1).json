@@ -1,0 +1,1312 @@
+{
+  "name": "ekstere - Prospection Stromer (Apollo + IA + Close)",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -752,
+        912
+      ],
+      "id": "b4d35031-d5ef-4daa-b1b9-760624a32cfd",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Rôle\nTu es un agent spécialisé dans la recherche et la qualification de prospects B2B pour ekstere, entreprise française spécialisée dans les vélos électriques reconditionnés, la mobilité premium et les Speed Bikes Stromer.\nTa mission est d'identifier les entreprises tertiaires parisiennes les plus susceptibles d'être intéressées par une offre de location de Speed Bikes Stromer pour leurs salariés.\nL'objectif n'est pas de constituer une liste générale d'entreprises, mais de trouver des prospects commerciaux à fort potentiel, pour lesquels l'utilisation quotidienne ou régulière d'un Stromer peut remplacer une partie des déplacements professionnels réalisés aujourd'hui en taxi, VTC, voiture ou transports en commun.\nOffre à promouvoir\nekstere souhaite proposer aux entreprises une flotte de Speed Bikes Stromer en location destinée aux collaborateurs qui réalisent régulièrement des déplacements professionnels en Île-de-France, notamment à Paris et dans les Hauts-de-Seine.\nLe Stromer est particulièrement adapté à cette cible car il permet :\nde se déplacer rapidement en milieu urbain ;\nd'effectuer des trajets professionnels de plusieurs kilomètres sans dépendre des embouteillages ;\nd'arriver à destination sans avoir à utiliser une voiture ou un taxi ;\nde limiter l'effort physique grâce à l'assistance électrique ;\nde conserver une tenue professionnelle grâce notamment à la transmission par courroie sur certains modèles ;\nde proposer une expérience de mobilité haut de gamme adaptée à des collaborateurs ayant des exigences élevées ;\nde bénéficier d'un vélo qui correspond à une image premium et valorisante ;\nde proposer une alternative concrète aux taxis, VTC, voitures et transports en commun pour certains déplacements professionnels.\nL'offre est particulièrement pertinente pour des entreprises dont les salariés doivent se déplacer souvent entre différents bureaux, clients, sites, réunions ou rendez-vous professionnels.\nZone géographique prioritaire\nRecherche en priorité des entreprises situées :\nà Paris ;\ndans les Hauts-de-Seine (92) ;\nà proximité de Clamart, notamment dans les communes facilement accessibles depuis l'atelier ekstere de Clamart ;\ndans les zones tertiaires bien connectées à Paris.\nAccorde une attention particulière aux entreprises dont les salariés effectuent des déplacements réguliers entre Paris et les Hauts-de-Seine.\nEntreprises à rechercher en priorité\nPrivilégie les entreprises tertiaires présentant plusieurs des caractéristiques suivantes :\n1. Activité nécessitant des déplacements fréquents\nPriorité élevée aux entreprises dont les collaborateurs doivent régulièrement se déplacer :\nentre plusieurs bureaux ;\nchez des clients ;\nsur différents sites ;\npour des réunions ;\npour des rendez-vous commerciaux ;\npour des missions ou interventions ;\nentre Paris et les Hauts-de-Seine.\nExemples de secteurs à explorer :\ncabinets de conseil ;\naudit ;\nfinance ;\nassurance ;\nimmobilier ;\narchitecture ;\ningénierie ;\nbureaux d'études ;\ncabinets d'avocats ;\nagences de communication ;\nagences événementielles ;\nsociétés de services ;\nESN / conseil IT ;\nrecrutement ;\nressources humaines ;\nservices aux entreprises ;\nsociétés spécialisées dans l'innovation ;\nentreprises ayant plusieurs implantations en Île-de-France.\nNe te limite pas à cette liste : identifie également d'autres secteurs présentant un fort potentiel de déplacements professionnels.\n2. Profil premium\nLe Stromer étant un produit haut de gamme, privilégie les entreprises :\nayant un positionnement premium ;\ntravaillant avec une clientèle professionnelle exigeante ;\nemployant des cadres, consultants, commerciaux, associés ou dirigeants ;\ndisposant d'un budget mobilité ou de frais de déplacement significatifs ;\nsusceptibles d'investir dans une solution de mobilité qualitative plutôt que dans une solution uniquement basée sur le prix.\nLe niveau de gamme de l'entreprise doit être considéré comme un critère important.\n3. Taille de l'entreprise\nPrivilégie en priorité les entreprises de :\n20 à 500 salariés.\nLes entreprises plus importantes peuvent également être retenues lorsqu'elles présentent un fort potentiel.\nÉvite les très petites structures sans salariés susceptibles d'effectuer régulièrement des déplacements professionnels.\nPour chaque entreprise, estime si possible le nombre de collaborateurs susceptibles d'être concernés par l'offre.\n4. Localisation\nAnalyse la localisation des bureaux.\nDonne la priorité aux entreprises :\nsituées dans Paris ou les Hauts-de-Seine ;\nproches d'axes permettant des déplacements fréquents à vélo ;\nayant plusieurs bureaux en Île-de-France ;\nsituées dans des quartiers d'affaires ou zones tertiaires ;\ndont les collaborateurs peuvent avoir besoin de rejoindre régulièrement différents points de Paris.\nLorsque l'information est disponible, identifie également les différents établissements de l'entreprise.\nSignaux indiquant un fort potentiel\nRecherche activement des signaux permettant de confirmer le besoin.\nPar exemple :\npolitique de mobilité durable ;\ndémarche RSE ;\nPlan de Mobilité Employeur ;\nflotte automobile ;\nbudget important consacré aux déplacements ;\nutilisation importante de taxis ou VTC ;\nnombreux déplacements professionnels ;\nplusieurs bureaux à Paris / Île-de-France ;\ncommerciaux ou consultants très mobiles ;\ncollaborateurs amenés à rencontrer régulièrement des clients ;\nrecrutement de profils commerciaux ou consultants ;\ncommunication autour de la mobilité durable ;\navantages salariés liés à la mobilité ;\nforfait mobilité durable ;\nvolonté de réduire l'utilisation de la voiture ;\nengagement environnemental ;\nsiège situé dans une zone où les déplacements urbains sont fréquents.\nUn signal concret et récent doit augmenter le score du prospect.\nProfils de décideurs à identifier\nPour chaque entreprise, cherche les personnes susceptibles de porter ou de décider ce type d'offre.\nPriorité aux fonctions suivantes :\nDRH / Directeur des Ressources Humaines\nResponsable RH\nResponsable RSE / ESG\nResponsable QVT / Qualité de Vie au Travail\nResponsable mobilité\nOffice Manager\nResponsable des services généraux\nDirecteur administratif et financier\nDirecteur des achats\nDirection générale\nResponsable flotte / mobilité lorsqu'il existe\nPour les PME, privilégie directement le dirigeant, DG, DRH ou Office Manager.\nInformations à rechercher\nPour chaque entreprise retenue, retourne une fiche contenant :\nNom de l'entreprise\nSite internet\nSecteur d'activité\nNombre approximatif de salariés\nAdresse du siège\nAutres implantations pertinentes en Île-de-France\nDistance approximative par rapport à Clamart\nProfil de l'entreprise\nPourquoi elle pourrait avoir besoin de Stromer\nTypes de collaborateurs potentiellement concernés\nIndices de déplacements professionnels fréquents\nIndices de politique RSE / mobilité\nNiveau de gamme / positionnement de l'entreprise\nDécideur potentiel\nFonction du décideur\nNom du décideur lorsque disponible\nURL LinkedIn de l'entreprise\nURL LinkedIn du décideur lorsque disponible\nAdresse e-mail professionnelle lorsqu'elle est disponible légalement\nSource de chaque information importante\nSystème de scoring\nAttribue à chaque entreprise une note sur 100.\nConstruis le score à partir des critères suivants :\nPotentiel de déplacement - 30 points\nTrès nombreux déplacements professionnels : 25-30\nNombreux déplacements : 18-24\nDéplacements réguliers : 10-17\nPeu de déplacements identifiés : 0-9\nAdéquation géographique - 20 points\nParis / Hauts-de-Seine avec déplacements réguliers entre plusieurs sites : 18-20\nParis / 92 : 14-17\nÎle-de-France proche : 8-13\nPlus éloigné : 0-7\nProfil premium - 15 points\nÉvalue la capacité et la probabilité de l'entreprise à proposer une solution de mobilité haut de gamme à ses collaborateurs.\nNombre de collaborateurs concernés - 15 points\nEstime le potentiel de flotte :\nplusieurs dizaines de collaborateurs mobiles : score élevé ;\nquelques collaborateurs : score moyen ;\ntrès faible potentiel : score faible.\nPolitique mobilité / RSE - 10 points\nAttribue davantage de points lorsqu'une politique de mobilité durable ou RSE est clairement identifiée.\nFacilité d'identification du décideur - 10 points\nPrivilégie les entreprises pour lesquelles un décideur pertinent peut être clairement identifié.\nRègles importantes\nNe cherche pas simplement les entreprises les plus connues.\nUne PME de 50 salariés avec 15 consultants qui se déplacent quotidiennement entre Paris et les Hauts-de-Seine peut être beaucoup plus intéressante qu'un grand groupe de 5 000 salariés dont les collaborateurs se déplacent peu.\nLe critère principal est donc :\n\"Cette entreprise a-t-elle un problème concret de déplacements professionnels urbains que le Stromer peut résoudre ?\"\nNe déduis pas qu'une entreprise est intéressante uniquement parce qu'elle communique sur la RSE.\nCherche des éléments concrets permettant de démontrer le potentiel commercial.\nNe privilégie pas uniquement les entreprises ayant déjà une politique vélo : l'objectif est également d'identifier des entreprises qui utilisent aujourd'hui principalement le taxi, le VTC, la voiture ou les transports en commun et pour lesquelles le Stromer pourrait constituer une alternative.\nFormat de sortie\nRetourne les résultats sous forme de tableau, classés du score le plus élevé au plus faible.\nColonnes obligatoires :\n| Score /100 | Entreprise | Secteur | Effectif estimé | Localisation | Potentiel de déplacements | Pourquoi Stromer ? | Décideur | Fonction | LinkedIn | Site | Preuves / sources |\nNe retourne que les prospects ayant un score supérieur ou égal à 60/100.\nÀ la fin, crée trois catégories :\n🔥 Priorité 1\nProspects à contacter immédiatement.\n🟠 Priorité 2\nProspects intéressants nécessitant une qualification complémentaire.\n🟡 Priorité 3\nProspects potentiels mais avec moins de signaux d'achat.\nPour chaque entreprise en Priorité 1, rédige également une phrase expliquant précisément pourquoi ekstere devrait la prospecter.\nObjectif final\nL'objectif est de permettre à un commercial ekstere de prendre la liste obtenue et de commencer immédiatement sa prospection.\nLa qualité des prospects est plus importante que la quantité.\nIl vaut mieux fournir 20 entreprises très pertinentes et bien documentées que 100 entreprises génériques.\nCherche en priorité des entreprises pour lesquelles il existe une vraie cohérence entre :\ndéplacements professionnels fréquents + Paris / Hauts-de-Seine + collaborateurs à fort pouvoir d'achat ou profil cadre + positionnement premium + intérêt potentiel pour la mobilité durable + capacité à financer une flotte de Stromer.\n\nNB:Sors moi la liste de ces entreprises sous forme de JSON",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        32,
+        -64
+      ],
+      "id": "e5a17fef-d8cd-4c23-bd3f-48239aa3043c",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "builtInTools": {
+          "webSearch": {
+            "searchContextSize": "medium",
+            "allowedDomains": "google.com",
+            "country": "FR"
+          }
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        48,
+        144
+      ],
+      "id": "af52c5f0-85e2-423a-be0c-7d9b2a60f983",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "32WdHhHsqLWHn8BM",
+          "name": "OpenAi_ekstere"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "personSearchFilters": {
+          "person_titles": ""
+        }
+      },
+      "type": "@apolloio/n8n-nodes-apollo.apollo",
+      "typeVersion": 1,
+      "position": [
+        384,
+        -64
+      ],
+      "id": "e019f666-0e5c-47ad-b031-59ed4e20ac97",
+      "name": "Search people",
+      "credentials": {
+        "apolloApi": {
+          "id": "KCIYBBj3eACvVjIz",
+          "name": "Apollo account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{ \"companies\": [ { \"name\": \"Decathlon\", \"domain\": \"decathlon.fr\" } ] }"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        208,
+        144
+      ],
+      "id": "4b683124-00ee-44d6-9560-65d2d68cabdc",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Nombre de pages Apollo à récupérer (100 entreprises par page, 1 crédit par page)\nconst NB_PAGES = 1;\nreturn Array.from({ length: NB_PAGES }, (_, i) => ({ json: { page: i + 1 } }));"
+      },
+      "id": "85f8ee79-e51e-4c33-8223-3a082c27614a",
+      "name": "Pages à récupérer",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -512,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apollo.io/api/v1/mixed_companies/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"organization_locations\": [\n    \"Paris, France\",\n    \"Boulogne-Billancourt, France\",\n    \"Issy-les-Moulineaux, France\",\n    \"Courbevoie, France\",\n    \"Puteaux, France\",\n    \"Nanterre, France\",\n    \"Neuilly-sur-Seine, France\",\n    \"Levallois-Perret, France\",\n    \"Clichy, France\",\n    \"Suresnes, France\",\n    \"Rueil-Malmaison, France\",\n    \"Montrouge, France\",\n    \"Clamart, France\",\n    \"Meudon, France\",\n    \"Sèvres, France\",\n    \"Saint-Cloud, France\"\n  ],\n  \"organization_num_employees_ranges\": [\"21,50\", \"51,100\", \"101,200\", \"201,500\"],\n  \"q_organization_keyword_tags\": [\n    \"management consulting\",\n    \"audit\",\n    \"accounting\",\n    \"legal services\",\n    \"law practice\",\n    \"real estate\",\n    \"architecture & planning\",\n    \"civil engineering\",\n    \"engineering\",\n    \"marketing & advertising\",\n    \"public relations\",\n    \"events services\",\n    \"staffing & recruiting\",\n    \"human resources\",\n    \"insurance\",\n    \"financial services\",\n    \"investment management\",\n    \"information technology & services\"\n  ],\n  \"page\": {{ $json.page }},\n  \"per_page\": 100\n}",
+        "options": {}
+      },
+      "id": "c91c334e-ba6a-43aa-90bd-167b502e5d24",
+      "name": "Apollo - Recherche entreprises",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -272,
+        880
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "6obWSpSrESyQbako",
+          "name": "Header Auth account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "organizations",
+        "options": {}
+      },
+      "id": "e58e5fcc-de62-4b81-9851-c33cbc5fe941",
+      "name": "Split Out entreprises",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "maxItems": 5
+      },
+      "id": "d983876b-4b2e-470c-a2c8-d286e782766e",
+      "name": "Limite test",
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        224,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.apollo.io/api/v1/organizations/enrich",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "domain",
+              "value": "={{ $json.primary_domain }}"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 5
+            }
+          }
+        }
+      },
+      "id": "3575ebe9-563e-489f-adae-0993a28da314",
+      "name": "Apollo - Détails entreprise",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        464,
+        880
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "6obWSpSrESyQbako",
+          "name": "Header Auth account 4"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f2aed7c3-14ca-4aa1-9eea-8c205fa891d9",
+              "name": "apollo_id",
+              "value": "={{ $json.organization.id }}",
+              "type": "string"
+            },
+            {
+              "id": "3eaeaf6d-3c3b-4b7a-a0db-046f5ca7ee7d",
+              "name": "name",
+              "value": "={{ $json.organization.name }}",
+              "type": "string"
+            },
+            {
+              "id": "892d42a8-aa32-4e61-a2fd-9e7b7aea9960",
+              "name": "domain",
+              "value": "={{ $json.organization.primary_domain }}",
+              "type": "string"
+            },
+            {
+              "id": "ea8cc47f-1efc-4dfc-b1c6-79cea148dae7",
+              "name": "website",
+              "value": "={{ $json.organization.website_url }}",
+              "type": "string"
+            },
+            {
+              "id": "653e146a-45b7-4b2c-a718-298dc8596bc3",
+              "name": "linkedin",
+              "value": "={{ $json.organization.linkedin_url }}",
+              "type": "string"
+            },
+            {
+              "id": "13ee14e3-e5ed-4b0c-9d7e-98875b691be8",
+              "name": "employees",
+              "value": "={{ $json.organization.estimated_num_employees }}",
+              "type": "string"
+            },
+            {
+              "id": "06fb0037-22a1-4230-8553-72c7824f39d1",
+              "name": "industry",
+              "value": "={{ $json.organization.industry }}",
+              "type": "string"
+            },
+            {
+              "id": "4edab74a-3a08-4d8e-9639-ebe8808e4c1f",
+              "name": "keywords",
+              "value": "={{ ($json.organization.keywords || []).slice(0, 20).join(', ') }}",
+              "type": "string"
+            },
+            {
+              "id": "55f3f65f-36f6-4fda-801e-e24d8ec718bd",
+              "name": "description",
+              "value": "={{ $json.organization.short_description }}",
+              "type": "string"
+            },
+            {
+              "id": "6b311ff1-4f2a-4041-b94c-8a4816cba92c",
+              "name": "city",
+              "value": "={{ $json.organization.city }}",
+              "type": "string"
+            },
+            {
+              "id": "ec902c13-a2ea-464d-b147-b0b92892652e",
+              "name": "address",
+              "value": "={{ $json.organization.raw_address }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c36fb86a-cc19-40f2-a63e-31846a1cabe6",
+      "name": "Nettoyage",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        704,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Entreprise : {{ $json.name }}\nSite : {{ $json.website }}\nSecteur : {{ $json.industry }}\nEffectif estimé : {{ $json.employees }}\nVille : {{ $json.city }}\nAdresse : {{ $json.address }}\nMots-clés : {{ $json.keywords }}\nDescription : {{ $json.description }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "Tu qualifies des prospects B2B pour ekstere, entreprise française spécialisée dans les vélos électriques reconditionnés et la mobilité premium. ekstere propose aux entreprises une flotte de Speed Bikes Stromer en location (vélos électriques haut de gamme jusqu'à 45 km/h, transmission par courroie, tenue professionnelle préservée) pour les collaborateurs qui se déplacent souvent en Île-de-France. Atelier ekstere à Clamart (92).\n\nQuestion centrale : cette entreprise a-t-elle un problème concret de déplacements professionnels urbains (aujourd'hui en taxi, VTC, voiture ou transports en commun) que le Stromer peut résoudre ?\n\nBarème sur 100 :\n- deplacements (0-30) : très nombreux déplacements (consultants, commerciaux, rendez-vous clients, multi-sites) = 25-30 ; nombreux = 18-24 ; réguliers = 10-17 ; peu = 0-9\n- geo (0-20) : Paris/92 avec déplacements entre plusieurs sites = 18-20 ; Paris/92 = 14-17 ; IDF proche = 8-13 ; plus loin = 0-7\n- premium (0-15) : clientèle exigeante, cadres, associés, capacité à financer une mobilité haut de gamme\n- collaborateurs (0-15) : plusieurs dizaines de salariés mobiles = élevé ; quelques-uns = moyen\n- rse (0-10) : politique mobilité/RSE visible dans les données ou connue avec certitude\n- decideur (0-10) : structure permettant d'identifier clairement un décideur (DRH, Office Manager, services généraux, DG)\n\nPriorité : P1 si score >= 80, P2 si 70-79, P3 si 60-69, \"Exclu\" si < 60.\n\nRègles :\n- Note uniquement à partir des données fournies et de ce que tu sais avec certitude sur l'entreprise. N'invente aucun fait.\n- Si une information manque, baisse la note du critère concerné et signale-le dans \"incertitudes\".\n- Une PME de 50 personnes avec 15 consultants mobiles vaut mieux qu'un grand groupe sédentaire.\n- Communiquer sur la RSE ne suffit pas : il faut un vrai potentiel de déplacements.\n- \"accroche\" : une phrase d'ouverture d'email, naturelle, personnalisée pour cette entreprise, qui relie son activité aux déplacements de ses équipes. Pas de formule creuse.\n- Réponds uniquement dans le format JSON demandé."
+        }
+      },
+      "id": "4e27a8d5-f2e2-45a9-a6eb-06b3abf6f213",
+      "name": "AI Agent - Scoring",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        944,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "347e8b71-2dc4-4990-bfa0-058a033a2da7",
+              "name": "apollo_id",
+              "value": "={{ $('Nettoyage').item.json.apollo_id }}",
+              "type": "string"
+            },
+            {
+              "id": "1fbad296-b86e-4996-8c65-e0f3edbb9419",
+              "name": "name",
+              "value": "={{ $('Nettoyage').item.json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "956a414d-ab17-4247-bc9f-fae1f780a158",
+              "name": "domain",
+              "value": "={{ $('Nettoyage').item.json.domain }}",
+              "type": "string"
+            },
+            {
+              "id": "1ee6b937-a195-49b9-9963-5b5c3e99d20c",
+              "name": "website",
+              "value": "={{ $('Nettoyage').item.json.website }}",
+              "type": "string"
+            },
+            {
+              "id": "b0542b7a-c3c0-46fc-9082-390ae7ff77f8",
+              "name": "linkedin_entreprise",
+              "value": "={{ $('Nettoyage').item.json.linkedin }}",
+              "type": "string"
+            },
+            {
+              "id": "8ab8eaa1-33bc-4d41-ae14-1c1dd4467c67",
+              "name": "score",
+              "value": "={{ $json.output.score }}",
+              "type": "number"
+            },
+            {
+              "id": "5340ab37-cbee-4a9b-a9ef-fee1e45ade7c",
+              "name": "priorite",
+              "value": "={{ $json.output.priorite }}",
+              "type": "string"
+            },
+            {
+              "id": "cdb67cdb-755a-42ae-b091-cd49ca0325ad",
+              "name": "pourquoi",
+              "value": "={{ $json.output.pourquoi_stromer }}",
+              "type": "string"
+            },
+            {
+              "id": "8ef9f4fe-c9a7-4e78-bd7b-46f150baac8f",
+              "name": "collaborateurs_mobiles",
+              "value": "={{ $json.output.collaborateurs_mobiles_estimes }}",
+              "type": "number"
+            },
+            {
+              "id": "7f9fa3e8-db69-4b84-9cf9-f9ee31343899",
+              "name": "accroche",
+              "value": "={{ $json.output.accroche }}",
+              "type": "string"
+            },
+            {
+              "id": "fb28fbea-21ec-44ae-a17e-1a0a48973776",
+              "name": "incertitudes",
+              "value": "={{ $json.output.incertitudes }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c1ae7972-6e67-49d6-84e2-4118da43d4a5",
+      "name": "Résultat scoring",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1184,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0b2e57bb-3faa-49ec-ba99-9e9e09ea51f1",
+              "leftValue": "={{ $json.score }}",
+              "rightValue": 60,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "d5947d84-ef65-4485-b70d-31a7bc38aa3e",
+      "name": "Score ≥ 60",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        1424,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apollo.io/api/v1/mixed_people/api_search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"organization_ids\": [\"{{ $json.apollo_id }}\"],\n  \"person_titles\": [\n    \"DRH\",\n    \"Directeur des ressources humaines\",\n    \"Directrice des ressources humaines\",\n    \"Responsable RH\",\n    \"Responsable ressources humaines\",\n    \"Responsable RSE\",\n    \"Responsable QVT\",\n    \"Office Manager\",\n    \"Responsable services généraux\",\n    \"Responsable mobilité\",\n    \"Directeur administratif et financier\",\n    \"DAF\",\n    \"Directeur des achats\",\n    \"Directeur général\",\n    \"CEO\",\n    \"Fondateur\"\n  ],\n  \"include_similar_titles\": true,\n  \"page\": 1,\n  \"per_page\": 3\n}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 5
+            }
+          }
+        }
+      },
+      "id": "733bf1d1-db0d-4af5-a388-e365c98b6abb",
+      "name": "Apollo - Recherche décideurs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1664,
+        880
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "6obWSpSrESyQbako",
+          "name": "Header Auth account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "people",
+        "options": {}
+      },
+      "id": "36679e8f-c178-4ef5-b8c7-b29266976f43",
+      "name": "Split Out décideurs",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1904,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apollo.io/api/v1/people/match",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"id\": \"{{ $json.id }}\"\n}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 5
+            }
+          }
+        }
+      },
+      "id": "88bbbcfa-dbac-4c55-b9b1-c9991c032a42",
+      "name": "Apollo - Email décideur",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2144,
+        880
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "6obWSpSrESyQbako",
+          "name": "Header Auth account 4"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b1f45aa3-755a-4bd9-953b-9409ce130e41",
+              "name": "email",
+              "value": "={{ $json.person?.email }}",
+              "type": "string"
+            },
+            {
+              "id": "7bb19a0c-869a-4c38-b953-76de2853fcd8",
+              "name": "email_status",
+              "value": "={{ $json.person?.email_status }}",
+              "type": "string"
+            },
+            {
+              "id": "4fae39aa-6ca9-4c7b-83b4-dd8e0782982c",
+              "name": "full_name",
+              "value": "={{ $json.person?.name }}",
+              "type": "string"
+            },
+            {
+              "id": "a6b35e0c-b31e-451d-8627-494987f4fa05",
+              "name": "first_name",
+              "value": "={{ $json.person?.first_name }}",
+              "type": "string"
+            },
+            {
+              "id": "fa6b23b6-e835-41ae-9f60-ec476727037d",
+              "name": "title",
+              "value": "={{ $json.person?.title }}",
+              "type": "string"
+            },
+            {
+              "id": "5e1de861-e036-4350-9878-fd56ca3331d9",
+              "name": "linkedin",
+              "value": "={{ $json.person?.linkedin_url }}",
+              "type": "string"
+            },
+            {
+              "id": "43eb6f7a-75e5-43e0-9bf5-f50613a868bb",
+              "name": "company_name",
+              "value": "={{ $('Score ≥ 60').item.json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "98bbd1f4-9772-44d6-82e7-41e4dc91e855",
+              "name": "domain",
+              "value": "={{ $('Score ≥ 60').item.json.domain }}",
+              "type": "string"
+            },
+            {
+              "id": "92a42b05-e34c-4354-8b39-3a7690c3af29",
+              "name": "website",
+              "value": "={{ $('Score ≥ 60').item.json.website }}",
+              "type": "string"
+            },
+            {
+              "id": "3268e1ac-9e1b-4125-95f8-fce930dc776d",
+              "name": "score",
+              "value": "={{ $('Score ≥ 60').item.json.score }}",
+              "type": "number"
+            },
+            {
+              "id": "251b22ff-11b3-4b0d-b77f-97e5e9249e7e",
+              "name": "priorite",
+              "value": "={{ $('Score ≥ 60').item.json.priorite }}",
+              "type": "string"
+            },
+            {
+              "id": "c3b467e0-54e4-4daf-8af2-9f08b553643d",
+              "name": "pourquoi",
+              "value": "={{ $('Score ≥ 60').item.json.pourquoi }}",
+              "type": "string"
+            },
+            {
+              "id": "a6729cce-5601-4ba2-a5c6-a7b1d52039a8",
+              "name": "accroche",
+              "value": "={{ $('Score ≥ 60').item.json.accroche }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a8f8cf8b-6c21-430d-bbe1-970ff32645f2",
+      "name": "Préparer contact",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2384,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ffd00335-1392-418f-bab4-c277370e7764",
+              "leftValue": "={{ $json.email_status }}",
+              "rightValue": "verified",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "0ff804b4-d53b-44c3-aea5-57d11243db52",
+      "name": "Email vérifié",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        2624,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Supprime les doublons d'email et regroupe les contacts par entreprise\n// -> 1 lead Close par entreprise, avec tous ses décideurs en contacts\nconst seen = new Set();\nconst companies = {};\n\nfor (const item of $input.all()) {\n  const c = item.json;\n  if (!c.email) continue;\n  const key = c.email.toLowerCase();\n  if (seen.has(key)) continue;\n  seen.add(key);\n\n  const dom = c.domain || c.company_name;\n  if (!companies[dom]) {\n    const lead = {\n      name: c.company_name,\n      description:\n        `Score Stromer : ${c.score}/100 - ${c.priorite}\\n` +\n        `Pourquoi Stromer : ${c.pourquoi}\\n` +\n        `Accroche : ${c.accroche}`,\n      contacts: [],\n    };\n    if (c.website) lead.url = c.website;\n    companies[dom] = { lead, score: c.score, priorite: c.priorite, accroche: c.accroche };\n  }\n\n  const contact = {\n    name: c.full_name,\n    title: c.title,\n    emails: [{ email: c.email, type: 'office' }],\n  };\n  if (c.linkedin) contact.urls = [{ url: c.linkedin, type: 'url' }];\n  companies[dom].lead.contacts.push(contact);\n}\n\nreturn Object.values(companies)\n  .sort((a, b) => b.score - a.score)\n  .map((co) => ({ json: co }));"
+      },
+      "id": "6c3def1a-22ed-4f73-a23e-7716bf0d0729",
+      "name": "Regrouper par entreprise",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2864,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.close.com/api/v1/lead/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.lead) }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 3
+            }
+          }
+        }
+      },
+      "id": "e49fd816-abf4-41de-b54b-01060e40f4af",
+      "name": "Close - Créer lead",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3104,
+        880
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "Xa6SD3GVvSEQzblQ",
+          "name": "Base Chat USR/PASS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "contacts",
+        "options": {}
+      },
+      "id": "3de4b9fb-d2ec-4758-bbc4-6f18a87103b6",
+      "name": "Split Out contacts Close",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        3344,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.close.com/api/v1/sequence_subscription/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  sequence_id: \"seq_A_REMPLACER\",\n  contact_id: $json.id,\n  contact_email: $json.emails[0].email,\n  sender_account_id: \"emailacct_A_REMPLACER\",\n  sender_name: \"Prénom Nom A_REMPLACER\",\n  sender_email: \"adresse@ekstere.fr\"\n}) }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 3
+            }
+          }
+        }
+      },
+      "id": "f7481d02-5ca6-4679-b415-40e7eca9d8e9",
+      "name": "Close - Inscrire séquence",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3584,
+        880
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "Xa6SD3GVvSEQzblQ",
+          "name": "Base Chat USR/PASS"
+        }
+      },
+      "disabled": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## 1. Apollo trouve les entreprises\nFiltres : Paris + 92, 21-500 salariés, secteurs tertiaires.\n**Limite test** = 5 entreprises : augmente ou supprime quand tout marche.",
+        "height": 170,
+        "width": 1020,
+        "color": 5
+      },
+      "id": "e0dd4ec8-9627-4ade-9a46-b662dc0ecf02",
+      "name": "Note 21",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        672
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 2. L'IA note chaque entreprise /100\nSeules celles avec un score ≥ 60 continuent.",
+        "height": 170,
+        "width": 980,
+        "color": 4
+      },
+      "id": "e21c365d-3167-4a9e-9b13-d10589b7d946",
+      "name": "Note 22",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        656,
+        672
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 3. Apollo trouve les décideurs et leurs emails\nUniquement les emails **verified**.",
+        "height": 170,
+        "width": 1220,
+        "color": 6
+      },
+      "id": "d138ad26-aeb3-47b3-89a3-83c752b7fbe3",
+      "name": "Note 23",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1616,
+        672
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 4. Close\n1 lead par entreprise. **Inscrire séquence** est désactivé : active-le seulement après avoir vérifié les leads.",
+        "height": 170,
+        "width": 740,
+        "color": 3
+      },
+      "id": "9c12116e-2f90-49f3-9b97-b2acccf16bff",
+      "name": "Note 24",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3056,
+        672
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "id": "06d9b532-bc52-48e4-9bd7-25c060ac8b05",
+      "name": "OpenAI Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        880,
+        1104
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "32WdHhHsqLWHn8BM",
+          "name": "OpenAi_ekstere"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"score\": 78,\n  \"detail\": {\n    \"deplacements\": 25,\n    \"geo\": 17,\n    \"premium\": 12,\n    \"collaborateurs\": 10,\n    \"rse\": 5,\n    \"decideur\": 9\n  },\n  \"collaborateurs_mobiles_estimes\": 15,\n  \"pourquoi_stromer\": \"Consultants en rendez-vous clients quotidiens entre La Défense et Paris 8e\",\n  \"types_collaborateurs\": \"Consultants, associés, commerciaux\",\n  \"decideur_cible\": \"DRH\",\n  \"priorite\": \"P2\",\n  \"accroche\": \"Vos consultants passent sans doute une bonne partie de leurs journées entre La Défense et vos clients parisiens.\",\n  \"incertitudes\": \"Pas d'information sur la politique mobilité\"\n}"
+      },
+      "id": "31e9b5a5-9691-40c4-a426-285aafbbdd2d",
+      "name": "Structured Output Parser1",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        1056,
+        1104
+      ]
+    }
+  ],
+  "pinData": {
+    "Split Out contacts Close": [
+      {
+        "json": {
+          "created_by": "user_mZ0PZv7T55eJHZWDbhWLzzGulh02uWh3LWUAl6yE3JS",
+          "date_created": "2026-10-07T01:26:10.544000+00:00",
+          "date_updated": "2026-10-07T01:26:10.544000+00:00",
+          "display_name": "Arnaud Bartolomei",
+          "emails": [
+            {
+              "email": "arnaud.bartolomei@fr-dba.com",
+              "is_unsubscribed": false,
+              "type": "office"
+            }
+          ],
+          "id": "cont_oiL15lpf7yWKlislo56FKYq6mqtUJxIVanOTOPFLRWO",
+          "integration_links": [],
+          "lead_id": "lead_x9w2gAmrPQZrf7NiGsJvdhPnBqJYqTP6FMZBVpvNyLR",
+          "name": "Arnaud Bartolomei",
+          "organization_id": "orga_wpUwVbzoHTh3BPbamoVbsXb6p0IkhUId0aG0917C8DI",
+          "phones": [],
+          "timezone": null,
+          "timezone_source": null,
+          "title": "DRH",
+          "updated_by": "user_mZ0PZv7T55eJHZWDbhWLzzGulh02uWh3LWUAl6yE3JS",
+          "urls": [
+            {
+              "type": "url",
+              "url": "http://www.linkedin.com/in/arnaud-bartolomei"
+            }
+          ]
+        }
+      },
+      {
+        "json": {
+          "created_by": "user_mZ0PZv7T55eJHZWDbhWLzzGulh02uWh3LWUAl6yE3JS",
+          "date_created": "2026-10-07T01:26:10.550000+00:00",
+          "date_updated": "2026-10-07T01:26:10.550000+00:00",
+          "display_name": "Tiphaine Durier",
+          "emails": [
+            {
+              "email": "tiphaine.durier@fr-dba.com",
+              "is_unsubscribed": false,
+              "type": "office"
+            }
+          ],
+          "id": "cont_XEiwePEGfJYom9SSP4qoUEUCyiX1kw9t6rerHXKCQzt",
+          "integration_links": [],
+          "lead_id": "lead_x9w2gAmrPQZrf7NiGsJvdhPnBqJYqTP6FMZBVpvNyLR",
+          "name": "Tiphaine Durier",
+          "organization_id": "orga_wpUwVbzoHTh3BPbamoVbsXb6p0IkhUId0aG0917C8DI",
+          "phones": [],
+          "timezone": null,
+          "timezone_source": null,
+          "title": "Human Resources Director",
+          "updated_by": "user_mZ0PZv7T55eJHZWDbhWLzzGulh02uWh3LWUAl6yE3JS",
+          "urls": [
+            {
+              "type": "url",
+              "url": "http://www.linkedin.com/in/tiphaine-durier"
+            }
+          ]
+        }
+      },
+      {
+        "json": {
+          "created_by": "user_mZ0PZv7T55eJHZWDbhWLzzGulh02uWh3LWUAl6yE3JS",
+          "date_created": "2026-10-07T01:26:10.540000+00:00",
+          "date_updated": "2026-10-07T01:26:10.540000+00:00",
+          "display_name": "Philippe Joly",
+          "emails": [
+            {
+              "email": "pjoly@naos-international.com",
+              "is_unsubscribed": false,
+              "type": "office"
+            }
+          ],
+          "id": "cont_7V3G0Tpcu7ODnT60BVFQSbEiJiNUZBS5WGDE46ylI9d",
+          "integration_links": [],
+          "lead_id": "lead_UIdJP3whBQifUkHXyQjDpS4rqZUpS2AHvUIhMczpYme",
+          "name": "Philippe Joly",
+          "organization_id": "orga_wpUwVbzoHTh3BPbamoVbsXb6p0IkhUId0aG0917C8DI",
+          "phones": [],
+          "timezone": null,
+          "timezone_source": null,
+          "title": "Founder - CEO",
+          "updated_by": "user_mZ0PZv7T55eJHZWDbhWLzzGulh02uWh3LWUAl6yE3JS",
+          "urls": [
+            {
+              "type": "url",
+              "url": "http://www.linkedin.com/in/jolyphilippe"
+            }
+          ]
+        }
+      },
+      {
+        "json": {
+          "created_by": "user_mZ0PZv7T55eJHZWDbhWLzzGulh02uWh3LWUAl6yE3JS",
+          "date_created": "2026-10-07T01:26:10.546000+00:00",
+          "date_updated": "2026-10-07T01:26:10.546000+00:00",
+          "display_name": "Frederic Clausier",
+          "emails": [
+            {
+              "email": "fclausier@naos-international.com",
+              "is_unsubscribed": false,
+              "type": "office"
+            }
+          ],
+          "id": "cont_RKJY6IxuTQgZImK67Ke6h4ubQgqpTOt4Tsa9AHYGV2V",
+          "integration_links": [],
+          "lead_id": "lead_UIdJP3whBQifUkHXyQjDpS4rqZUpS2AHvUIhMczpYme",
+          "name": "Frederic Clausier",
+          "organization_id": "orga_wpUwVbzoHTh3BPbamoVbsXb6p0IkhUId0aG0917C8DI",
+          "phones": [],
+          "timezone": null,
+          "timezone_source": null,
+          "title": "CEO & Owner I Executive Search & Executive Interim Management",
+          "updated_by": "user_mZ0PZv7T55eJHZWDbhWLzzGulh02uWh3LWUAl6yE3JS",
+          "urls": [
+            {
+              "type": "url",
+              "url": "http://www.linkedin.com/in/fclausier"
+            }
+          ]
+        }
+      },
+      {
+        "json": {
+          "created_by": "user_mZ0PZv7T55eJHZWDbhWLzzGulh02uWh3LWUAl6yE3JS",
+          "date_created": "2026-10-07T01:26:10.536000+00:00",
+          "date_updated": "2026-10-07T01:26:10.536000+00:00",
+          "display_name": "Fabrice Allard",
+          "emails": [
+            {
+              "email": "fabriceallard@jobberry.com",
+              "is_unsubscribed": false,
+              "type": "office"
+            }
+          ],
+          "id": "cont_Mm0jkLBeEChYofTuVuralVp8IP19ynh7fmSnLwRkBOp",
+          "integration_links": [],
+          "lead_id": "lead_DqomyyPlJvL1W0PRQbJw4FxhnXMEOYcFS3UPETtqVWU",
+          "name": "Fabrice Allard",
+          "organization_id": "orga_wpUwVbzoHTh3BPbamoVbsXb6p0IkhUId0aG0917C8DI",
+          "phones": [],
+          "timezone": null,
+          "timezone_source": null,
+          "title": "Fondateur Jobberry",
+          "updated_by": "user_mZ0PZv7T55eJHZWDbhWLzzGulh02uWh3LWUAl6yE3JS",
+          "urls": [
+            {
+              "type": "url",
+              "url": "http://www.linkedin.com/in/fabrice-allard-recruteur"
+            }
+          ]
+        }
+      },
+      {
+        "json": {
+          "created_by": "user_mZ0PZv7T55eJHZWDbhWLzzGulh02uWh3LWUAl6yE3JS",
+          "date_created": "2026-10-07T01:26:10.545000+00:00",
+          "date_updated": "2026-10-07T01:26:10.545000+00:00",
+          "display_name": "Xavier Clouzet",
+          "emails": [
+            {
+              "email": "xavierclouzet@jobberry.com",
+              "is_unsubscribed": false,
+              "type": "office"
+            }
+          ],
+          "id": "cont_h5JpchR2B64Y1QTWsj4XQ9EZlNhQ6sUrTBMYTNZRMEm",
+          "integration_links": [],
+          "lead_id": "lead_DqomyyPlJvL1W0PRQbJw4FxhnXMEOYcFS3UPETtqVWU",
+          "name": "Xavier Clouzet",
+          "organization_id": "orga_wpUwVbzoHTh3BPbamoVbsXb6p0IkhUId0aG0917C8DI",
+          "phones": [],
+          "timezone": null,
+          "timezone_source": null,
+          "title": "Founder",
+          "updated_by": "user_mZ0PZv7T55eJHZWDbhWLzzGulh02uWh3LWUAl6yE3JS",
+          "urls": [
+            {
+              "type": "url",
+              "url": "http://www.linkedin.com/in/xavier-clouzet-recruteur"
+            }
+          ]
+        }
+      },
+      {
+        "json": {
+          "created_by": "user_mZ0PZv7T55eJHZWDbhWLzzGulh02uWh3LWUAl6yE3JS",
+          "date_created": "2026-10-07T01:26:11.514000+00:00",
+          "date_updated": "2026-10-07T01:26:11.514000+00:00",
+          "display_name": "Rayann Labidi",
+          "emails": [
+            {
+              "email": "rayann@happycab.fr",
+              "is_unsubscribed": false,
+              "type": "office"
+            }
+          ],
+          "id": "cont_HpWy1lwViC4kJiohnFC381GSOHCrx1pjuRdZK91jc0h",
+          "integration_links": [],
+          "lead_id": "lead_9Evep5OcGxMQN0Vyy1xm90WbnKJnDDUCFwaPZr3v77g",
+          "name": "Rayann Labidi",
+          "organization_id": "orga_wpUwVbzoHTh3BPbamoVbsXb6p0IkhUId0aG0917C8DI",
+          "phones": [],
+          "timezone": null,
+          "timezone_source": null,
+          "title": "Co-fondateur & Dirigeant",
+          "updated_by": "user_mZ0PZv7T55eJHZWDbhWLzzGulh02uWh3LWUAl6yE3JS",
+          "urls": [
+            {
+              "type": "url",
+              "url": "http://www.linkedin.com/in/rayann-labidi"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Pages à récupérer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Search people",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pages à récupérer": {
+      "main": [
+        [
+          {
+            "node": "Apollo - Recherche entreprises",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apollo - Recherche entreprises": {
+      "main": [
+        [
+          {
+            "node": "Split Out entreprises",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out entreprises": {
+      "main": [
+        [
+          {
+            "node": "Limite test",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limite test": {
+      "main": [
+        [
+          {
+            "node": "Apollo - Détails entreprise",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apollo - Détails entreprise": {
+      "main": [
+        [
+          {
+            "node": "Nettoyage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nettoyage": {
+      "main": [
+        [
+          {
+            "node": "AI Agent - Scoring",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent - Scoring": {
+      "main": [
+        [
+          {
+            "node": "Résultat scoring",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Résultat scoring": {
+      "main": [
+        [
+          {
+            "node": "Score ≥ 60",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Score ≥ 60": {
+      "main": [
+        [
+          {
+            "node": "Apollo - Recherche décideurs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apollo - Recherche décideurs": {
+      "main": [
+        [
+          {
+            "node": "Split Out décideurs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out décideurs": {
+      "main": [
+        [
+          {
+            "node": "Apollo - Email décideur",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apollo - Email décideur": {
+      "main": [
+        [
+          {
+            "node": "Préparer contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Préparer contact": {
+      "main": [
+        [
+          {
+            "node": "Email vérifié",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email vérifié": {
+      "main": [
+        [
+          {
+            "node": "Regrouper par entreprise",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Regrouper par entreprise": {
+      "main": [
+        [
+          {
+            "node": "Close - Créer lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Close - Créer lead": {
+      "main": [
+        [
+          {
+            "node": "Split Out contacts Close",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out contacts Close": {
+      "main": [
+        [
+          {
+            "node": "Close - Inscrire séquence",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent - Scoring",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent - Scoring",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "9cd212ab-49f0-4a18-904f-92111f4a90e0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "aca6ed7ec8875b2fbca26169c7cd9cbc432770c08b36ede295ebecdc45904a16"
+  },
+  "id": "7P0CaeOzKXNWydsd",
+  "tags": []
+}
