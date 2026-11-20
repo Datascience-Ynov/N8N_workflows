@@ -9,10 +9,13 @@
 
 ## 📂 Contenu
 
-| Workflow | Ce qu'il fait | Nœuds |
-|:--|:--|:--:|
-| **Prospection B2B (Apollo + IA + CRM)** | Recherche d'entreprises, enrichissement, scoring IA sur 100 selon une grille métier, recherche des décideurs, création des fiches dans le CRM | 19 |
-| *(ajoute ici les autres workflows du dépôt)* | | |
+| Workflow | Ce qu'il fait | Nœuds | Résultat |
+|:--|:--|:--:|:--|
+| **Annonces produit automatisées** | Photos déposées, récupération de la fiche technique via l'API Magento, rédaction SEO par Gemini, extraction des attributs par OpenAI, contrôles qualité, publication | 75 | **-85 %** de temps de création, **×8** annonces publiées, 95 % des vélos en ligne en moins de 24 h |
+| **Enrichissement de fiches produit par LLM** | Recherche web automatisée, score de confiance par site, nettoyage HTML, extraction structurée par champ, relecture humaine ciblée (orchestrateur + sous-workflow) | 24 + 52 | **0,02 €** par référence au lieu de 2 €, sur 50 000 références |
+| **Assistant IA interne multi-agents (RAG)** | Question posée dans Google Chat, classification d'intention, orchestration LangGraph vers 4 agents (marketing, SEO, comptes rendus, support), recherche dans la documentation interne | multi-agents | Réponse en **moins de 5 s**, **plus de 60 %** des demandes traitées sans intervention, 100 % d'adoption |
+| **Surveillance quotidienne des prix** | Lecture paginée du catalogue Magento, comparaison à l'historique, règles métier de détection des écarts, classement par urgence, alerte envoyée au bon site | 66 + 30 | Erreurs de prix repérées chaque matin, **sans aucun contrôle manuel** |
+| **Prospection B2B (Apollo + IA + CRM)** | Recherche d'entreprises, enrichissement, scoring IA sur 100 selon une grille métier, recherche des décideurs, création des fiches dans le CRM | 19 | Chaîne complète testée de bout en bout, jusqu'aux leads qualifiés dans le CRM |
 
 ---
 
@@ -54,6 +57,6 @@ flowchart LR
 
 ## 🧰 Stack
 
-`n8n` · `JavaScript` · `OpenAI` · `Gemini` · `Apollo` · `Close CRM` · `API REST` · `Google Workspace`
+`n8n` · `JavaScript` · `LangGraph` · `OpenAI` · `Gemini` · `Redis` · `Magento` · `Apify` · `Apollo` · `Close CRM` · `API REST` · `Google Workspace`
 
-📬 [Portfolio](https://mourad2511.github.io) · [LinkedIn](https://www.linkedin.com/in/mourad-amoussa) · mourad1.amoussa@outlook.com
+📬 [Portfolio](https://mourad2511.github.io) · [GitHub](https://github.com/Mourad2511) · [LinkedIn](https://www.linkedin.com/in/mourad-amoussa) · mourad1.amoussa@outlook.com
